@@ -22,4 +22,6 @@ To combine my experience managing complex infrastructure projects with the power
 
 ### 🔐 Security & Networking
 [![CompTIA Security+](https://images.credly.com/size/110x110/images/7474fd19-1b0f-45c8-b2a7-ebf3fda137a3/image.png)](https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url)
-[![CompTIA Network+](https://images.credly.com/size/110x110/images/df48dab2-4f1d-4a63-90e0-eb92bba76f4e/image.png)](https://www.credly.com/badges/dace6b68-35b4-44ae-b37d-7707d9f89742/public_url)
+[![CompTIA Network+](https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url)
+
+
