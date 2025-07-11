@@ -17,11 +17,12 @@ To combine my experience managing complex infrastructure projects with the power
 ## 📜 Certifications
 
 ### ☁️ Cloud & Platforms
-[![Microsoft Azure Fundamentals (AZ-900)](https://images.credly.com/size/110x110/images/f4e4ec1e-f143-4e63-9c37-4eade5c542d0/image.png)](https://www.credly.com/badges/YOUR-AZ900-BADGE-ID-HERE)
-[![Microsoft SC-900](https://images.credly.com/size/110x110/images/ca7c267d-d5bc-494e-a046-044f4f6f9e91/image.png)](https://www.credly.com/badges/415f6148-f8a6-4863-830d-c9e369ac77a1/public_url)
+[![Microsoft Azure Fundamentals](assets/microsoft-certified-azure-fundamentals.png)](https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url)
+[![Microsoft SC-900](assets/microsoft-certified-security-compliance-and-identity-fundamentals.png)](https://www.credly.com/badges/415f6148-f8a6-4863-830d-c9e369ac77a1/public_url)
 
 ### 🔐 Security & Networking
-[![CompTIA Security+](https://images.credly.com/size/110x110/images/7474fd19-1b0f-45c8-b2a7-ebf3fda137a3/image.png)](https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url)
-[![CompTIA Network+](https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url)
+[![CompTIA Security+](assets/comptia-security-ce-certification.png)](https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url)
+[![CompTIA Network+](assets/comptia-network-ce-certification.1-3.png)](https://www.credly.com/badges/dace6b68-35b4-44ae-b37d-7707d9f89742/public_url)
+[![CEH](assets/ceh.png)](https://www.credly.com/badges/033bbcc4-33cb-4749-94c9-5d2c1e93ca8a/public_url)
 
 
