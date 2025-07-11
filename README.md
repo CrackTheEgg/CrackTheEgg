@@ -35,7 +35,7 @@ To combine my experience managing complex infrastructure projects with the power
 </a>
 
 <a href="assets/CEH_2E345519D3F7.png" target="_blank">
-  <img src="assets/CEH_2E345519D3F7.png" alt="CEH" width="110" height="110">
+  <img src="assets/CEH_2E345519D3F7.png" alt="CEH" width="99" height="99">
 </a>
 
 
