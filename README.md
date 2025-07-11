@@ -34,7 +34,7 @@ To combine my experience managing complex infrastructure projects with the power
   <img src="assets/comptia-network-ce-certification.1-3.png" alt="Network+" width="110" height="110">
 </a>
 
-<a href="assets/CC-CEH-Certificate.pdf" target="_blank">
+<a href="assets/ECC-CEH-Certificate.pdf" target="_blank">
   <img src="assets/CEH_2E345519D3F7.png" alt="CEH" width="110" height="110">
 </a>
 
