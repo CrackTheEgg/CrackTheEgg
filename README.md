@@ -28,7 +28,7 @@ To combine my experience managing complex infrastructure projects with the power
 </a>
 
 <a href="assets/ECC-CEH-Certificate.pdf" target="_blank">
-  <img src="assets/CEH_2E345519D3F7.png" alt="CEH" width="110" height="110">
+  <img src="assets/CEH_2E345519D3F7.png" alt="CEH" width="100" height="100">
 </a>
 
 <a href="https://www.credly.com/badges/415f6148-f8a6-4863-830d-c9e369ac77a1/public_url" target="_blank">
