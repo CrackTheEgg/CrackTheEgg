@@ -17,6 +17,10 @@ To combine my experience managing complex infrastructure projects with the power
 <h2>📜 Certifications</h2>
 
 <!-- ☁️ Cloud & Platforms -->
+
+<a href="https://www.credly.com/badges/c352daae-90c4-453a-a241-2aef3c351894/public_url" target="blank">
+  <img src="assets/aws-certified-cloud-practitioner.png" alt="AWS Certified Cloud Practitioner" width="110" height="110">
+
 <a href="https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url" target="_blank">
   <img src="assets/microsoft-certified-azure-fundamentals.png" alt="Azure Fundamentals" width="110" height="110">
 </a>
