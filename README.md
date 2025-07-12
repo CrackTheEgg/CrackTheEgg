@@ -39,8 +39,3 @@ To combine my experience managing complex infrastructure projects with the power
   <img src="assets/microsoft-certified-security-compliance-and-identity-fundamentals.png" alt="SC-900" width="110" height="110">
 </a>
 
-✅ Edited from my Mac Studio using VS Code!
-
-🔁 Test edit from VS Code — verifying push!
-
-🔁 2nd Test edit from VS Code — verifying push!
