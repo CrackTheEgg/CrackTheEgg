@@ -38,3 +38,7 @@ To combine my experience managing complex infrastructure projects with the power
 <a href="https://www.credly.com/badges/415f6148-f8a6-4863-830d-c9e369ac77a1/public_url" target="_blank">
   <img src="assets/microsoft-certified-security-compliance-and-identity-fundamentals.png" alt="SC-900" width="110" height="110">
 </a>
+
+✅ Edited from my Mac Studio using VS Code!
+
+🔁 Test edit from VS Code — verifying push!
