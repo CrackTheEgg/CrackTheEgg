@@ -16,7 +16,7 @@
 
 The cloud isn't just infrastructure — it's a **global architecture movement**. Solutions Architects are no longer designing for single apps or teams — they're engineering for scale, resilience, and global reach.
 
-**Atlas** is named for that shift: designing with the world in mind. This project doesn't teach AWS in isolation. It mirrors how real-world architects think:
+**Atlas** is named for that shift: designing with the wider world in mind. This project doesn't teach AWS in isolation. It mirrors how real-world architects think:
 
 * From client brief ➝ to architectural diagrams ➝ to deployment ➝ to optimization
 * From simple triggers ➝ to distributed systems ➝ to ethical impact
