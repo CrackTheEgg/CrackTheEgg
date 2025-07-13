@@ -2,17 +2,71 @@
 
 🏗️ Former construction project manager now focused on building scalable, intelligent cloud systems with AWS.
 
-## 🧭 My Mission
-To combine my experience managing complex infrastructure projects with the power of AWS to design secure, resilient, and cost-effective cloud solutions.
+🔧 I started **Project Atlas** as a structured learning path to move from theoretical AWS knowledge to real-world architecture — and ultimately contribute to global, ethical, cloud-native design.
 
-## 🌱 Currently Working On
-- ✅ AWS Cloud Practitioner (passed)
-- 🧠 Studying for AWS SAA exam
-- ⚙️ Building a progressive 11-project AWS portfolio
-- 🚀 Chapter 1: [Lambda Hello World](https://github.com/CrackTheEgg/CrackTheEgg/tree/main/Chapter_01_Lambda_Hello_World)
+---
 
+# 🗺️ Project Atlas
 
+**Project Atlas** is a learning journey into real-world AWS Solution Architecture — from whiteboard to deployment. Each chapter builds a complete, practical cloud-native project while layering deeper skills across architecture, automation, cost-optimization, and secure design.
 
+---
+
+## 🤔 Why Atlas?
+
+The cloud isn't just infrastructure — it's a **global architecture movement**. Solutions Architects are no longer designing for single apps or teams — they're engineering for scale, resilience, and global reach.
+
+**Atlas** is named for that shift: designing with the world in mind. This project doesn't teach AWS in isolation. It mirrors how real-world architects think:
+
+* From client brief ➝ to architectural diagrams ➝ to deployment ➝ to optimization
+* From simple triggers ➝ to distributed systems ➝ to ethical impact
+* From services ➝ to systems ➝ to ecosystems
+
+This is'nt about just learning AWS — it's about learning to **think as architect's would**.
+
+---
+
+## 🧱 The Learning Workflow
+
+Each chapter follows this 6-step applied methodology:
+
+1. 📝 **Client Brief** – Simulated client requirement with business & technical context
+2. 🧠 **Written Response** – High-level interpretation + architectural reasoning
+3. 🧭 **Architecture Diagram** – Visual translation of the proposed AWS design
+4. ⚙️ **Build** – Real AWS deployment using IaC (CloudFormation or Terraform)
+5. 🤖 **Automate** – CI/CD or serverless patterns where appropriate
+6. 📈 **Optimize** – Cost, security, observability, and scalability reflection
+
+Each chapter builds from the previous — technically and conceptually.
+
+---
+
+## 📚 Chapter Overview
+
+| Chapter | Title                               | Focus Area                               |
+| ------- | ----------------------------------- | ---------------------------------------- |
+| 01      | Hello Lambda                        | Lambda, API Gateway, CloudWatch          |
+| 02      | Static Site S3                      | S3 hosting, Route 53, CloudFront         |
+| 03      | Secure Contact Form                 | API Gateway, Lambda, reCAPTCHA, SES, WAF |
+| 04      | Visitor Analytics Dashboard         | Kinesis, Lambda, Athena, QuickSight      |
+| 05      | Scheduled Content Generator         | EventBridge, Lambda, S3, Step Functions  |
+| 06      | Authenticated Web App               | Cognito, Amplify, IAM, AppSync           |
+| 07      | Serverless REST API                 | API Gateway (REST), Lambda, DynamoDB     |
+| 08      | Scalable Backend API                | ECS Fargate, ALB, Auto Scaling, RDS      |
+| 09      | CI/CD + IaC Pipelines               | CodePipeline, CodeBuild, CloudFormation  |
+| 10      | Observability Platform              | X-Ray, CloudWatch, CloudTrail, Config    |
+| 11      | SignalCheck – Conscious Sharing App | NLP, Fact Checking, User Ethics, Bedrock |
+
+---
+
+## 🚀 Contributions
+
+Project Atlas is a solo learning journey — but contributions, ideas, and forks are welcome.
+
+* Want to suggest a use case? Raise an issue.
+* Want to collaborate on a module? Fork and PR.
+
+🧭 Built with ❤️ by [@christianhegarty](https://github.com/CrackTheEgg)
 
 ## 🛠 Tools & Tech
 `AWS` `Lambda` `API Gateway` `S3` `CloudFormation` `Terraform` `Python` `GitHub`
