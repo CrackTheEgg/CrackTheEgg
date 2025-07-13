@@ -14,15 +14,15 @@
 
 ## 🤔 Why Atlas?
 
-The cloud isn't just infrastructure — it's a **global architecture movement**. Solutions Architects are no longer designing for single apps or teams — they're engineering for scale, resilience, and global reach.
+Cloud computing has evolved beyond just infrastructure — it's become a **global architecture movement**. Today's solutions are built not just for apps or teams, but for scale, resilience, and impact across borders.
 
-**Atlas** is named for that shift: designing with the wider world in mind. This project doesn't teach AWS in isolation. It mirrors how real-world architects think:
+**Atlas** reflects that shift: a mindset of designing with the wider world in mind. It’s a learning journey that mirrors how real architects work — not just configuring services, but thinking systemically.
 
-* From client brief ➝ to architectural diagrams ➝ to deployment ➝ to optimization
-* From simple triggers ➝ to distributed systems ➝ to ethical impact
-* From services ➝ to systems ➝ to ecosystems
+- From client brief ➝ to architecture diagrams ➝ to deployment ➝ to iteration  
+- From simple triggers ➝ to distributed systems ➝ to meaningful impact  
+- From services ➝ to systems ➝ to ecosystems  
 
-It's not just about learning AWS — it's about learning to **think like an architect**: with clarity, empathy, and a global perspective.
+It’s not just about learning AWS — it’s about learning to **think like an architect**: with clarity, empathy, and a global perspective.
 
 ---
 
