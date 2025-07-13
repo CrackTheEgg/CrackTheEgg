@@ -20,3 +20,7 @@ These diagrams provide a visual reference for the AWS architecture implemented i
 - Top-down flow represents user traffic
 - Major services labeled explicitly
 - Version control managed alongside codebase
+
+## Architecural Diagram
+
+![Architecture Diagram](./architecture_diagrams/Chapter_1_Lambda_Hello_World.png)
