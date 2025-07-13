@@ -1,6 +1,6 @@
 # 👋 Hi, I'm Chris Hegarty (CrackTheEgg)
 
-🏗️ Former construction project manager now focused on building scalable, intelligent cloud systems with AWS.
+🏗️ Former Construction Project Manager now focused on building scalable, intelligent cloud systems with AWS.
 
 🔧 I started **Project Atlas** as a structured learning path to move from theoretical AWS knowledge to real-world architecture — and ultimately contribute to global, ethical, cloud-native design.
 
@@ -14,11 +14,11 @@
 
 ## 🤔 Why Atlas?
 
-Cloud computing has evolved beyond just infrastructure — it's become a **global architecture movement**. Today's solutions are built not just for apps or teams, but for scale, resilience, and impact across borders.
+Cloud isn’t just infrastructure — it’s a way of thinking about **scalable, connected systems**. Solutions Architects today aren’t just solving technical problems for one app or team — they’re designing for resilience, security, and impact at scale.
 
-**Atlas** reflects that shift: a mindset of designing with the wider world in mind. It’s a learning journey that mirrors how real architects work — not just configuring services, but thinking systemically.
+**Atlas** reflects that shift: designing with the wider world in mind. It’s a learning journey that mirrors how real architects work — not just configuring services, but thinking systemically.
 
-- From client brief ➝ to architecture diagrams ➝ to deployment ➝ to iteration  
+- From client brief ➝ to architecture diagrams ➝ to deployment ➝ to optimization  
 - From simple triggers ➝ to distributed systems ➝ to meaningful impact  
 - From services ➝ to systems ➝ to ecosystems  
 
