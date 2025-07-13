@@ -22,7 +22,7 @@ The cloud isn't just infrastructure — it's a **global architecture movement**.
 * From simple triggers ➝ to distributed systems ➝ to ethical impact
 * From services ➝ to systems ➝ to ecosystems
 
-This is'nt about just learning AWS — it's about learning to **think as architect's would**.
+It's not just about learning AWS — it's about learning to **think like an architect**: with clarity, empathy, and a global perspective.
 
 ---
 
@@ -66,7 +66,7 @@ Project Atlas is a solo learning journey — but contributions, ideas, and forks
 * Want to suggest a use case? Raise an issue.
 * Want to collaborate on a module? Fork and PR.
 
-🧭 Built with ❤️ by [@christianhegarty](https://github.com/CrackTheEgg)
+🧭 Built with 🖤 by [@christianhegarty](https://github.com/CrackTheEgg)
 
 ## 🛠 Tools & Tech
 `AWS` `Lambda` `API Gateway` `S3` `CloudFormation` `Terraform` `Python` `GitHub`
