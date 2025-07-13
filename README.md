@@ -9,7 +9,7 @@ To combine my experience managing complex infrastructure projects with the power
 - ✅ AWS Cloud Practitioner (passed)
 - 🧠 Studying for AWS SAA exam
 - ⚙️ Building a progressive 11-project AWS portfolio
-- 🚀 Chapter 1: [Lambda Hello World](Project_1_Lambda_Hello_World)
+- 🚀 Chapter 1: [Lambda Hello World](https://github.com/CrackTheEgg/CrackTheEgg/tree/main/Project_1_Lambda_Hello_World)
 
 
 
