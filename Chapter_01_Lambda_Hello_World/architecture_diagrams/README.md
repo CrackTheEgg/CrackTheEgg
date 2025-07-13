@@ -22,6 +22,6 @@ These diagrams provide a visual reference for the AWS architecture implemented i
 - Version control managed alongside codebase
 
 ## Architecural Diagrams
+Chapter_01_Lambda_Hello_World/architecture_diagrams/Chapter_1_Lambda_Hello_World.drawio.png
 
-![Lambda Architecture](https://github.com/CrackTheEgg/CrackTheEgg/assets/CrackTheEgg/4e389c281762de70a1913a5f730026fe9dd1ba1c)
 
