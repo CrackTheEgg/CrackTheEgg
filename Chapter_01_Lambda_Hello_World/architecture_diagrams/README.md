@@ -21,6 +21,7 @@ These diagrams provide a visual reference for the AWS architecture implemented i
 - Major services labeled explicitly
 - Version control managed alongside codebase
 
-## Architecural Diagram
+## Architecural Diagrams
 
+![Lambda Architecture](https://github.com/CrackTheEgg/CrackTheEgg/assets/CrackTheEgg/4e389c281762de70a1913a5f730026fe9dd1ba1c)
 
