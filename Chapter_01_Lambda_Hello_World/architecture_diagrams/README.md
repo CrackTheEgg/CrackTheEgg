@@ -4,7 +4,6 @@ This folder contains visual architecture artifacts for the **Atlas Project**.
 
 ## Contents
 
-- **Chapter_1_Lambda_Hello_World.drawio** – Editable diagram source in Draw.io format
 - **Chapter_1_Lambda_Hello_World.drawio.pdf** – Exported PDF version for documentation or presentation
 
 ## Purpose
