@@ -23,4 +23,4 @@ These diagrams provide a visual reference for the AWS architecture implemented i
 
 ## Architecural Diagram
 
-https://github.com/CrackTheEgg/CrackTheEgg/blob/main/Chapter_01_Lambda_Hello_World/architecture_diagrams/README.md#:~:text=Chapter_1_Lambda_Hello_World.drawio.png
+
