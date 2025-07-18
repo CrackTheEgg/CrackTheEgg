@@ -40,6 +40,8 @@ This project demonstrates core AWS solution architecture skills by deploying a s
     'body': json.dumps('Hello from the Atlas Project!')
   }
   ```
+&nbsp;
+  
 - Triggered via **REST API Gateway**
 - Deployed to `default` stage with `ANY` method support
 - Execution role includes `AWSLambdaBasicExecutionRole` for logging
