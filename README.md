@@ -2,7 +2,7 @@
 
 🏗️ Former Construction Project Manager now focused on building scalable, intelligent cloud systems with AWS.
 
-🔧 I started **Project Atlas** as a structured learning path to move from theoretical AWS knowledge to real-world architecture — and ultimately contribute to global, ethical, cloud-native design.
+🔧 I started **Project Atlas** as a structured learning path to move from theoretical AWS knowledge to real-world architecture — and to ultimately contribute to global, ethical, cloud-native designs.
 
 ---
 
@@ -58,15 +58,6 @@ Each chapter builds from the previous — technically and conceptually.
 | 11      | SignalCheck – Conscious Sharing App | NLP, Fact Checking, User Ethics, Bedrock |
 
 ---
-
-## 🚀 Contributions
-
-Project Atlas is a solo learning journey — but contributions, ideas, and forks are welcome.
-
-* Want to suggest a use case? Raise an issue.
-* Want to collaborate on a module? Fork and PR.
-
-🧭 Built with 🖤 by [@christianhegarty](https://github.com/CrackTheEgg)
 
 ## 🛠 Tools & Tech
 `AWS` `Lambda` `API Gateway` `S3` `CloudFormation` `Terraform` `Python` `GitHub`
