@@ -19,9 +19,7 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 - Attached inline policy to allow only specific Lambda invocation
 - Enabled **MFA** and access keys for CLI/API use
 
-![IAM group and user created with scoped access permissions.](./Chapter_01_Lambda_Hello_World/P1_Assets/IAM-1.png)
-*IAM group and user created with scoped access permissions.*
-
+![IAM group and user created with scoped access permissions.](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/IAM-2.png)
 ![IAM User Permissions](../images/Screenshot%202025-07-18%20at%208.22.34%E2%80%AFam.png)
 *IAM user Atlas_Project_1 with inline Lambda invoke permissions.*
 
