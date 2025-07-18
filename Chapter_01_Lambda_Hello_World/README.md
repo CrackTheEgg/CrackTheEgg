@@ -46,13 +46,14 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 - Deployed to `default` stage with `ANY` method support
 - Execution role includes `AWSLambdaBasicExecutionRole` for logging
 
-![Lambda Code Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-1.png)
 #### *Lambda function source code for Hello World.*
+![Lambda Code Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-1.png)
 
 &nbsp;
 
-![Lambda Test Result](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-2%20-%20Code%20Test.png)
 #### *Test result confirming successful function execution.*
+![Lambda Test Result](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-2%20-%20Code%20Test.png)
+
 
 ---
 
