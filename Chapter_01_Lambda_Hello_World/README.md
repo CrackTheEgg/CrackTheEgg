@@ -58,11 +58,6 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 
 &nbsp;  
 
-![Lambda Test Result](../images/Screenshot%202025-07-18%20at%207.33.21%E2%80%AFam.png)
-*Test result confirming successful function execution.*
-
-&nbsp;
-
 #### *Test result confirming successful function execution.*
 ![Lambda Test Result](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-2%20-%20Code%20Test.png)
 
