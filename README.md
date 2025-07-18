@@ -2,7 +2,7 @@
 
 🏗️ Former Construction Project Manager now focused on building scalable, intelligent cloud systems with AWS.
 
-🔧 I started **Project Atlas** as a structured learning path to move from theoretical AWS knowledge to real-world architecture — and ultimately contribute to global, ethical, cloud-native design.
+🔧 I started **Project Atlas** as a structured learning path to move from theoretical AWS knowledge to real-world architecture — and to ultimately contribute to global, ethical, cloud-native designs.
 
 ---
 
