@@ -1,20 +1,3 @@
-# Chapter 01 — Lambda Hello World
-
-This is the first project in **Project Atlas**, exploring AWS Lambda fundamentals through a "Hello World" serverless function.
-
-## Purpose
-Learn how to:
-- Write a basic Lambda function
-- Deploy via AWS Console
-- Set up IAM roles
-- Trigger using API Gateway or test events
-
-## Files
-- `lambda_function.py` (coming soon)
-
----
-
-
 # Atlas Project 1 — AWS Architecture Summary
 
 This project demonstrates core AWS solution architecture skills by deploying a secure, serverless, and observable Hello World API. Designed for portfolio visibility, it includes IAM, Lambda, API Gateway, CloudWatch, and WAF configuration with security-first principles.
@@ -36,7 +19,7 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 - Attached inline policy to allow only specific Lambda invocation
 - Enabled **MFA** and access keys for CLI/API use
 
-![IAM Group Setup](../images/Screenshot%202025-07-18%20at%208.23.30%E2%80%AFam.png)
+![IAM Group Setup](../P1_Assets/IAM-1.png) 
 *IAM group and user created with scoped access permissions.*
 
 ![IAM User Permissions](../images/Screenshot%202025-07-18%20at%208.22.34%E2%80%AFam.png)
