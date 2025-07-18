@@ -12,6 +12,13 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 
 ---
 
+## 🧭 Project Architecture
+
+![Project Architecture Diagram]
+*Architecture showing API Gateway → Lambda → CloudWatch, with WAF layer for security.*
+
+---
+
 
 ## 🔒 IAM Configuration
 - Created IAM **User Group**: `atlas-admins`
@@ -46,6 +53,8 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 
 ![Lambda Code Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-1.png)
 *Lambda function source code for Hello World.*
+
+&nbsp;  
 
 ![Lambda Test Result](../images/Screenshot%202025-07-18%20at%207.33.21%E2%80%AFam.png)
 *Test result confirming successful function execution.*
