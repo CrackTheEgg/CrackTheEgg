@@ -14,7 +14,7 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 
 ## 🧭 Project Architecture
 
-![Project Architecture Diagram]
+![Project Architecture Diagram](https://github.com/CrackTheEgg/CrackTheEgg/tree/main/Chapter_01_Lambda_Hello_World#:~:text=Chapter_1_Lambda_Hello_World.drawio)
 *Architecture showing API Gateway → Lambda → CloudWatch, with WAF layer for security.*
 
 ---
