@@ -24,7 +24,6 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 ![IAM Group Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/IAM-1.png)
 
 &nbsp;  
-&nbsp;
 
 #### *IAM user Atlas_Project_1 with inline Lambda invoke permissions.*
 ![IAM User Permissions](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/IAM-2.png)
