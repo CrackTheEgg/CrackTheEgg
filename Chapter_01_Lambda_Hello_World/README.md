@@ -56,18 +56,16 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 #### *Lambda function source code for Hello World.*
 ![Lambda Code Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-1.png)
 
-<<<<<<< HEAD
 &nbsp;  
 
 ![Lambda Test Result](../images/Screenshot%202025-07-18%20at%207.33.21%E2%80%AFam.png)
 *Test result confirming successful function execution.*
-=======
+
 &nbsp;
 
 #### *Test result confirming successful function execution.*
 ![Lambda Test Result](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-2%20-%20Code%20Test.png)
 
->>>>>>> ae01e87681c9e8a9f0ab65dfea8a1e5fbf8f27c1
 
 ---
 
