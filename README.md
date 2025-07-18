@@ -59,15 +59,6 @@ Each chapter builds from the previous — technically and conceptually.
 
 ---
 
-## 🚀 Contributions
-
-Project Atlas is a solo learning journey — but contributions, ideas, and forks are welcome.
-
-* Want to suggest a use case? Raise an issue.
-* Want to collaborate on a module? Fork and PR.
-
-🧭 Built with 🖤 by [@christianhegarty](https://github.com/CrackTheEgg)
-
 ## 🛠 Tools & Tech
 `AWS` `Lambda` `API Gateway` `S3` `CloudFormation` `Terraform` `Python` `GitHub`
 
