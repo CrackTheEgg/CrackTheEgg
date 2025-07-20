@@ -54,7 +54,7 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 - Execution role includes `AWSLambdaBasicExecutionRole` for logging
 
 #### *Lambda function source code for Hello World.*
-![Lambda Code Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-1.png)
+![Lambda Function Configuration](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/Lambda-1.png)
 
 &nbsp;  
 
@@ -71,8 +71,8 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 - Successfully tested using API Gateway console + Postman
 - Verified response and latency under 2ms execution time
 
-![API Gateway Trigger](../images/Screenshot%202025-07-18%20at%208.10.47%E2%80%AFam.png)
-*API Gateway configured with Lambda trigger and default stage.*
+#### *API Gateway configured to invoke the Lambda function.*  
+![API Gateway Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/API-1.png)
 
 ---
 
