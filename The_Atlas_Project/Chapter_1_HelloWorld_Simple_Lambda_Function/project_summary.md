@@ -28,7 +28,8 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 - Enabled **MFA** and access keys for CLI/API use
   
 #### *IAM group and user created with scoped access permissions.*
-![IAM Group Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/IAM-1.png)
+![IAM Role Configuration](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/IAM-1.png)
+*IAM policy attached to Lambda execution role.*
 
 &nbsp;  
 
