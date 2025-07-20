@@ -14,7 +14,7 @@ Each folder below contains:
 
 | Chapter | Title                     | Focus Area                              | Status     | Project Link      |
 |---------|---------------------------|------------------------------------------|------------|-------------------|
-| 01      | Hello Lambda              | Lambda, API Gateway, CloudWatch, WAF     | ✅ Complete | [Project_1](../Chapter_1_HelloWorld_Simple_Lambda_Function/README.md) |
+| 01      | Hello Lambda              | Lambda, API Gateway, CloudWatch, WAF     | ✅ Complete | [Project_1](The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/project_summary.md)  |
 | 02      | Static Site S3            | S3, Route 53, CloudFront                 | 🟨 Planned  |                   |
 | 03      | Secure Contact Form       | API GW, SES, Lambda, CAPTCHA, WAF        | 🟨 Planned  |                   |
 | 04      | Visitor Analytics         | Kinesis, Firehose, Athena, QuickSight    | 🟨 Planned  |                   |
