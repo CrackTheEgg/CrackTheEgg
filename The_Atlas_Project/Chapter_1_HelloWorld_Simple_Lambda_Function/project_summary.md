@@ -5,6 +5,8 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 ---
 
 ## 📅 Project Objectives
+
+- 🔗 **Live Demo**: [Hello World API Endpoint](https://j48isil1b9.execute-api.eu-north-1.amazonaws.com/default/HelloWorld)
 - Deploy a simple Hello World application using **AWS Lambda + API Gateway**
 - Secure the API using **AWS WAF with managed and custom rules**
 - Implement logging, monitoring, and IAM best practices
