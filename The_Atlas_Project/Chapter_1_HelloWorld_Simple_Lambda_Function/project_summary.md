@@ -14,7 +14,7 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 
 ## 🧭 Project Architecture
 
-![Project Architecture](https://github.com/your-username/your-repo-name/raw/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/architectural_diagrams/Chapter_1_Lambda_Hello_World_rev_1.png)
+  <img src="/Users/christianhegarty/CrackTheEgg/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/architectural_diagrams/Chapter_1_Lambda_Hello_World.drawio rev_1.png" alt="Network+" width="110" height="110">
 *Architecture showing API Gateway → Lambda → CloudWatch, with WAF layer for security.*
 
 
