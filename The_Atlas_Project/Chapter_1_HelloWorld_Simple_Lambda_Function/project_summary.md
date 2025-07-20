@@ -29,12 +29,11 @@ This project demonstrates core AWS solution architecture skills by deploying a s
   
 #### *IAM group and user created with scoped access permissions.*
 ![IAM Role Configuration](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/IAM-1.png)
-*IAM policy attached to Lambda execution role.*
 
 &nbsp;  
 
 #### *IAM user Atlas_Project_1 with inline Lambda invoke permissions.*
-![IAM User Permissions](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/IAM-2.png)
+![IAM Policy Assignment](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/IAM-2.png)
 
 
 ---
@@ -60,7 +59,7 @@ This project demonstrates core AWS solution architecture skills by deploying a s
 &nbsp;  
 
 #### *Test result confirming successful function execution.*
-![Lambda Test Result](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/Chapter_01_Lambda_Hello_World/P1_Assets/Lambda-2%20-%20Code%20Test.png)
+![Lambda Code Test](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/Lambda-2%20-%20Code%20Test.png)
 
 
 ---
