@@ -87,11 +87,13 @@ Applied a layered security model with WAF v2:
 - **Default Allow** → Allows if no rule matches
 - **Sample Requests Enabled** → Diagnostic sampling active
 
-![WAF Rule Set](../images/Screenshot%202025-07-18%20at%208.20.55%E2%80%AFam.png)
-*WAF rules applied to the Hello World API endpoint.*
+#### *WAF rule created to protect API Gateway endpoint.*
+![WAF Rule Setup](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/WAF-1.png)
 
-![WAF Logging Enabled](../images/Screenshot%202025-07-18%20at%208.21.20%E2%80%AFam.png)
-*Logging and sample requests enabled in WAF.*
+&nbsp;  
+
+#### *WAF associated with CloudFront distribution or API Gateway stage.*
+![WAF Association](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/WAF-2.png)
 
 ---
 
