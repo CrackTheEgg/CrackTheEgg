@@ -103,11 +103,17 @@ Applied a layered security model with WAF v2:
   - Invocations, Errors, Duration, Throttles
 - Logs include request ID, memory usage, billing duration, and custom logging
 
-![CloudWatch Metrics](../images/Screenshot%202025-07-18%20at%207.34.07%E2%80%AFam.png)
-*CloudWatch metrics for Lambda performance and reliability.*
+#### *CloudWatch logs confirm the Lambda function was triggered successfully.*
+![CloudWatch Logs - 1](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/CloudWatch%20logs%20-%201.png)
 
-![CloudWatch Logs](../images/Screenshot%202025-07-18%20at%207.34.47%E2%80%AFam.png)
-*Recent invocations and execution performance logs.*
+&nbsp;
+
+#### *CloudWatch shows detailed log stream for execution lifecycle.*
+![CloudWatch Logs - 2](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/CloudWatch%20Logs-2.png)
+&nbsp;
+
+#### *Log metrics provide invocation and performance insights.*
+![CloudWatch Logs - 3](https://raw.githubusercontent.com/CrackTheEgg/CrackTheEgg/main/The_Atlas_Project/Chapter_1_HelloWorld_Simple_Lambda_Function/P1_Assets/CloudWatch%20Logs-3.png)
 
 ---
 
