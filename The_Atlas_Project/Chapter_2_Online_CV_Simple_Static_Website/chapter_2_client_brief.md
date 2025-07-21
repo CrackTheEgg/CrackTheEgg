@@ -1,97 +1,44 @@
-# 📄 Project Response – Chapter 02: Static Online CV
+# 📄 Client Brief – Chapter 02: Online CV Website
 
 ---
 
-## BACKGROUND
+## Overview
 
-This document outlines the proposed solution for a modern, static online CV site. The goal is to showcase an individual's professional background, education, and a portfolio of AWS projects, continuing the "golden thread" established in Project 1.
+As part of building a strong online presence, I would like a personal website that acts as a digital version of my CV. It should highlight my background, education, and a growing portfolio of technical projects — especially those related to AWS and cloud computing.
 
----
-
-## OBJECTIVE
-
-To design and deploy a lightweight, responsive, and cost-effective personal CV site hosted on AWS, with emphasis on:
-
-- Clear, accessible design with professional tone
-- Structured content including Work History, Education, Skills, and AWS Projects
-- Integrated links to GitHub and Project Atlas
-- Fully serverless and Free Tier-eligible architecture
+This will help me showcase my skills to potential employers, clients, or collaborators, and give a professional first impression.
 
 ---
 
-## SOLUTION ARCHITECTURE
+## Requirements
 
-### Components:
-
-- **HTML/CSS Static Website** – Personal branding site
-- **Amazon S3** – Static hosting bucket
-- **Amazon Route 53** *(optional)* – Custom domain DNS
-- **Amazon CloudFront** – CDN + HTTPS
-- **IAM** – Scoped user for CV deployment
-
-### Architecture Flow:
-
-```
-User Request → CloudFront CDN → S3 Static Site Bucket
-```
+- A simple, clean, and professional design
+- Mobile-friendly layout (works well on phones and tablets)
+- Sections for:
+  - Personal introduction
+  - Work history & education
+  - Skills & technologies
+  - Links to my GitHub and AWS projects
+- Hosted online with a public URL
+- Fast loading and secure (uses HTTPS)
 
 ---
 
-## SECURITY & IAM
+## Preferences
 
-- IAM user `Atlas_Project_2` added to `atlas-admins` group
-- Scoped IAM policy for deploying to S3 and managing CloudFront
-- SSL enabled via AWS Certificate Manager (if custom domain used)
-
----
-
-## DEPLOYMENT STRATEGY
-
-**Method:**
-
-- Manual deployment using AWS Console or CLI
-- Source files managed and versioned in GitHub
-
-**Steps:**
-
-1. Design page layout and static content
-2. Configure S3 bucket for static website hosting
-3. (Optional) Point custom domain using Route 53
-4. Deploy content from GitHub repo via S3 console or CLI
-5. Configure CloudFront distribution and attach SSL
+- I’d prefer the website to be low cost or ideally free to run
+- I don’t want to rely on WordPress or third-party builders
+- If possible, I’d like to link it with my own custom domain later
 
 ---
 
-## DOCUMENTATION STRATEGY
+## Future Additions (Optional)
 
-Each major phase is supported with:
-
-- Annotated architectural diagrams (HLD and LLD)
-- Screenshots for key AWS steps (IAM, S3, CloudFront, etc.)
-- Commentary for reasoning, choices, and learnings
-
-> While daily workflow planning helped guide execution, this document reflects the final state of the solution and is structured for professional clarity.
+- A blog or updates section
+- Better portfolio features with images or animations
+- Analytics to track how many people visit the site
 
 ---
 
-## SUCCESS CRITERIA
-
-- Static website renders fully and securely
-- Responsive layout and clean design
-- Public link to GitHub project(s) embedded
-- No monthly cost under Free Tier
-- HLD + LLD accurately reflect the implementation
-
----
-
-## FUTURE CONSIDERATIONS
-
-- Convert HTML to React with CI/CD pipeline
-- Add analytics using CloudWatch or 3rd party tools
-- Use Amplify or S3-triggered deploy automation
-- Integrate blog or project CMS using Headless CMS
-
----
-
-**End of Project Response – Chapter 02**
+**Thank you — excited to see what this could become!**
 
