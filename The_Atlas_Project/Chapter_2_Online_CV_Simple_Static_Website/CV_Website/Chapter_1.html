@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christian Hegarty — AWS Projects</title>
+  <link rel="stylesheet" href="css/chapter.css" />
+</head>
+<body>
+
+  <!-- 🔹 Fixed Background Image Layer -->
+  <div class="background-layer"></div>
+
+  <!-- 🔹 Fading Background Overlay -->
+  <div class="background-overlay" id="bgOverlay"></div>
+
+  <!-- 🔹 Hero Header Section -->
+  <div class="hero-fixed">
+    <div class="overlay-text">
+      <h1 class="main-heading">Chapter 1 - Hello from Lambda</h1>
+      <p class="strapline">create • construct • architect</p>
+      <div class="nav-buttons">
+        <a href="index.html">Home</a>
+        <a href="atlas.html">AWS Projects</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Spacer to push content below nav -->
+  <div class="section-spacer"></div>
+
+  <!-- 🔹 Chapter Main Container -->
+  <div class="chapter-container">
+
+    <!-- 🔹 Project Summary -->
+    <h2>Project Summary</h2>
+    <div class="ch-intro">
+      <p>This project demonstrates core AWS solution architecture skills by deploying a secure, serverless, and observable Hello World API. Designed for portfolio visibility, it includes IAM, Lambda, API Gateway, CloudWatch, and WAF configuration with security-first principle.</p>
+      <a href="https://j48isil1b9.execute-api.eu-north-1.amazonaws.com/default/HelloWorld" target="_blank" class="api-button">Click for Demo</a>
+      <hr class="section-divider"/>
+    </div>
+
+    <!-- 🔹 Architectural Diagrams -->
+    <div class="ch-diagrams">
+      <h2>Architectural Diagrams</h2>
+      <p>The following high-level diagram outlines the core AWS services and flow behind the serverless ‘Hello World’ API, highlighting security layers and logical separation.</p>
+      <div class="diagram-container">
+        <img 
+          src="C2_Website_Assets/arch_diagrams/Chapter_1/Chapter_1_Lambda_Hello_World.drawio%20rev%201.png" 
+          alt="Chapter 1 Lambda Hello World Architecture Diagram"
+          class="chapter-diagram" />
+        <p class="diagram-caption">Figure 1: High-level architecture for the 'Hello World' serverless API</p>
+      </div>
+      <hr class="section-divider"/>
+    </div>
+
+    <!-- 🔹 Lambda Code Block -->
+    <div class="ch-lambdacode">
+      <h2>Lambda Function Code</h2>
+      <p>A simple Python-based Lambda function that returns a stylized ‘Hello from Lambda’ message in nostalgic ASCII art.</p>
+      <div class="diagram-container">
+        <img 
+          src="C2_Website_Assets/images/C1_Lambda_Code.png" 
+          alt="Chapter 1 Lambda Hello World Code Snippet"
+          class="chapter-diagram" />
+        <p class="diagram-caption">Figure 2: Lambda function code snippet</p>
+      </div>
+    </div>
+    <hr class="section-divider"/>
+
+    <!-- 🔹 Service Breakdown -->
+    <div class="ch-services">
+      <h2>Service Breakdown</h2>
+      <p>This solution integrates several core AWS services: AWS Lambda for compute, Amazon API Gateway for routing, IAM for access control, CloudWatch for logging, and AWS WAF for edge protection. Each service was chosen to support a secure, fully serverless architecture.</p>
+      <hr class="section-divider" />
+    </div>
+
+    <!-- 🔹 Security Considerations -->
+    <div class="ch-security">
+      <h2>Security Considerations</h2>
+      <p>IAM roles follow the principle of least privilege. The API Gateway is protected with AWS WAF to mitigate common web exploits, and all logs are sent to CloudWatch for auditability and visibility. No hardcoded secrets or publicly exposed endpoints exist beyond the API entry point.</p>
+      <hr class="section-divider" />
+    </div>
+
+    <!-- 🔹 Cost Overview -->
+    <div class="ch-cost">
+      <h2>Cost Overview</h2>
+      <p>This project stays well within the AWS Free Tier. Lambda and API Gateway are pay-per-use services, with negligible cost at low volume. No EC2 instances, load balancers, or persistent storage are used, keeping operating expenses minimal.</p>
+      <hr class="section-divider" />
+    </div>
+
+    <!-- 🔹 Key Learnings -->
+    <div class="ch-learnings">
+      <h2>Key Learnings</h2>
+      <p>This chapter demonstrates the power of combining AWS services to produce scalable, event-driven solutions. The exercise reinforces architecture thinking — especially around decoupling, observability, and applying security-first design from the start.</p>
+      <hr class="section-divider" />
+    </div>
+
+  </div> <!-- End .chapter-container -->
+
+  <!-- 🔹 Certifications Section -->
+  <div class="certificate-section">
+    <h2>Certifications</h2>
+    <div class="badge-grid">
+      <a href="https://www.credly.com/badges/c352daae-90c4-453a-a241-2aef3c351894/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/AZ_900.png" alt="AZ-900 Azure Fundamentals" />
+      </a>
+      <a href="https://www.credly.com/badges/dace6b68-35b4-44ae-b37d-7707d9f89742/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/Net_Plus.png" alt="Network+ (Net+)" />
+      </a>
+      <a href="assets/ECC-CEH-Certificate.pdf" target="_blank">
+        <img src="C2_Website_Assets/badges/CEH.png" alt="Certified Ethical Hacker (CEH)" />
+      </a>
+      <a href="https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/Sec_Plus.png" alt="Security+ (Sec+)" />
+      </a>
+      <a href="https://www.credly.com/badges/415f6148-f8a6-4863-830d-c9e369ac77a1/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/SC_900.png" alt="SC-900 Microsoft Security Compliance" />
+      </a>
+    </div>
+    <div class="badge-row">
+      <a href="https://www.credly.com/badges/c352daae-90c4-453a-a241-2aef3c351894/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/CCP.png" alt="AWS Certified Cloud Practitioner" class="ccp-badge" />
+      </a>
+    </div>
+  </div>
+
+  <!-- 🔹 Bottom Navigation -->
+  <div class="bottom-nav-buttons">
+    <a href="index.html">Home</a>
+    <a href="atlas.html">AWS Projects</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+</body>
+</html>
