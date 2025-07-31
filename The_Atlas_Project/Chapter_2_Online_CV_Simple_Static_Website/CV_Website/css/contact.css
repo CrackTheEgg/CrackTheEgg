@@ -40,9 +40,10 @@ body {
 /* === Hero Section === */
 .hero-container {
   position: relative;
-  height: 100vh;
   width: 100vw;
   padding-left: 5%;
+  padding-top: 100px; /* Optional */
+  padding-bottom: 100px; /* Optional */
 }
 
 .overlay-text {
@@ -119,7 +120,7 @@ body {
 .nav-buttons {
   margin-top: 10px;
   display: flex;
-  gap: 35px;
+  gap: 45px;
 }
 
 .nav-buttons a {
@@ -152,3 +153,45 @@ body {
   }
 }
 
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  background: rgba(0, 0, 31, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: #fff;
+}
+
+.contact-heading {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1.5px;
+}
+
+.contact-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+.contact-methods p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-methods a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-methods a:hover {
+  text-decoration: underline;
+}
+
+.section-spacer {
+  height: 350px;
+  width: 100%;
+}
