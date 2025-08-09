@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Christian Hegarty</title>
+  <link rel="stylesheet" href="css/global.css" />
+</head>
+<body>
+
+  <!-- Fixed Background Image -->
+  <div class="background-layer" aria-hidden="true"></div> <!-- ✅ Optional: hides from screen readers -->
+
+  <!-- Hero Section Start -->
+  <header class="hero-container"> <!-- ✅ Use <header> for semantic clarity -->
+    <div class="overlay-text">
+      <h1 class="main-heading">Overview</h1>
+      <p class="strapline">create • construct • architect</p>
+      <nav class="nav-buttons"> <!-- ✅ Use <nav> when linking to other sections/pages -->
+        <a href="index.html">Home</a>
+        <a href="atlas-1.html">AWS Projects</a>
+        <a href="contact-1.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <!-- Hero Section End -->
+
+<!-- Chapter Container Start -->
+
+ <div class="main-container">
+   <div class="scroll-box">
+    <h2>Chapters 1–11: Overview</h2>
+    <p>Below is a structured overview, with the learning focus, tech stack, and goal of each chapter.</p>
+
+    <div class="content-block" id="c1">
+      <h3>✅ Chapter 1: Hello from Lambda</h3>
+      <ul>
+        <li><strong>Focus:</strong> Intro to serverless compute</li>
+        <li><strong>Skills:</strong> Lambda function basics, IAM roles, logging</li>
+        <li><strong>Outcome:</strong> Deploy a simple “Hello World” API endpoint</li>
+        <li><strong>AWS:</strong> Lambda, IAM, CloudWatch</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c2">
+      <h3>✅ Chapter 2: S3 Static Website – CV</h3>
+      <ul>
+        <li><strong>Focus:</strong> Hosting with S3 + front-end structuring</li>
+        <li><strong>Skills:</strong> Website deployment, routing, CloudFront</li>
+        <li><strong>Outcome:</strong> Host a static CV site with custom domain & HTTPS</li>
+        <li><strong>AWS:</strong> S3, CloudFront, Route 53, ACM</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c3">
+      <h3>⏳ Chapter 3: Secure Contact Form</h3>
+      <ul>
+        <li><strong>Focus:</strong> Web-to-email pipeline</li>
+        <li><strong>Skills:</strong> Serverless APIs, data handling, secure design</li>
+        <li><strong>Outcome:</strong> Form that sends a secure email without data storage</li>
+        <li><strong>AWS:</strong> API Gateway, Lambda, SES, IAM</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c4">
+      <h3>🔒 Chapter 4: Feedback System with DynamoDB</h3>
+      <ul>
+        <li><strong>Focus:</strong> Intro to persistent data</li>
+        <li><strong>Skills:</strong> CRUD operations via API Gateway + Lambda</li>
+        <li><strong>Outcome:</strong> Store & retrieve feedback securely</li>
+        <li><strong>AWS:</strong> DynamoDB, Lambda, API Gateway, IAM</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c5">
+      <h3>🔒 Chapter 5: CI/CD for Static & Lambda</h3>
+      <ul>
+        <li><strong>Focus:</strong> Automating deployments</li>
+        <li><strong>Skills:</strong> GitHub Actions, CodePipeline, CodeBuild</li>
+        <li><strong>Outcome:</strong> Push-to-deploy for static and serverless apps</li>
+        <li><strong>AWS:</strong> CodePipeline, CodeBuild, IAM, S3</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c6">
+      <h3>🔒 Chapter 6: Auth with Cognito</h3>
+      <ul>
+        <li><strong>Focus:</strong> User identity and access control</li>
+        <li><strong>Skills:</strong> Cognito User Pools, OAuth flows</li>
+        <li><strong>Outcome:</strong> Secure login for web app</li>
+        <li><strong>AWS:</strong> Cognito, API Gateway (authorizers)</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c7">
+      <h3>🔒 Chapter 7: Frontend App Integration</h3>
+      <ul>
+        <li><strong>Focus:</strong> End-to-end user interaction</li>
+        <li><strong>Skills:</strong> JavaScript (or React), calling secure APIs, session management</li>
+        <li><strong>Outcome:</strong> Users can log in and interact with your app</li>
+        <li><strong>AWS:</strong> All prior services + JS frontend</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c8">
+      <h3>🔒 Chapter 8: Global Distribution + Monitoring</h3>
+      <ul>
+        <li><strong>Focus:</strong> Resilience and reach</li>
+        <li><strong>Skills:</strong> CDN tuning, DNS, health checks, observability</li>
+        <li><strong>Outcome:</strong> Globally accessible app with monitoring</li>
+        <li><strong>AWS:</strong> CloudFront, Route 53, CloudWatch</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c9">
+      <h3>🔒 Chapter 9: Cost Optimisation + Tagging Strategy</h3>
+      <ul>
+        <li><strong>Focus:</strong> FinOps basics</li>
+        <li><strong>Skills:</strong> Budgets, tagging policies, cost explorer</li>
+        <li><strong>Outcome:</strong> Understand and control AWS costs across projects</li>
+        <li><strong>AWS:</strong> AWS Budgets, Cost Explorer, Organizations</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c10">
+      <h3>🔒 Chapter 10: AI Integration (Text Analysis)</h3>
+      <ul>
+        <li><strong>Focus:</strong> ML services with low-code</li>
+        <li><strong>Skills:</strong> Using Comprehend to analyse text (e.g. sentiment or topic)</li>
+        <li><strong>Outcome:</strong> Add meaning-aware intelligence to content</li>
+        <li><strong>AWS:</strong> Amazon Comprehend, Lambda, API Gateway</li>
+      </ul>
+    </div>
+
+    <div class="content-block" id="c11">
+      <h3>🔒 Chapter 11: TBC</h3>
+      <ul>
+        <li><strong>Focus:</strong> Full stack architecture</li>
+        <li><strong>Skills:</strong> Synthesising everything — frontend, API, network, security, storage, ML</li>
+        <li><strong>Outcome:</strong>A mobile based application that is fully supported on AWS infrastructure</li>
+        <li><strong>AWS:</strong> Full stack (S3, Lambda, DynamoDB, Cognito, Comprehend, CloudFront, etc.)</li>
+      </ul>
+    </div>
+  </div>
+  </div> <!-- End .chapter-scroll -->
+</div> <!-- End .chapter-container -->
+
+
+<!-- 🔹 Certifications -->
+<div class="certificate-section">
+  <div class="badge-footer">
+    <h2>Certifications</h2>
+          <div class="badge-grid">
+      <a href="https://www.credly.com/badges/033bbcc4-33cb-4749-94c9-5d2c1e93ca8a/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/AZ_900.png" alt="AZ-900 Azure Fundamentals" />
+      </a>
+      <a href="https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/Net_Plus.png" alt="Network+ (Net+)" />
+      </a>
+      <a href="C2_Website_Assets/images/CEH%20Cert.png" target="_blank">
+         <img src="C2_Website_Assets/badges/CEH.png" alt="Certified Ethical Hacker (CEH)" />
+      </a>
+            <a href="https://www.credly.com/badges/dace6b68-35b4-44ae-b37d-7707d9f89742/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/Sec_Plus.png" alt="Security+ (Sec+)" />
+      </a>
+      <a href="https://www.credly.com/badges/415f6148-f8a6-4863-830d-c9e369ac77a1/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/SC_900.png" alt="SC-900 Microsoft Security Compliance" />
+      </a>
+      <a href="https://www.credly.com/badges/c352daae-90c4-453a-a241-2aef3c351894/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/CCP.png" alt="AWS Certified Cloud Practitioner" class="ccp-badge" />
+      </a>
+    </div>
+  </div>
+</div>
+  
+</body>
+</html>

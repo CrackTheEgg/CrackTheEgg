@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Christian Hegarty</title>
+  <link rel="stylesheet" href="css/teststyle.css" />
+</head>
+<body>
+
+  <!-- Fixed Background Image -->
+  <div class="background-layer"></div>
+
+  <!-- Overlay that fades in on scroll -->
+  <div class="background-overlay" id="bgOverlay"></div>
+
+  <!-- Hero Section -->
+  <div class="hero-container">
+    <div class="overlay-text">
+      <h1 class="main-heading">Christian Hegarty.</h1>
+      <p class="strapline">create • construct • architect</p>
+      <div class="nav-buttons">
+        <a href="cv.html">CV</a>
+        <a href="atlas.html">AWS Projects</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Background Fade Script -->
+  <script>
+    const overlay = document.getElementById('bgOverlay');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const maxFadeStart = 1300;
+      const opacity = Math.min(scrollY / maxFadeStart, 1);
+      overlay.style.backgroundColor = `rgba(0, 0, 31, ${opacity * 0.7})`;
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Christian Hegarty</title>
+  <link rel="stylesheet" href="css/contact.css" />
+</head>
+<body>
+
+  <!-- Fixed Background Image -->
+  <div class="background-layer"></div>
+
+  <!-- Overlay that fades in on scroll -->
+  <div class="background-overlay" id="bgOverlay"></div>
+
+ <div class="section-spacer"></div>
+
+  <!-- 🔹 Contact Container -->
+    <div class="contact-container">
+      <h1 class="contact-heading">Website Not Available</h1>
+     </div>
+
+  <!-- Background Fade Script -->
+  <script>
+    const overlay = document.getElementById('bgOverlay');
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const maxFadeStart = 1300;
+      let opacity = Math.min(scrollY / maxFadeStart, 1);
+      overlay.style.backgroundColor = `rgba(0, 0, 31, ${opacity * 0.7})`;
+      overlay.style.transition = 'background-color 0.2s ease-out';
+    });
+  </script>
+
+</body>
+</html>

@@ -43,10 +43,10 @@ body {
 }
 
 .main-heading {
-  font-size: 5rem;
+  font-size: 3.4rem;
   margin: 0;
   padding: 0;
-  letter-spacing: 5px;
+  letter-spacing: 1.8px;
 }
 
 .strapline {
@@ -82,7 +82,7 @@ body {
 .nav-buttons {
   margin-top: 10px;
   display: flex;
-  gap: 22px;
+  gap: 66px;
 }
 
 .nav-buttons a {
@@ -115,32 +115,34 @@ body {
   }
 }
 
-/* === Spacer === */
-.hero-spacer {
+/* === Spacer After Hero Section === */
+.section-spacer {
   height: 350px;
   width: 100%;
 }
 
-/* === CV Section === */
-.cv-container {
+/* === Atlas Section === */
+.atlas-container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 5px 20px 20px 20px;
+  padding: 5px 20px 20px 20px; /* top right bottom left */
   background: rgba(0, 0, 31, 0.8);
   border-radius: 50px;
   box-shadow: 0 0 50px rgba(255,255,255,0.2);
 }
 
-.cv-container h2 {
-  font-size: 3rem;
+.atlas-container h2:first-child {
+  margin-top: 20px;
+}
+.atlas-container h2 {
+  font-size: 2.8rem;
   font-weight: 700;
   color: #fff;
-  margin-top: 20px;
   margin-bottom: 0.5rem;
   letter-spacing: 1.4px;
 }
 
-.cv-container h4 {
+.atlas-container h4 {
   font-size: 1.8rem;
   font-weight: 600;
   color: #fff;
@@ -148,46 +150,110 @@ body {
   letter-spacing: 1px;
 }
 
-.cv-intro p {
+.atlas-intro p {
   color: #ccc;
   font-size: 1.4rem;
   line-height: 1.8;
   margin-bottom: 2rem;
 }
 
-/* === Job Entries === */
-.job-entry {
-  margin-bottom: 40px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+.atlas-intro-addendum {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1.4rem;
+  color: #eee;
 }
 
-.job-entry:last-child {
-  border-bottom: none;
+.atlas-intro-addendum strong {
+  color: #fff;
+  font-weight: 625;
 }
 
-.job-entry h3 {
-  font-size: 1.8rem;
+.atlas-intro-conclusion {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem; /* 👈 Add this */
+  font-style: italic;
+  color: #bbb;
+}
+
+/* === Chapter Entries === */
+.atlas-timeline {
+  margin-top: 1.5rem;
+}
+
+.chapter-entry {
+  margin-top: 0; /* Optional reset */
+  padding: 10px;
+  padding-top: .1rem;  /* 👈 Add if visual lift is needed */
+  margin-bottom: 5px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+}
+
+.chapter-entry h3 {
+  font-size: 1.4rem;
   font-weight: 600;
   color: #fff;
   margin-bottom: 0.2rem;
 }
 
-.job-entry span {
-  font-style: italic;
-  color: #aaa;
-  display: block;
-  margin-bottom: 10px;
-}
-
-.job-entry p {
-  font-size: 1.4rem;
-  line-height: 1.8;
+.chapter-entry p {
+  font-size: 1rem;
+  line-height: 1.6;
   color: #ccc;
-  margin-bottom: 10px;
 }
 
-/* === Certificate Section === */
+.chapter-row {
+  display: inline-flex;
+  align-items: center;
+}
+
+.chapter-row-1 {
+  gap: 3.6rem;  /* 👈 Adjust this value as needed */
+}
+
+.chapter-row-2 {
+  gap: 0.4rem;  /* 👈 Adjust this separately */
+}
+
+
+.chapter-row-3 {
+  gap: 2.0rem;  /* 👈 Adjust this separately */
+}
+
+
+.chapter-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.inline-chapter-button {
+  font-size: 1rem;
+  margin-left: 1rem;
+  padding: 6px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  font-weight: 500;
+  transition: all 0.1s ease;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
+  animation: glowPulse 10.5s ease-in-out infinite;
+}
+
+.inline-chapter-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+
+
+/* === Badge Section === */
 .certificate-section {
   text-align: center;
   margin-top: 60px;
@@ -206,13 +272,13 @@ body {
   width: 100px;
   border-radius: 10px;
   transition: 0.3s ease-in-out;
-  box-shadow: 0 0 12px rgba(255,255,255,0.15);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 }
 
 .badge-grid img:hover,
 .ccp-badge:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 24px rgba(255,255,255,0.4);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.4);
 }
 
 .badge-row {
@@ -221,9 +287,9 @@ body {
   justify-content: center;
 }
 
-/* === Bottom Nav === */
+/* === Bottom Navigation === */
 .bottom-nav-buttons {
-  margin-top: 40px;
+  margin-top: 60px;
   display: flex;
   justify-content: center;
   gap: 20px;
@@ -237,11 +303,37 @@ body {
   border-radius: 10px;
   backdrop-filter: blur(6px);
   font-size: 1.1rem;
-  box-shadow: 0 0 10px rgba(255,255,255,0.2);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
   transition: 0.2s ease;
 }
 
 .bottom-nav-buttons a:hover {
-  background: rgba(255,255,255,0.2);
-  box-shadow: 0 0 16px rgba(255,255,255,0.4);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
 }
+
+/* Phones (≤ 480px) */
+@media (max-width: 480px) {
+.main-heading {
+  font-size: 1.2rem;
+  text-align: left;
+}
+
+  .strapline {
+    font-size: 1rem;
+    letter-spacing: 1.3px;
+    text-align: left;
+  }
+
+  .overlay-text {
+    top: 6%;
+  }
+}
+
+/* Small laptops (≤ 1024px) */
+@media (max-width: 1024px) {
+  .main-heading {
+    font-size: 2rem;
+    text-align: left;
+}
+  }

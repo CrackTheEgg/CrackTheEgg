@@ -40,9 +40,10 @@ body {
 /* === Hero Section === */
 .hero-container {
   position: relative;
-  height: 100vh;
   width: 100vw;
-  padding-left: 5%;
+  padding-left: 2.5%;
+  padding-top: 75px; /* Optional */
+  padding-bottom: 75px; /* Optional */
 }
 
 .overlay-text {
@@ -55,10 +56,10 @@ body {
 
 /* === Main Heading === */
 .main-heading {
-  font-size: 5rem;
+  font-size: 3.4rem;
   margin: 0;
   padding: 0;
-  letter-spacing: 5.0px;
+  letter-spacing: 1.8px;
 }
 
 /* === Strapline === */
@@ -119,7 +120,7 @@ body {
 .nav-buttons {
   margin-top: 10px;
   display: flex;
-  gap: 35px;
+  gap: 45px;
 }
 
 .nav-buttons a {
@@ -149,6 +150,73 @@ body {
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
     opacity: 1;
     background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+.contact-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px 20px;
+  background: rgba(0, 0, 31, 0.85);
+  border-radius: 20px;
+  box-shadow: 0 0 60px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: #fff;
+}
+
+.contact-heading {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1.5px;
+}
+
+.contact-subtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+.contact-methods p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-methods a {
+  color: #61dafb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.contact-methods a:hover {
+  text-decoration: underline;
+}
+
+.section-spacer {
+  height: 180px;
+  width: 100%;
+}
+
+/* Phones (≤ 480px) */
+@media (max-width: 480px) {
+  .main-heading {
+    font-size: 1.9rem;
+  }
+
+  .strapline {
+    font-size: 1rem;
+    letter-spacing: 1.3px;
+  }
+
+  .overlay-text {
+    top: 6%;
+  }
+}
+
+/* Small laptops (≤ 1024px) */
+@media (max-width: 1024px) {
+  .main-heading {
+    font-size: 2rem;
+    text-align: center;
   }
 }
 
