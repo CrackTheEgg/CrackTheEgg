@@ -452,8 +452,8 @@ body {
   opacity: 1;
 }
 
-/* === MOBILE STYLES (≤ 440px) === */
-@media screen and (max-width: 440px) {
+/* === MOBILE STYLES (≤ 760px) === */
+@media screen and (max-width: 760px) {
 
   .hero-container {
     align-items: center;

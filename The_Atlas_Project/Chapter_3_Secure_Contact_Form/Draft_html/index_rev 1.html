@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Fast Layered Falling Circles with Symmetric Fades</title>
+<style>
+  :root { --bg:#032B36; }
+  html,body {height:100%;margin:0}
+  body {background:var(--bg);font-family:system-ui,sans-serif}
+
+  /* let circles render past the bottom */
+  .bg {position:fixed; inset:0; overflow:visible}
+
+  .bubble{
+    position:absolute; top:0; left:0;
+    border-radius:50%;
+    box-shadow:0 6px 12px rgba(0,0,0,.45);
+    will-change: transform, opacity;
+  }
+
+  /* symmetric fade (dark → clear → dark) */
+  .fade-overlay{
+    position:fixed; inset:0; pointer-events:none; z-index:2;
+    background: linear-gradient(
+      to bottom,
+      rgba(3,43,54,0.85) 0%,
+      rgba(3,43,54,0.00) 25%,
+      rgba(3,43,54,0.00) 75%,
+      rgba(3,43,54,0.85) 100%
+    );
+  }
+
+  .content{ position:relative; z-index:3; min-height:100%; display:grid; place-items:center }
+  .card{ color:#fff; background:rgba(0, 0, 0, 0.735); padding:1.5rem 2rem; border-radius:14px; backdrop-filter:blur(4px) }
+
+  @media (prefers-reduced-motion: reduce){ .bubble{ animation:none!important } }
+</style>
+</head>
+<body>
+
+<div class="bg" id="bg" aria-hidden="true"></div>
+<div class="fade-overlay" aria-hidden="true"></div>
+
+<main class="content">
+  <div class="card">
+    <h1>Contact — Chapter 3</h1>
+    <p>Secure serverless form goes here.</p>
+  </div>
+</main>
+
+<script>
+(() => {
+  const bg = document.getElementById('bg');
+
+  // Pastel palette
+  const COLORS = ['#A8E0FF','#FFE3C2','#CFF7E5','#FFC7C2','#FFF7BD','#EAD7FF','#F7D0E6'];
+
+  // Tunables
+  const COUNT         = Math.min(1200, Math.floor(window.innerWidth / 2)); // responsive & sane
+  const R_MIN = 6,   R_MAX = 70;    // px
+  const SPEED_MIN = 25, SPEED_MAX = 400; // px/sec
+  const FADE_FRAC    = 0.15;        // top/bottom fade zone = 15% of viewport
+  const BOTTOM_MARGIN = 240;        // extra px beyond bottom before respawn
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function pick(a){ return a[(Math.random()*a.length)|0]; }
+
+  const discs = [];
+  for (let i=0;i<COUNT;i++){
+    const el = document.createElement('div');
+    el.className = 'bubble';
+    bg.appendChild(el);
+    discs.push({el, r:0, x:0, y:0, vy:0, color:'#fff'});
+  }
+
+  function spawn(d){
+    d.r = rand(R_MIN, R_MAX);
+    d.x = rand(0, window.innerWidth - d.r*2);
+    d.y = -d.r - rand(0, window.innerHeight * 0.2); // start slightly above
+    const sizeFactor = (d.r - R_MIN) / (R_MAX - R_MIN); // 0..1
+    d.vy = rand(SPEED_MIN, SPEED_MAX) * (1 - 0.4*sizeFactor); // bigger = slower
+    d.color = pick(COLORS);
+
+    const s = `${d.r*2}px`;
+    d.el.style.width = s;
+    d.el.style.height = s;
+    d.el.style.background = d.color;
+    d.el.style.transform = `translate3d(${d.x}px,${d.y}px,0)`;
+    d.el.style.opacity = 0; // will fade in
+  }
+
+  // initial positions staggered
+  discs.forEach(d => { spawn(d); d.y = rand(0, window.innerHeight); });
+
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(0.05, (now-last)/1000); last = now;
+
+    const H = window.innerHeight;
+    const fadeZone = H * FADE_FRAC;
+    const bottomStart = H - fadeZone;
+
+    for (const d of discs){
+      d.y += d.vy * dt;
+
+      // per-circle symmetric fade
+      let opacity = 1;
+      if (d.y < fadeZone) {                   // fade IN at top
+        opacity = d.y / fadeZone;
+      } else if (d.y > bottomStart) {         // fade OUT at bottom
+        opacity = 1 - (d.y - bottomStart) / fadeZone;
+      }
+      d.el.style.opacity = Math.max(0, Math.min(1, opacity)).toFixed(2);
+
+      // let it fall well past viewport before recycling
+      if (d.y > H + d.r + BOTTOM_MARGIN) spawn(d);
+
+      d.el.style.transform = `translate3d(${d.x}px,${d.y}px,0)`;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  // keep inside width on resize
+  window.addEventListener('resize', () => {
+    discs.forEach(d => { d.x = Math.min(d.x, window.innerWidth - d.r*2); });
+  });
+})();
+</script>
+</body>
+</html>

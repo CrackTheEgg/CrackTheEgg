@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Raining Mixed Circles with Mid Fade</title>
+<style>
+  html, body { height: 100%; margin: 0; }
+  .bg { position: fixed; inset: 0; isolation: isolate; background:#fff; }
+  svg { width:100%; height:100%; display:block; }
+  .bubble { mix-blend-mode: multiply; will-change: transform, opacity; }
+
+  /* demo content layer (replace with your contact form) */
+  .content { position: relative; z-index: 1; display:grid; place-items:center; min-height:100%; }
+  .card { background: rgba(255,255,255,.9); padding:2rem; border-radius:16px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bubble { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <svg id="bubbles" viewBox="0 0 1000 1000" preserveAspectRatio="none"></svg>
+</div>
+
+<main class="content">
+  <div class="card">
+    <h1>Contact (Chapter 3)</h1>
+    <p>Serverless secure form goes here.</p>
+  </div>
+</main>
+
+<script>
+(() => {
+  const svg = document.getElementById('bubbles');
+  const vb = { w: 1000, h: 1000 };
+  svg.setAttribute('viewBox', `0 0 ${vb.w} ${vb.h}`);
+
+  // palette
+  const COLORS = ['#FF6B6B','#FFD93D','#6BCB77','#4D96FF','#C77DFF'];
+  const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // config
+  const COUNT = 600;
+  const R_MIN = 14, R_MAX = 65; // radius range
+  const V_MIN = 10, V_MAX = 30; // vertical speed
+  const DRIFT = 9;
+
+  // opacity curve
+  const OPACITY_TOP = 0.1;     // fully transparent at top
+  const OPACITY_MIDDLE = 0.90; // max opacity mid-screen
+  const OPACITY_BOTTOM = 0.1;  // fade out at bottom
+
+  const bubbles = [];
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function pick(arr){ return arr[(Math.random()*arr.length)|0]; }
+
+  function spawn(b){ 
+    b.r = rand(R_MIN, R_MAX);
+    b.x = rand(b.r, vb.w - b.r);
+    b.y = -rand(b.r * 2, vb.h * 0.5);
+    b.vy = rand(V_MIN, V_MAX);
+    b.vx = rand(-DRIFT, DRIFT);
+    b.color = pick(COLORS);
+    b.phase = rand(0, Math.PI*2);
+    b.sway = rand(0.15, 0.85);
+    b.el.setAttribute('r', b.r.toFixed(2));
+    b.el.setAttribute('fill', b.color);
+  }
+
+  for (let i=0;i<COUNT;i++){
+    const el = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    el.setAttribute('class','bubble');
+    svg.appendChild(el);
+    const b = { el, r:0, x:0, y:0, vx:0, vy:0, color:'#000', phase:0, sway:0.5 };
+    spawn(b);
+    b.y = rand(0, vb.h);
+    bubbles.push(b);
+  }
+
+  function opacityFromY(y){
+    const t = y / vb.h;
+    if (t < 0.5) {
+      // fade in: top → middle
+      return OPACITY_TOP + (OPACITY_MIDDLE - OPACITY_TOP) * (t / 0.5);
+    } else {
+      // fade out: middle → bottom
+      return OPACITY_MIDDLE + (OPACITY_BOTTOM - OPACITY_MIDDLE) * ((t - 0.5) / 0.5);
+    }
+  }
+
+  let last = performance.now();
+  function frame(now){
+    const dt = Math.min(0.05, (now - last)/1000);
+    last = now;
+
+    if (!prefersReduced) {
+      for (const b of bubbles){
+        b.phase += dt * 1.5;
+        b.x += (b.vx + Math.sin(b.phase) * 12 * b.sway) * dt;
+        b.y += b.vy * dt;
+
+        if (b.x < b.r) b.x = b.r;
+        if (b.x > vb.w - b.r) b.x = vb.w - b.r;
+
+        const opacity = opacityFromY(b.y);
+        b.el.setAttribute('cx', b.x.toFixed(2));
+        b.el.setAttribute('cy', b.y.toFixed(2));
+        b.el.setAttribute('opacity', opacity.toFixed(3));
+
+        if (b.y - b.r > vb.h) spawn(b);
+      }
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

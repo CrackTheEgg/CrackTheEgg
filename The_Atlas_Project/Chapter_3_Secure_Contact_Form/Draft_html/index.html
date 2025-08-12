@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Contact — Chapter 3</title>
+
+<style>
+  :root { --bg:#011318; }
+  html,body {height:100%;margin:0}
+  body {background:var(--bg);font-family:system-ui,sans-serif}
+
+  .bg {position:fixed; inset:0; overflow:visible}
+
+  .bubble{
+    position:absolute; top:0; left:0;
+    border-radius:50%;
+    box-shadow:0 4px 4px rgba(0,0,0,0);
+    will-change: transform, opacity;
+    overflow:hidden;
+  }
+  .bubble img{ width:100%; height:100%; object-fit:contain; display:block; pointer-events:none; }
+
+  .fade-overlay{
+    position:fixed; inset:0; pointer-events:none; z-index:2;
+    background:linear-gradient(to bottom, rgba(3,43,54,.85) 0%, rgba(3,43,54,0) 25%, rgba(3,43,54,0) 75%, rgba(3,43,54,.85) 100%);
+  }
+
+  .content{ position:relative; z-index:3; min-height:100%; display:grid; place-items:center }
+  .card{ color:#fff; background:rgba(1, 11, 25, 0.958); padding:1.5rem 2rem; border-radius:14px; backdrop-filter:blur(4px); width:min(680px,92vw) }
+  .muted{ opacity:.85; margin-top:.25rem }
+
+  /* form styles */
+  form{ display:grid; gap:1rem; margin-top:1rem }
+  .row{ display:grid; gap:1rem; grid-template-columns:1fr 1fr }
+  @media (max-width:640px){ .row{ grid-template-columns:1fr } }
+  label, fieldset{ display:grid; gap:.4rem; font-size:.95rem }
+  input[type="email"], input[type="tel"], textarea{
+    padding:.7rem .8rem; border-radius:10px; border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.06); color:#fff; outline:none;
+  }
+  input:focus, textarea:focus{ border-color:#8ddcff; box-shadow:0 0 0 3px rgba(141,220,255,.2) }
+  .choice{ display:flex; align-items:center; gap:.5rem }
+  button{ padding:.8rem 1rem; border:0; border-radius:12px; color:#042330; background:#fffd8d; font-weight:700; cursor:pointer }
+  button[disabled]{ opacity:.6; cursor:not-allowed }
+  .note{ min-height:1.2em; font-size:.95rem }
+  .hp{ position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden }
+  @media (prefers-reduced-motion: reduce){ .bubble{ animation:none!important } }
+</style>
+</head>
+<body>
+
+<div class="bg" id="bg" aria-hidden="true"></div>
+<div class="fade-overlay" aria-hidden="true"></div>
+
+<main class="content">
+  <div class="card" role="region" aria-labelledby="c3-title">
+    <h1 id="c3-title">Chapter 3 – Secure Contact Form</h1>
+    <p class="muted">Enter your email or phone number to help us test the secure contact form. No personal data is stored—messages are processed in-memory only.</p>
+
+    <form id="contactForm" novalidate>
+      <!-- honeypot -->
+      <label class="hp" aria-hidden="true">Nickname (leave blank)
+        <input type="text" name="nickname" tabindex="-1" autocomplete="off">
+      </label>
+
+      <div class="row">
+        <label>Email
+          <input type="email" name="email" autocomplete="email" placeholder="you@example.com">
+        </label>
+        <label>Phone
+          <input type="tel" name="phone" autocomplete="tel" placeholder="+447700900123">
+        </label>
+      </div>
+
+      <fieldset class="row">
+        <legend>Preferred reply</legend>
+        <label class="choice"><input type="radio" name="reply" value="email"> Email</label>
+        <label class="choice"><input type="radio" name="reply" value="sms"> SMS</label>
+        <label class="choice"><input type="radio" name="reply" value="either" checked> Either</label>
+      </fieldset>
+
+      <label>Message (optional)
+        <textarea name="message" rows="3" maxlength="500" placeholder="Say hello or leave this blank."></textarea>
+      </label>
+
+      <label class="choice">
+        <input type="checkbox" name="consent" required>
+        I agree to be contacted for testing only.
+      </label>
+
+      <input type="hidden" name="form_ts" id="form_ts">
+      <input type="hidden" name="form_token" id="form_token">
+
+      <button type="submit" id="submitBtn">Send test</button>
+      <div id="formNote" class="note" role="status" aria-live="polite"></div>
+    </form>
+  </div>
+</main>
+
+<!-- Background animation -->
+<script>
+(() => {
+  const bg = document.getElementById('bg');
+  const SMILEYS = ['SM_1.png','SM_2.png','SM_3.png','SM_4.png','SM_5.png','SM_6.png','SM_7.png','SM_8.png','SM_9.png','SM_10.png','SM_11.png','SM_12.png','SM_13.png','SM_14.png','SM_15.png','SM_16.png','SM_17.png','SM_18.png'];
+  const COLORS = ['#A8E0FF','#FFE3C2','#CFF7E5','#FFC7C2','#FFF7BD','#EAD7FF','#F7D0E6'];
+
+  const COUNT = Math.min(300, Math.floor(window.innerWidth / 3));
+  const R_MIN = 6,  R_MAX = 90;
+  const SPEED_MIN = 20, SPEED_MAX = 100;
+  const FADE_FRAC = 0.15;
+  const BOTTOM_MARGIN = 240;
+  const SMILEY_RATIO = 1; // 100% smileys; change to 0.25 for ~25%
+
+  function rand(a,b){ return a + Math.random()*(b-a); }
+  function pick(a){ return a[(Math.random()*a.length)|0]; }
+
+  const discs = [];
+  for (let i=0;i<COUNT;i++){
+    const el = document.createElement('div');
+    el.className = 'bubble';
+    const img = document.createElement('img');
+    bg.appendChild(el);
+    discs.push({el, img, r:0, x:0, y:0, vy:0, isSmiley:false});
+  }
+
+  function spawn(d){
+    d.r = rand(R_MIN, R_MAX);
+    d.x = rand(0, window.innerWidth - d.r*2);
+    d.y = -d.r - rand(0, window.innerHeight * 0.2);
+    const sizeFactor = (d.r - R_MIN) / (R_MAX - R_MIN);
+    d.vy = rand(SPEED_MIN, SPEED_MAX) * (1 - 0.4*sizeFactor);
+    d.isSmiley = Math.random() < SMILEY_RATIO;
+
+    const s = `${d.r*2}px`;
+    d.el.style.width = s; d.el.style.height = s;
+    d.el.style.transform = `translate3d(${d.x}px,${d.y}px,0)`;
+    d.el.style.opacity = 0;
+
+    if (d.isSmiley){
+      if (!d.img.isConnected) d.el.appendChild(d.img);
+      d.img.src = pick(SMILEYS);
+      d.el.style.background = 'transparent';
+    } else {
+      if (d.img.isConnected) d.el.removeChild(d.img);
+      d.el.style.background = pick(COLORS);
+    }
+  }
+
+  discs.forEach(d => { spawn(d); d.y = rand(0, window.innerHeight); });
+
+  let last = performance.now();
+  function loop(now){
+    const dt = Math.min(0.15, (now-last)/1000); last = now;
+    const H = window.innerHeight, fadeZone = H * FADE_FRAC, bottomStart = H - fadeZone;
+
+    for (const d of discs){
+      d.y += d.vy * dt;
+      let opacity = 1;
+      if (d.y < fadeZone) opacity = d.y / fadeZone;
+      else if (d.y > bottomStart) opacity = 1 - (d.y - bottomStart) / fadeZone;
+      d.el.style.opacity = Math.max(0, Math.min(1, opacity)).toFixed(2);
+      if (d.y > H + d.r + BOTTOM_MARGIN) spawn(d);
+      d.el.style.transform = `translate3d(${d.x}px,${d.y}px,0)`;
+    }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  window.addEventListener('resize', () => {
+    discs.forEach(d => { d.x = Math.min(d.x, window.innerWidth - d.r*2); });
+  });
+})();
+</script>
+
+<!-- Contact form wiring -->
+<script>
+(() => {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+
+  const note = document.getElementById('formNote');
+  const btn  = document.getElementById('submitBtn');
+  const tsEl = document.getElementById('form_ts');
+  const tokEl= document.getElementById('form_token');
+
+  // simple timing token: server will check elapsed >= 2s
+  const ts = Date.now();
+  tsEl.value = String(ts);
+  tokEl.value = String(ts).split('').reverse().join('') + ':' + Math.random().toString(36).slice(2,8);
+
+  const API_URL = 'https://YOUR_API_ID.execute-api.YOUR_REGION.amazonaws.com/prod/contact'; // <-- replace after deploy
+
+  function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function validE164(v){ return /^\+?[1-9]\d{7,14}$/.test(v.replace(/\s+/g,'')); }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    note.textContent = '';
+
+    const data = Object.fromEntries(new FormData(form));
+    const email = (data.email||'').trim();
+    const phone = (data.phone||'').trim();
+    const consent = !!data.consent;
+
+    if ((data.nickname||'').trim() !== '') { return; } // honeypot
+
+    if (!validEmail(email) && !validE164(phone)) {
+      note.textContent = 'Please enter a valid email or phone number (E.164, e.g., +447700900123).';
+      return;
+    }
+    if (!consent){ note.textContent = 'Please agree to the testing consent.'; return; }
+
+    btn.disabled = true;
+
+    try{
+      const res = await fetch(API_URL, {
+        method:'POST',
+        headers:{ 'Content-Type':'application/json' },
+        body: JSON.stringify({
+          email: validEmail(email) ? email : undefined,
+          phone: validE164(phone) ? phone : undefined,
+          reply: data.reply || 'either',
+          message: (data.message||'').slice(0,500),
+          form_ts: tsEl.value,
+          form_token: tokEl.value,
+        }),
+      });
+
+      if (res.ok){
+        form.reset();
+        note.textContent = 'Thanks! Check your inbox/phone for a test message.';
+      } else {
+        note.textContent = 'Could not send right now. Please try again shortly.';
+        console.error('Send failed:', await res.text());
+      }
+    } catch(err){
+      note.textContent = 'Network error. Please try again.';
+      console.error(err);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
