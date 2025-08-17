@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 3 – Secure Contact Form</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <style>
+    /* Lightweight table styles to match existing aesthetic */
+    .wa-table { width: 100%; border-collapse: collapse; margin: .5rem 0 1rem; }
+    .wa-table th, .wa-table td { padding: .6rem .8rem; border: 1px solid rgba(255,255,255,.12); }
+    .wa-table th { text-align: left; background: rgba(255,255,255,.06); font-weight: 600; }
+    .wa-table tr:nth-child(even) td { background: rgba(255,255,255,.03); }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: .95rem; }
+    pre { background: rgba(255,255,255,.04); padding: .9rem 1rem; border-radius: 10px; overflow-x: auto; border: 1px solid rgba(255,255,255,.08); }
+  </style>
+</head>
+<body>
+
+  <!-- Fixed Background Image -->
+  <div class="background-layer" aria-hidden="true"></div>
+
+  <!-- Hero Section -->
+  <header class="hero-container">
+    <div class="overlay-text">
+      <h1 class="main-heading">Chapter 3 – Secure Contact Form</h1>
+      <p class="strapline">create • construct • architect</p>
+      <nav class="nav-buttons">
+        <a href="index.html">Home</a>
+        <a href="atlas-1.html">AWS Projects</a>
+        <a href="Chapter_2.html">Prev</a>
+        <a href="Overview.html#c4" class="btn-next">Next</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Chapter Container -->
+  <div class="main-container">
+    <div class="scroll-box">
+
+      <h2 class="chapter-title-main">Chapter 3 – Secure Contact Form (Step Change)</h2>
+
+      <!-- Intro & Reflection -->
+      <div class="content-block">
+        <h3>Intro & Reflection</h3>
+        <p>Chapters 1–2 delivered functional, secure AWS builds with concise documentation. From Chapter 3 onwards, I adopt an <em>enhanced documentation standard</em> aligned to the AWS Well‑Architected Framework: explicit trade‑offs, Well‑Architected mapping, cost modelling, Infrastructure‑as‑Code, and operational readiness.</p>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- Mock Client Brief -->
+      <div class="content-block">
+        <h3>Mock Client Brief</h3>
+        <p><strong>Project:</strong> Secure Contact Form • <strong>Date:</strong> 2025‑08‑12</p>
+        <p><strong>Objective:</strong> Enable visitors to send secure messages without storing personal data, ensuring high deliverability and minimal spam.</p>
+        <h4>Functional Requirements</h4>
+        <ul>
+          <li>Secure web‑to‑email / web‑to‑SMS pipeline (no persistent PII)</li>
+          <li>Spam prevention: honeypot, bot detection, throttling</li>
+          <li>TLS end‑to‑end; CORS restricted to <code>https://christianhegarty.com</code></li>
+          <li>Logging & monitoring for failures and API usage</li>
+          <li>Low‑cost, serverless‑first approach</li>
+          <li>Record <em>engagement metrics</em> in CloudWatch (total, by reply type)</li>
+        </ul>
+        <h4>Security Requirements</h4>
+        <ul>
+          <li>Validate email and E.164 phone numbers</li>
+          <li>Honeypot field + render‑time token with minimum submission delay</li>
+          <li>Least‑privilege IAM; no PII in logs</li>
+        </ul>
+        <h4>Constraints</h4>
+        <ul>
+          <li>Integrates with Chapter 2 static site (S3 + CloudFront)</li>
+          <li>AWS‑native services preferred</li>
+          <li>Minimal operational overhead</li>
+        </ul>
+        <h4>Out of Scope</h4>
+        <ul>
+          <li>Persistent storage of submissions</li>
+          <li>Advanced analytics or DynamoDB integration</li>
+        </ul>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- Solution Response -->
+      <div class="content-block">
+        <h3>Solution Response</h3>
+        <p><strong>Services:</strong> S3 + CloudFront (frontend), API Gateway (Regional), Lambda (Python), SES (email), SNS (SMS optional), CloudWatch (logs, metrics, dashboards).</p>
+        <p><strong>Flow:</strong> Browser → CloudFront → API Gateway → Lambda → SES/SNS; Lambda emits custom CloudWatch metrics. No PII persists after processing.</p>
+        <h4>Trade‑offs</h4>
+        <ul>
+          <li><strong>SES vs third‑party:</strong> Lower latency and cost; single‑provider ops.</li>
+          <li><strong>No DB now:</strong> Simpler, cheaper; history deferred to a later chapter.</li>
+          <li><strong>Serverless only:</strong> Auto‑scales; fewer ops tasks; pay‑per‑use.</li>
+        </ul>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- Well-Architected Mapping -->
+      <div class="content-block">
+        <h3>Well‑Architected Mapping</h3>
+        <table class="wa-table" aria-label="Well-Architected Mapping">
+          <thead><tr><th>Pillar</th><th>Implementation in this Project</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Security</strong></td><td>IAM least privilege, TLS, strict CORS, bot mitigation, optional WAF</td></tr>
+            <tr><td><strong>Reliability</strong></td><td>SES retries; API throttling; idempotent Lambda logic</td></tr>
+            <tr><td><strong>Performance Efficiency</strong></td><td>Serverless scaling; client‑side validation; API caching (optional)</td></tr>
+            <tr><td><strong>Cost Optimisation</strong></td><td>Pay‑per‑use services; log retention controls</td></tr>
+            <tr><td><strong>Operational Excellence</strong></td><td>Metrics/alarms; dashboards; runbook for SES bounces</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- Architecture Diagram -->
+      <div class="content-block">
+        <h3>Architecture Diagram</h3>
+        <p>High‑level architecture with trust boundaries and traffic flow.</p>
+        <div class="diagram-container">
+          <img src="C3_Website_Assets/arch_diagrams/Chapter_3_Secure_Contact_Form.drawio.png" alt="Chapter 3 Secure Contact Form – Architecture Diagram" class="chapter-diagram" />
+          <p class="diagram-caption">Figure: CloudFront → API Gateway → Lambda → SES/SNS with CloudWatch metrics and logs.</p>
+        </div>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- IaC Snippet -->
+      <div class="content-block">
+        <h3>Infrastructure as Code (SAM excerpt)</h3>
+        <pre><code># TODO: replace domain & ARNs before deploy
+Resources:
+  ContactFormFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.11
+      Handler: app.lambda_handler
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - Statement:
+            - Effect: Allow
+              Action:
+                - ses:SendEmail
+                - cloudwatch:PutMetricData
+              Resource: "*"
+      Environment:
+        Variables:
+          ALLOWED_ORIGIN: https://christianhegarty.com
+  ContactApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+      Cors:
+        AllowOrigin: "'https://christianhegarty.com'"
+        AllowMethods: "'POST,OPTIONS'"
+        AllowHeaders: "'Content-Type'"
+      EndpointConfiguration: REGIONAL
+  ContactIntegration:
+    Type: AWS::Serverless::Function
+    Properties:
+      # Optionally split ingest & send functions; else wire ContactFormFunction to API directly
+</code></pre>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- Cost Breakdown -->
+      <div class="content-block">
+        <h3>Cost Breakdown (est.)</h3>
+        <table class="wa-table" aria-label="Cost Breakdown">
+          <thead><tr><th>Service</th><th>Assumption</th><th>Est. Monthly</th></tr></thead>
+          <tbody>
+            <tr><td>SES</td><td>500 emails</td><td>£0.00 (Free Tier)</td></tr>
+            <tr><td>API Gateway</td><td>10k requests</td><td>£0.35</td></tr>
+            <tr><td>Lambda</td><td>50k invocations</td><td>£0.00 (Free Tier)</td></tr>
+            <tr><td>CloudWatch Logs</td><td>~1 GB storage</td><td>~£0.25</td></tr>
+            <tr><td><strong>Total</strong></td><td>—</td><td><strong>~£0.60</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- Ops & Monitoring -->
+      <div class="content-block">
+        <h3>Ops & Monitoring</h3>
+        <ul>
+          <li>CloudWatch alarms: Lambda <em>Errors &gt; 0</em> (5m), API 5XX spike, SES bounce rate &gt; 5% (1d)</li>
+          <li>Dashboard: invocations, duration p95, 4XX/5XX, bounces, throttles</li>
+          <li>Runbook: investigate alarms → check WAF (if enabled) → API logs → Lambda logs; verify SES DKIM/SPF</li>
+        </ul>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- Future Improvements -->
+      <div class="content-block">
+        <h3>Improvements & Next Steps</h3>
+        <ul>
+          <li>Add reCAPTCHA Enterprise or Lambda authorizer challenge</li>
+          <li>Introduce SNS SMS channel and rate limits per identity</li>
+          <li>Persist optional audit trail in DynamoDB with TTL</li>
+        </ul>
+        <nav class="nav-buttons">
+          <a href="#" target="_blank">Live Demo (coming soon)</a>
+          <a href="#" target="_blank">GitHub Repo</a>
+        </nav>
+      </div>
+
+    </div>
+  </div>
+
+<!-- 🔹 Certifications -->
+<div class="certificate-section">
+  <div class="badge-footer">
+    <h2>IT Certifications</h2>
+  <div class="badge-grid">
+      <a href="https://www.credly.com/badges/033bbcc4-33cb-4749-94c9-5d2c1e93ca8a/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/AZ_900.png" alt="AZ-900 Azure Fundamentals" />
+      </a>
+      <a href="https://www.credly.com/badges/2c03d748-3465-4c32-b190-2c4458a5fdc0/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/Net_Plus.png" alt="Network+ (Net+)" />
+      </a>
+      <a href="C2_Website_Assets/images/CEH%20Cert.png" target="_blank">
+         <img src="C2_Website_Assets/badges/CEH.png" alt="Certified Ethical Hacker (CEH)" />
+      </a>
+            <a href="https://www.credly.com/badges/dace6b68-35b4-44ae-b37d-7707d9f89742/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/Sec_Plus.png" alt="Security+ (Sec+)" />
+      </a>
+      <a href="https://www.credly.com/badges/415f6148-f8a6-4863-830d-c9e369ac77a1/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/SC_900.png" alt="SC-900 Microsoft Security Compliance" />
+      </a>
+      <a href="https://www.credly.com/badges/c352daae-90c4-453a-a241-2aef3c351894/public_url" target="_blank">
+        <img src="C2_Website_Assets/badges/CCP.png" alt="AWS Certified Cloud Practitioner" class="ccp-badge" />
+      </a>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
