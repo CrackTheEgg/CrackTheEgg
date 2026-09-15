@@ -1,5 +1,6 @@
 import os
 import re
+import json
 from itertools import product
 from pathlib import Path
 
@@ -11,6 +12,7 @@ PROJECT_DIRECTORY = Path(__file__).resolve().parent
 ENV_FILE = PROJECT_DIRECTORY / ".env"
 CANDIDATE_FILE = PROJECT_DIRECTORY / "candidate_links.txt"
 REPORT_DIRECTORY = PROJECT_DIRECTORY / "reports"
+SHIPPING_FILE = PROJECT_DIRECTORY / "shipping_costs.json"
 
 load_dotenv(ENV_FILE)
 
@@ -229,6 +231,50 @@ def write_purchase_report(
     )
 
     return report_path
+
+def load_shipping_costs():
+    if not SHIPPING_FILE.exists():
+        raise SystemExit(
+            f"Shipping-cost file was not found: {SHIPPING_FILE}"
+        )
+
+    try:
+        shipping_costs = json.loads(
+            SHIPPING_FILE.read_text(encoding="utf-8")
+        )
+    except json.JSONDecodeError as error:
+        raise SystemExit(
+            f"Invalid JSON in {SHIPPING_FILE.name}: {error}"
+        )
+
+    if not isinstance(shipping_costs, dict):
+        raise SystemExit(
+            "Shipping-cost data must be a JSON object."
+        )
+
+    return shipping_costs
+
+
+def get_shipping_cost(
+    shipping_costs,
+    seller_name,
+    record_count,
+):
+    seller_rates = shipping_costs.get(seller_name, {})
+    shipping_value = seller_rates.get(str(record_count))
+
+    if shipping_value is None:
+        return None
+
+    try:
+        shipping_cost = float(shipping_value)
+    except (TypeError, ValueError):
+        return None
+
+    if shipping_cost < 0:
+        return None
+
+    return shipping_cost
 
 def main():
     print("RECORD HUNTER — PURCHASE OPTIMISER")
@@ -493,6 +539,7 @@ def main():
     print(f"Item subtotal: GBP {consolidated_subtotal:.2f}")
 
     unresolved_releases = [
+        description
         for release_id, description in all_releases.items()
         if not eligible_by_release.get(release_id)
     ]
@@ -501,6 +548,51 @@ def main():
         fewest_seller_plan,
         cheapest_subtotal,
         unresolved_releases,
+    )
+
+    shipping_costs = load_shipping_costs()
+    shipping_requirements = set()
+
+    for plan in (cheapest_plan, fewest_seller_plan):
+        plan_groups = group_plan_by_seller(plan)
+
+        for seller_name, seller_listings in plan_groups.items():
+            shipping_requirements.add(
+                (seller_name, len(seller_listings))
+            )
+
+    print("\nSHIPPING COST REQUIREMENTS")
+
+    missing_shipping_costs = []
+
+    for seller_name, record_count in sorted(
+        shipping_requirements,
+        key=lambda requirement: requirement[0].lower(),
+    ):
+        shipping_cost = get_shipping_cost(
+            shipping_costs,
+            seller_name,
+            record_count,
+        )
+
+        if shipping_cost is None:
+            missing_shipping_costs.append(
+                (seller_name, record_count)
+            )
+            print(
+                f"MISSING — {seller_name} — "
+                f"{record_count} record(s)"
+            )
+        else:
+            print(
+                f"LOADED — {seller_name} — "
+                f"{record_count} record(s) — "
+                f"GBP {shipping_cost:.2f}"
+            )
+
+    print(
+        f"Missing shipping prices: "
+        f"{len(missing_shipping_costs)}"
     )
 
     print(f"\nMarkdown report saved to: {report_path}")
