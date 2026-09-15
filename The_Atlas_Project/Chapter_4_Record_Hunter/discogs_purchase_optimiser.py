@@ -276,6 +276,28 @@ def get_shipping_cost(
 
     return shipping_cost
 
+def get_api_shipping_price(listing):
+    shipping_price = listing.get("shipping_price")
+
+    if not isinstance(shipping_price, dict):
+        return None
+
+    currency = shipping_price.get("currency")
+    value = shipping_price.get("value")
+
+    if currency != "GBP" or value is None:
+        return None
+
+    try:
+        shipping_value = float(value)
+    except (TypeError, ValueError):
+        return None
+
+    if shipping_value < 0:
+        return None
+
+    return shipping_value
+
 def main():
     print("RECORD HUNTER — PURCHASE OPTIMISER")
     print("Configuration loaded successfully.")
@@ -549,6 +571,36 @@ def main():
         cheapest_subtotal,
         unresolved_releases,
     )
+
+    print("\nAPI SHIPPING PRICE CHECK")
+
+    api_shipping_available = 0
+    api_shipping_unavailable = 0
+
+    for listing in eligible_listings:
+        seller_name = listing.get("seller", {}).get(
+            "username",
+            "Unknown seller",
+        )
+        listing_id = listing.get("id")
+        api_shipping_price = get_api_shipping_price(listing)
+
+        if api_shipping_price is None:
+            api_shipping_unavailable += 1
+            print(
+                f"UNAVAILABLE — Listing {listing_id} — "
+                f"{seller_name}"
+            )
+        else:
+            api_shipping_available += 1
+            print(
+                f"AVAILABLE — Listing {listing_id} — "
+                f"{seller_name} — GBP {api_shipping_price:.2f}"
+            )
+
+    print("\nAPI SHIPPING SUMMARY")
+    print(f"Available: {api_shipping_available}")
+    print(f"Unavailable: {api_shipping_unavailable}")
 
     shipping_costs = load_shipping_costs()
     shipping_requirements = set()
