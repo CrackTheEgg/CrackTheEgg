@@ -240,6 +240,11 @@ Record Hunter demonstrates:
 * Secure cloud architecture planning.
 * Incremental development and controlled testing.
 
+
+## Application Workflow
+
+![Record Hunter purchase optimiser workflow](docs/diagrams/purchase_optimiser.png)
+
 ## Disclaimer
 
 Record Hunter is an independent portfolio project and is not affiliated with or endorsed by Discogs. Marketplace data remains subject to Discogs availability, terms and supported API functionality.
