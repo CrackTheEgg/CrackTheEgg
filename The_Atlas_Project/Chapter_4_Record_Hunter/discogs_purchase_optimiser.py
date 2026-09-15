@@ -5,11 +5,12 @@ from pathlib import Path
 
 import requests
 from dotenv import load_dotenv
-
+from datetime import datetime
 
 PROJECT_DIRECTORY = Path(__file__).resolve().parent
 ENV_FILE = PROJECT_DIRECTORY / ".env"
 CANDIDATE_FILE = PROJECT_DIRECTORY / "candidate_links.txt"
+REPORT_DIRECTORY = PROJECT_DIRECTORY / "reports"
 
 load_dotenv(ENV_FILE)
 
@@ -131,6 +132,103 @@ def group_plan_by_seller(plan):
         seller_groups.setdefault(seller_name, []).append(listing)
 
     return seller_groups
+
+def write_purchase_report(
+    plan,
+    cheapest_subtotal,
+    unresolved_releases,
+):
+    REPORT_DIRECTORY.mkdir(parents=True, exist_ok=True)
+
+    generated_at = datetime.now().astimezone()
+    report_name = (
+        "purchase_report_"
+        f"{generated_at.strftime('%Y-%m-%d_%H-%M-%S')}.md"
+    )
+    report_path = REPORT_DIRECTORY / report_name
+
+    seller_groups = group_plan_by_seller(plan)
+    plan_subtotal = calculate_plan_subtotal(plan)
+    plan_premium = plan_subtotal - cheapest_subtotal
+
+    lines = [
+        "# Record Hunter Purchase Report",
+        "",
+        f"Generated: {generated_at.strftime('%Y-%m-%d %H:%M %Z')}",
+        "",
+        "## Summary",
+        "",
+        f"- Records covered: {len(plan)}",
+        f"- Sellers required: {len(seller_groups)}",
+        f"- Item subtotal: GBP {plan_subtotal:.2f}",
+        f"- Premium over cheapest-item plan: GBP {plan_premium:.2f}",
+        "- Shipping must be confirmed in the Discogs cart.",
+        "",
+        "## Selected Listings by Seller",
+        "",
+    ]
+
+    for seller_name in sorted(seller_groups, key=str.lower):
+        seller_listings = seller_groups[seller_name]
+        seller_subtotal = calculate_plan_subtotal(seller_listings)
+
+        lines.extend(
+            [
+                f"### {seller_name}",
+                "",
+                f"Seller subtotal: **GBP {seller_subtotal:.2f}**",
+                "",
+            ]
+        )
+
+        for listing in seller_listings:
+            release = listing.get("release", {})
+            price = float(
+                listing.get("price", {}).get("value") or 0
+            )
+            listing_id = listing.get("id")
+            description = release.get(
+                "description",
+                "Unknown release",
+            )
+            url = (
+                "https://www.discogs.com/shop/item/"
+                f"{listing_id}"
+            )
+
+            lines.append(
+                f"- [{description}]({url}) — GBP {price:.2f}"
+            )
+
+        lines.extend(
+            [
+                "",
+                "Shipping: confirm in the Discogs cart.",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
+            "## Unresolved Releases",
+            "",
+        ]
+    )
+
+    if unresolved_releases:
+        for description in unresolved_releases:
+            lines.append(f"- {description}")
+    else:
+        lines.append("- None")
+
+    lines.append("")
+
+    report_path.write_text(
+        "\n".join(lines),
+        encoding="utf-8",
+    )
+
+    return report_path
 
 def main():
     print("RECORD HUNTER — PURCHASE OPTIMISER")
@@ -393,6 +491,19 @@ def main():
     print(f"Records covered: {len(fewest_seller_plan)}")
     print(f"Sellers required: {len(seller_groups)}")
     print(f"Item subtotal: GBP {consolidated_subtotal:.2f}")
+
+    unresolved_releases = [
+        for release_id, description in all_releases.items()
+        if not eligible_by_release.get(release_id)
+    ]
+
+    report_path = write_purchase_report(
+        fewest_seller_plan,
+        cheapest_subtotal,
+        unresolved_releases,
+    )
+
+    print(f"\nMarkdown report saved to: {report_path}")
 
 if __name__ == "__main__":
     main()

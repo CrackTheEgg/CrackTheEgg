@@ -3,3 +3,4 @@
 __pycache__/
 *.pyc
 seller_test_results.txt
+reports/*.md
