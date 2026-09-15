@@ -119,6 +119,19 @@ def count_plan_sellers(plan):
         }
     )
 
+def group_plan_by_seller(plan):
+    seller_groups = {}
+
+    for listing in plan:
+        seller_name = listing.get("seller", {}).get(
+            "username",
+            "Unknown seller",
+        )
+
+        seller_groups.setdefault(seller_name, []).append(listing)
+
+    return seller_groups
+
 def main():
     print("RECORD HUNTER — PURCHASE OPTIMISER")
     print("Configuration loaded successfully.")
@@ -347,6 +360,39 @@ def main():
         f"GBP {consolidation_premium:.2f}"
     )
     print("Shipping: confirm separately in the Discogs cart")
+
+    seller_groups = group_plan_by_seller(fewest_seller_plan)
+
+    print("\nPURCHASE REPORT GROUPED BY SELLER")
+
+    for seller_name in sorted(seller_groups, key=str.lower):
+        seller_listings = seller_groups[seller_name]
+        seller_subtotal = calculate_plan_subtotal(seller_listings)
+
+        print(f"\nSELLER: {seller_name}")
+        print(f"Records: {len(seller_listings)}")
+
+        for listing in seller_listings:
+            release = listing.get("release", {})
+            price = listing.get("price", {})
+            listing_id = listing.get("id")
+
+            print(
+                f"  {release.get('description', 'Unknown release')}"
+            )
+            print(f"  Price: GBP {float(price.get('value') or 0):.2f}")
+            print(
+                f"  URL: https://www.discogs.com/shop/item/"
+                f"{listing_id}"
+            )
+
+        print(f"Seller subtotal: GBP {seller_subtotal:.2f}")
+        print("Shipping: confirm in the Discogs cart")
+
+    print("\nPURCHASE REPORT TOTAL")
+    print(f"Records covered: {len(fewest_seller_plan)}")
+    print(f"Sellers required: {len(seller_groups)}")
+    print(f"Item subtotal: GBP {consolidated_subtotal:.2f}")
 
 if __name__ == "__main__":
     main()
