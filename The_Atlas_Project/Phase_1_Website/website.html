@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="How Christian Hegarty’s professional portfolio was built: site structure, responsive cards, page transitions, dark mode and selected code examples.">
+  <meta name="description" content="How Christian Hegarty’s professional portfolio was built: site structure, responsive cards, page transitions, dark mode, AWS hosting and automated deployment.">
   <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#101923" media="(prefers-color-scheme: dark)">
   <title>Professional Portfolio Website — Christian Hegarty</title>
@@ -19,17 +19,17 @@
       <a class="wordmark" href="index.html">Christian Hegarty</a>
       <a class="page-back" href="projects.html">← Back to projects</a>
     </header>
-    <p class="eyebrow page-label">Project case study · Local prototype</p>
+    <p class="eyebrow page-label">Project case study · Live on AWS</p>
     <h1>Professional Portfolio Website</h1>
     <p class="lede">A digital business card that opens into a professional portfolio.</p>
     <p>A website to present experience, qualifications and working projects, with the design and development of the site documented as a project in its own right.</p>
     <dl class="website-facts">
       <div><dt>Built with</dt><dd>HTML, CSS &amp; JavaScript</dd></div>
       <div><dt>Design</dt><dd>Responsive paper cards</dd></div>
-      <div><dt>Next stage</dt><dd>AWS hosting &amp; deployment</dd></div>
+      <div><dt>Hosting</dt><dd>AWS · Automated deployment</dd></div>
     </dl>
     <nav class="website-nav" aria-label="Case study sections">
-      <a href="#structure">Structure</a><a href="#design">Design</a><a href="#motion">Card flip</a><a href="#appearance">Night mode</a><a href="#code">Code</a><a href="#screens">Screenshots</a>
+      <a href="#structure">Structure</a><a href="#design">Design</a><a href="#motion">Card flip</a><a href="#appearance">Night mode</a><a href="#code">Code</a><a href="#screens">Screenshots</a><a href="#hosting">AWS hosting</a>
     </nav>
 
     <section class="website-section" id="structure" aria-labelledby="structure-title">
@@ -107,10 +107,12 @@ aspect-ratio: 1.75;</code></pre><p>The card size considers both the available wi
       </div>
     </section>
 
-    <section class="website-section" aria-labelledby="delivery-title">
-      <h2 id="delivery-title">From local prototype to hosted portfolio</h2>
-      <p>The next stage is a private S3 origin behind CloudFront, HTTPS and password-protected access for review. GitHub will hold the version history and an automated workflow will publish approved changes.</p>
-      <p class="website-note">Planned hosting workflow: edit → local preview → commit → push → deploy.</p>
+    <section class="website-section" id="hosting" aria-labelledby="delivery-title">
+      <h2 id="delivery-title">AWS hosting and automated deployment</h2>
+      <p>The portfolio is live on AWS. Website files are stored in a private S3 bucket in London and delivered through CloudFront. Route 53 connects the domain names, with HTTPS certificates managed by AWS Certificate Manager.</p>
+      <p>GitHub Actions publishes website changes pushed to the main branch. The workflow uses OpenID Connect (OIDC) to obtain temporary AWS credentials, synchronises the website files to S3 and invalidates the CloudFront cache. Deployment permissions are limited to the website bucket and distribution.</p>
+      <p>This replaces manual uploads with a repeatable release process. The initial deployment has been completed and verified at <a href="https://christianhegarty.com">christianhegarty.com</a> and <a href="https://www.christianhegarty.com">www.christianhegarty.com</a>.</p>
+      <p class="website-note">Release workflow: edit → local preview → commit → push → GitHub Actions → S3 → CloudFront.</p>
     </section>
     <footer class="page-footer">
       <p class="eyebrow page-label">Explore further</p>
