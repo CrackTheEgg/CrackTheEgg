@@ -1,0 +1,48 @@
+/* CV content inherits the shared card width, padding, colours and texture. */
+.cv-specialisms { max-width: none !important; }
+.cv-jump-links { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 1.5rem 0 2.5rem; }
+.cv-jump-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: .95rem; }
+.cv-section { border-top: 1px solid var(--rule); padding-top: var(--rule-label-gap); margin-top: 2.5rem; scroll-margin-top: 1.5rem; }
+.cv-section > .page-label { margin-bottom: 1.5rem; font-weight: 400; }
+.cv-section-body, .cv-section-body p { max-width: none; }
+.cv-section-body p:last-child, .cv-role-copy p:last-child { margin-bottom: 0; }
+.cv-page ul { font-size: 1.0625rem; line-height: 1.7; }
+.cv-expertise { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .65rem 2.5rem; margin: 0; padding-left: 1.2rem; }
+.cv-role { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); gap: 2.5rem; padding-block: 2rem; }
+.cv-role + .cv-role { border-top: 1px solid var(--rule); }
+.cv-role:first-child { padding-top: 0; }
+.cv-role:last-child { padding-bottom: 0; }
+.cv-role h3 { margin: .5rem 0; font-size: clamp(1.35rem, 2.4cqw, 1.7rem); font-weight: 500; line-height: 1.25; }
+.cv-role .cv-dates { margin: 0; font-size: .85rem; color: var(--muted-ink); }
+.cv-role .cv-employer { margin: 0; font-size: 1rem; }
+.cv-role-copy ul { margin: 0; padding-left: 1.2rem; }
+.cv-role-copy li + li { margin-top: .55rem; }
+.cv-education { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; text-align: center; }
+.cv-education strong { display: block; font-weight: 500; text-wrap: balance; }
+.cv-education span { display: block; color: var(--muted-ink); font-size: .95rem; }
+.cv-badges { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; list-style: none; padding: 0; margin: 0; }
+.cv-education + .cv-badges { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--rule); }
+.cv-badges a { display: flex; height: 100%; flex-direction: column; align-items: center; gap: .75rem; text-align: center; text-decoration: none; font-size: .95rem; line-height: 1.5; }
+.cv-badges img { display: block; width: 132px; height: 132px; max-width: 100%; object-fit: contain; }
+.cv-badge-link { margin-top: auto; padding-top: .25rem; font-size: .8rem; text-decoration: underline; text-underline-offset: .25em; color: var(--muted-ink); }
+.cv-badges a:hover .cv-badge-link { color: var(--ink); }
+@container (max-width: 42rem) {
+  .cv-education { grid-template-columns: minmax(0, 1fr); gap: 1.25rem; text-align: left; }
+  .cv-role { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+  .cv-expertise { grid-template-columns: minmax(0, 1fr); }
+  .cv-badges { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1rem; }
+}
+@container (max-width: 20rem) {
+  .cv-badges { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Centre the seventh badge and match the visible size of the padded Credly artwork. */
+.cv-badges > li:last-child:nth-child(3n + 1) { grid-column: 2; }
+.cv-badge-ceh img { padding: 30px; }
+@container (max-width: 42rem) {
+  .cv-badges > li:last-child:nth-child(3n + 1) { grid-column: auto; }
+  .cv-badges > li:last-child:nth-child(2n + 1) { grid-column: 1 / -1; justify-self: center; width: calc((100% - 1rem) / 2); }
+}
+@container (max-width: 20rem) {
+  .cv-badges > li:last-child:nth-child(n) { grid-column: auto; width: 100%; }
+}

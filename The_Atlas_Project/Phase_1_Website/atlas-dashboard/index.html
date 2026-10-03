@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#071122">
+  <title>AWS Utilities Dashboard | System &amp; project health</title>
+  <link rel="stylesheet" href="./style.css?v=aws-utilities-1">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Dashboard navigation">
+      <a class="brand" href="#overview" aria-label="AWS Utilities Dashboard"><span class="brand-mark" aria-hidden="true">AWS</span><span>AWS UTILITIES<small>DASHBOARD</small></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav-list">
+        <a href="#overview" class="nav-item active"><span class="nav-icon">◫</span> Overview <span class="nav-arrow">↗</span></a>
+        <a href="#machine" class="nav-item"><span class="nav-icon">▣</span> Mac Studio</a>
+        <a href="#insights" class="nav-item"><span class="nav-icon">◈</span> Insights</a>
+        <a href="#network" class="nav-item"><span class="nav-icon">⌁</span> Network</a>
+        <a href="#projects" class="nav-item"><span class="nav-icon">⬡</span> AWS projects</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="mini-status"><span class="pulse"></span><span>Portfolio demo<span class="mini-sub">Illustrative readings</span></span></div>
+        <p>Sample dashboard · v0.1</p>
+      </div>
+    </aside>
+
+    <main id="overview" class="main-content">
+      <header class="topbar">
+        <div class="breadcrumb">Workspace <span>/</span> Dashboard <span>/</span> <strong>Overview</strong></div>
+        <div class="top-actions"><span id="clock" class="clock"></span><button id="refresh" class="refresh-button" type="button" aria-label="Refresh dashboard">↻ <span>Refresh</span></button></div>
+      </header>
+
+      <div class="page-content">
+        <section class="hero">
+          <div><div class="eyebrow"><span class="eyebrow-line"></span> SYSTEM INTELLIGENCE</div><h1>Everything in<br><em>one view.</em></h1><p>Explore illustrative Mac health, connectivity, AWS resources, and project spending.</p></div>
+          <div class="hero-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="orbit-core">AWS</div><span class="orbit-dot dot-one"></span><span class="orbit-dot dot-two"></span><span class="orbit-dot dot-three"></span></div>
+        </section>
+
+        <div id="file-preview" class="notice" hidden><span class="notice-icon">↗</span><span>Mac and network readings are illustrative. AWS projects show live snapshots when connected.</span></div>
+        <div class="section-heading" id="machine"><div><div class="eyebrow subtle">01 / LOCAL MACHINE</div><h2>Mac Studio health</h2><p id="machine-meta">Connecting to this Mac…</p></div><span id="machine-status" class="status-pill"><span class="pulse"></span> Connecting</span></div>
+        <section class="metric-grid" aria-label="Mac health metrics">
+          <article class="metric-card metric-feature"><div class="card-top"><span class="metric-icon">⌁</span><span class="metric-label">SYSTEM LOAD</span><span class="metric-more">01 / 06</span></div><div class="metric-body"><div><strong id="load-value">—</strong><span class="metric-unit">/ <span id="core-count">—</span> cores</span></div><p>1 minute average <span id="load-5">—</span> at 5 min</p></div><div class="bar-track"><div id="load-bar" class="bar-fill lime"></div></div><div class="card-foot"><span>Load per logical core</span><strong id="load-percent">—</strong></div></article>
+          <article class="metric-card"><div class="card-top"><span class="metric-icon purple">▥</span><span class="metric-label">MEMORY</span><span class="metric-more">02 / 06</span></div><div class="metric-body"><div><strong id="memory-value">—</strong><span class="metric-unit">/ <span id="memory-total">—</span></span></div><p>Estimated memory in use</p></div><div class="bar-track"><div id="memory-bar" class="bar-fill purple-fill"></div></div><div class="card-foot"><span>Of physical memory</span><strong id="memory-percent">—</strong></div></article>
+          <article class="metric-card"><div class="card-top"><span class="metric-icon blue">▤</span><span class="metric-label">STORAGE</span><span class="metric-more">03 / 06</span></div><div class="metric-body"><div><strong id="disk-value">—</strong><span class="metric-unit">/ <span id="disk-total">—</span></span></div><p>Data volume used</p></div><div class="bar-track"><div id="disk-bar" class="bar-fill blue-fill"></div></div><div class="card-foot"><span>Available capacity</span><strong id="disk-free">—</strong></div></article>
+          <article class="metric-card"><div class="card-top"><span class="metric-icon orange">◷</span><span class="metric-label">UPTIME</span><span class="metric-more">04 / 06</span></div><div class="metric-body"><div><strong id="uptime-value">—</strong></div><p>Since last system start</p></div><div class="uptime-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="card-foot"><span id="chip">Mac</span><strong>ONLINE</strong></div></article>
+          <article class="metric-card"><div class="card-top"><span class="metric-icon">◉</span><span class="metric-label">PROCESSOR ACTIVITY</span><span class="metric-more">05 / 06</span></div><div class="metric-body"><div><strong id="cpu-value">—</strong><span class="metric-unit">active</span></div><p>Current CPU use across all cores</p></div><div class="bar-track"><div id="cpu-bar" class="bar-fill lime"></div></div><div class="card-foot"><span id="cpu-user">User —</span><strong id="cpu-system">System —</strong></div></article>
+          <article class="metric-card"><div class="card-top"><span class="metric-icon orange">♨</span><span class="metric-label">THERMAL STATUS</span><span class="metric-more">06 / 06</span></div><div class="metric-body"><div><strong id="thermal-value">—</strong></div><p>Apple system thermal state</p></div><div class="thermal-art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="card-foot"><span>CPU temperature</span><strong>°C unavailable</strong></div></article>
+        </section>
+
+        <div class="section-heading insights-heading" id="insights"><div><div class="eyebrow subtle">02 / SYSTEM INSIGHTS</div><h2>What’s happening now</h2><p>Memory pressure, disk activity, and the busiest processes.</p></div></div>
+        <section class="insight-grid" aria-label="Additional Mac Studio metrics">
+          <article class="insight-card">
+            <div class="insight-head"><span class="overline">MEMORY PRESSURE</span><span class="insight-icon">◉</span></div>
+            <div id="pressure-state" class="insight-value">—</div>
+            <p class="insight-description">macOS pressure state</p>
+            <div class="insight-detail"><span>Swap in use</span><strong id="swap-used">—</strong></div>
+            <div class="insight-detail"><span>Compressed memory</span><strong id="compressed-memory">—</strong></div>
+          </article>
+          <article class="insight-card">
+            <div class="insight-head"><span class="overline">DISK ACTIVITY</span><span class="insight-icon pink">▥</span></div>
+            <div class="insight-value"><span id="disk-throughput">—</span><small>MB/s</small></div>
+            <p class="insight-description">Current internal SSD throughput</p>
+            <div class="insight-detail"><span>Operations</span><strong id="disk-ops">—</strong></div>
+            <div class="insight-detail"><span>Drive</span><strong id="disk-device">—</strong></div>
+          </article>
+          <article class="insight-card processes-card">
+            <div class="insight-head"><span class="overline">TOP CPU PROCESSES</span><span class="insight-icon blue">≋</span></div>
+            <div id="process-list" class="process-list"><p class="insight-description">Waiting for live data…</p></div>
+            <p class="process-note">Recent CPU share per process</p>
+          </article>
+        </section>
+
+        <div class="section-heading network-heading" id="network"><div><div class="eyebrow subtle">03 / CONNECTIVITY</div><h2>Broadband &amp; Wi-Fi</h2><p>Current traffic, internet reachability, and wireless link details.</p></div><span id="network-status" class="status-pill">Checking</span></div>
+        <section class="network-grid" aria-label="Broadband and Wi-Fi statistics">
+          <article class="network-card">
+            <div class="network-card-head"><div><span class="overline">INTERNET CONNECTION</span><h3>Broadband</h3></div><span class="network-symbol">↗</span></div>
+            <div class="network-lead"><strong id="internet-status">Checking…</strong><span id="latency-value">—</span><small>connection time</small></div>
+            <div class="network-stats"><div><span>↓ DOWNLOAD NOW</span><strong id="download-rate">—</strong></div><div><span>↑ UPLOAD NOW</span><strong id="upload-rate">—</strong></div></div>
+            <p class="network-note">Live traffic on <span id="network-interface">—</span> · <span id="probe-target">checking endpoint</span>. Rates show current use, not your broadband plan speed.</p>
+          </article>
+          <article class="network-card">
+            <div class="network-card-head"><div><span class="overline">WIRELESS CONNECTION</span><h3>Wi-Fi</h3></div><span class="network-symbol wifi-symbol">⌁</span></div>
+            <div class="network-lead"><strong id="wifi-name">Checking…</strong><span id="wifi-signal">—</span><small>signal strength</small></div>
+            <div class="network-stats wifi-stats"><div><span>CHANNEL</span><strong id="wifi-channel">—</strong></div><div><span>LINK RATE</span><strong id="wifi-link">—</strong></div><div><span>NOISE / SNR</span><strong id="wifi-noise">—</strong></div></div>
+            <p class="network-note"><span id="wifi-mode">Wi-Fi mode unavailable</span> · Link rate is the Wi-Fi connection rate, not internet speed.</p>
+          </article>
+        </section>
+
+        <div class="section-heading project-heading" id="projects"><div><div class="eyebrow subtle">04 / CLOUD PROJECTS</div><h2>Project resources</h2><p>Track the infrastructure and spending behind each project.</p><a id="project-link" class="project-site-link" hidden target="_blank" rel="noopener noreferrer">Visit project ↗</a></div><label class="project-picker"><span>PROJECT</span><select id="project-select" aria-label="Select project"><option value="demo">Sample project</option></select><span class="select-chevron">⌄</span></label></div>
+        <div id="project-notice" class="notice"><span class="notice-icon">✳</span><span>Showing sample data. Add a project configuration and AWS read access to see live resources and costs.</span></div>
+        <section class="cloud-grid" aria-label="AWS project summary">
+          <article class="cloud-card cost-card"><div class="cloud-card-header"><div><span class="overline">MONTH TO DATE</span><h3>Project spend</h3></div><span id="cost-badge" class="small-badge">SAMPLE DATA</span></div><div class="cost-amount" id="cost-amount">—</div><p class="card-desc">Unblended cost, as reported by AWS Cost Explorer</p><div class="chart-wrap"><svg id="cost-chart" viewBox="0 0 520 126" preserveAspectRatio="none" role="img" aria-label="Daily project cost chart"><defs><linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ff3d9d" stop-opacity=".3"/><stop offset="100%" stop-color="#ff3d9d" stop-opacity="0"/></linearGradient></defs><path id="chart-area" fill="url(#chartGradient)"></path><path id="chart-line" fill="none" stroke="#ff3d9d" stroke-width="3" vector-effect="non-scaling-stroke"></path></svg></div><div class="chart-axis"><span>START OF MONTH</span><span>LATEST</span></div></article>
+          <article class="cloud-card service-card"><div class="cloud-card-header"><div><span class="overline">COST BREAKDOWN</span><h3>By service</h3></div><span class="dots">•••</span></div><div id="service-list" class="service-list"></div></article>
+        </section>
+        <section class="resource-panel"><div class="resource-header"><div><span class="overline">RESOURCE INVENTORY</span><h3>What’s running</h3></div><div class="resource-count"><span id="resource-count">0</span> tagged resources</div></div><div class="table-scroll"><table><thead><tr><th>RESOURCE</th><th>TYPE</th><th>REGION</th><th>STATE</th><th>CPU ACTIVITY</th></tr></thead><tbody id="resource-body"></tbody></table></div><div class="resource-footer"><span id="sync-text">Waiting for sync</span><span>↗ PROJECT MONITOR</span></div></section>
+        <footer class="page-footer"><span>AWS UTILITIES / DASHBOARD</span><span>Mac and network: sample · AWS: refreshed snapshot when available</span></footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

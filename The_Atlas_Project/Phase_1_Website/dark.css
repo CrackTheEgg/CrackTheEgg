@@ -1,0 +1,38 @@
+/* Loaded when the device prefers dark mode, or by the explicit preview link. */
+:root {
+  color-scheme: dark;
+  background: #101923;
+  color: #dcdedb;
+}
+.entrance, .content-page {
+  background: radial-gradient(ellipse at 50% 48%, #263644 0%, #17232f 42%, #101923 78%);
+}
+.entrance::before, .content-page::before {
+  filter: grayscale(1) invert(1);
+  mix-blend-mode: screen;
+  opacity: .16;
+}
+.business-card, .content-page .page {
+  --paper: #d8d7d0;
+  color: var(--ink);
+  color-scheme: light;
+  border-color: #e5e6dfaa;
+  border-bottom-color: #bcbfb9;
+  border-right-color: #c7cac3;
+  box-shadow: 0 0 22px 2px #ffe8c716, 0 0 70px 12px #ffdda823,
+              0 0 150px 25px #ffca8a16, 0 24px 45px -20px #0009;
+}
+.card-open:focus-visible { outline-color: #dce6ed; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .business-card:not(.contact-card):hover {
+    box-shadow: 0 0 26px 3px #ffe8c71c, 0 0 80px 14px #ffdda82b,
+                0 0 160px 28px #ffca8a1c, 0 28px 50px -20px #0009;
+  }
+}
+.menu-panel {
+  --paper: #d8d7d0;
+  color-scheme: light;
+  box-shadow: 0 0 70px #ffdda814, 0 24px 80px #0008;
+}
+.menu-panel::backdrop { background: #070d1673; }
+.fallback-nav :focus-visible { outline-color: #dce6ed; }

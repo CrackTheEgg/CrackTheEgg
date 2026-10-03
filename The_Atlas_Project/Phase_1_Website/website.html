@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How Christian Hegarty’s professional portfolio was built: site structure, responsive cards, page transitions, dark mode and selected code examples.">
+  <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101923" media="(prefers-color-scheme: dark)">
+  <title>Professional Portfolio Website — Christian Hegarty</title>
+  <link rel="stylesheet" href="styles.css?v=page-flips-1">
+  <link rel="stylesheet" href="website.css">
+  <link id="dark-theme" rel="stylesheet" href="dark.css" media="(prefers-color-scheme: dark)">
+  <script src="theme.js"></script>
+  <script src="website.js" defer></script>
+</head>
+<body class="content-page website-case">
+  <main class="page">
+    <header class="page-header">
+      <a class="wordmark" href="index.html">Christian Hegarty</a>
+      <a class="page-back" href="projects.html">← Back to projects</a>
+    </header>
+    <p class="eyebrow page-label">Project case study · Local prototype</p>
+    <h1>Professional Portfolio Website</h1>
+    <p class="lede">A digital business card that opens into a professional portfolio.</p>
+    <p>A website to present experience, qualifications and working projects, with the design and development of the site documented as a project in its own right.</p>
+    <dl class="website-facts">
+      <div><dt>Built with</dt><dd>HTML, CSS &amp; JavaScript</dd></div>
+      <div><dt>Design</dt><dd>Responsive paper cards</dd></div>
+      <div><dt>Next stage</dt><dd>AWS hosting &amp; deployment</dd></div>
+    </dl>
+    <nav class="website-nav" aria-label="Case study sections">
+      <a href="#structure">Structure</a><a href="#design">Design</a><a href="#motion">Card flip</a><a href="#appearance">Night mode</a><a href="#code">Code</a><a href="#screens">Screenshots</a>
+    </nav>
+
+    <section class="website-section" id="structure" aria-labelledby="structure-title">
+      <h2 id="structure-title">Site structure</h2>
+      <p>The homepage is a single business card. Explore turns it over to reveal the main navigation; Contact turns it the other way to reveal email and phone details. The longer pages use the same paper surface and grow with their content.</p>
+      <div class="website-map" aria-label="Website navigation structure">
+        <div class="website-map-root"><strong>Business card</strong><span>Homepage</span></div>
+        <div class="website-map-branches">
+          <div><h3>Explore</h3><ul><li>About — the portfolio’s purpose</li><li>CV — experience and qualifications</li><li>Projects — the portfolio and its case studies</li></ul></div>
+          <div><h3>Contact</h3><p>Email and mobile number on the reverse of the card.</p></div>
+        </div>
+      </div>
+      <p>Each destination is a separate HTML page with its own address. Shared styles keep the card width, typography and spacing consistent. Page-specific styles handle layouts such as the CV and project case studies.</p>
+    </section>
+
+    <section class="website-section" id="design" aria-labelledby="design-title">
+      <h2 id="design-title">From paper to browser</h2>
+      <div class="website-columns">
+        <div><h3>Colour and material</h3><p>A pale bone background, a slightly deeper card and blue-black ink create the visual foundation. Fine grain, a blind-embossed CH monogram and a raised perimeter give the card depth.</p></div>
+        <div><h3>Responsive proportions</h3><p>The business card keeps a 1.75:1 aspect ratio and responds to the browser’s width and height. Reading pages keep a shared maximum width and stack their content on smaller screens.</p></div>
+      </div>
+      <p>The background uses a mirrored paper tile to soften the joins between repeated images. The card has its own finer texture so the two surfaces remain distinct.</p>
+    </section>
+
+    <section class="website-section" id="motion" aria-labelledby="motion-title">
+      <h2 id="motion-title">The card flip</h2>
+      <p>Navigation follows the physical idea of turning a card over. About, Projects and CV turn into full reading pages, with their content already visible on the reverse.</p>
+      <ol class="website-steps">
+        <li><h3>Prepare</h3><p>Measure the destination using its own styles, then lay out its text at the final width.</p></li>
+        <li><h3>Turn and resize</h3><p>Rotate the two faces while scaling the card into position. The text keeps its line breaks throughout the turn.</p></li>
+        <li><h3>Continue reading</h3><p>Open the destination at the matching position. Long pages, including the CV, then scroll normally.</p></li>
+      </ol>
+      <div class="website-try">
+        <h3>Try the real interaction</h3>
+        <p>Open the preview, select Explore or Contact, then choose a page. Switch between light and night mode without leaving this case study.</p>
+        <button class="website-button" type="button" data-open-preview aria-haspopup="dialog" aria-controls="website-preview" hidden>Try the card flip <span aria-hidden="true">↗</span></button>
+        <noscript><p><a href="index.html">Open the main screen to explore the website</a>.</p></noscript>
+      </div>
+      <p class="website-note">The site honours reduced-motion preferences. When reduced motion is enabled, the links open normally without the turn.</p>
+    </section>
+
+    <section class="website-section" id="appearance" aria-labelledby="appearance-title">
+      <h2 id="appearance-title">Light and night mode</h2>
+      <p>The site follows the device’s light or dark appearance. Night mode changes the surroundings to blue-black and introduces a warm glow around the card, while keeping a light paper surface for reading.</p>
+      <div class="website-themes">
+        <div><div class="website-swatch website-swatch-light" aria-hidden="true"><span>Christian Hegarty</span></div><h3>Light</h3><p>Neutral paper, subtle shadows and blue-black ink.</p><button class="website-button" type="button" data-open-preview="light" aria-haspopup="dialog" aria-controls="website-preview" hidden>Preview light mode</button></div>
+        <div><div class="website-swatch website-swatch-dark" aria-hidden="true"><span>Christian Hegarty</span></div><h3>Night</h3><p>A darker surround and a soft, warm backlight.</p><button class="website-button" type="button" data-open-preview="dark" aria-haspopup="dialog" aria-controls="website-preview" hidden>Preview night mode</button></div>
+      </div>
+      <details class="website-code"><summary>How the automatic theme is selected</summary><pre><code>&lt;link id="dark-theme" rel="stylesheet" href="dark.css"
+      media="(prefers-color-scheme: dark)"&gt;</code></pre><p>The browser applies the dark stylesheet when the device requests it. A theme query parameter also allows either appearance to be previewed explicitly.</p></details>
+    </section>
+
+    <section class="website-section" id="code" aria-labelledby="code-title">
+      <h2 id="code-title">Selected code</h2>
+      <p>The core portfolio uses HTML for content, CSS for presentation and JavaScript for the interactions. These excerpts come from the current implementation.</p>
+      <details class="website-code"><summary>HTML — ordinary links, enhanced with motion</summary><pre><code>&lt;a class=&quot;card-open&quot; id=&quot;business-card&quot; href=&quot;explore.html&quot; data-card-flip=&quot;180&quot; aria-label=&quot;Explore the portfolio&quot;&gt;
+&lt;a class=&quot;card-front-contact&quot; href=&quot;contact.html&quot; data-card-flip=&quot;-180&quot;&gt;Contact&lt;/a&gt;</code></pre><p>The destination remains a normal link. The flip script reads its direction from a data attribute, while ordinary navigation still works without JavaScript.</p></details>
+      <details class="website-code"><summary>CSS — keeping the business card in proportion</summary><pre><code>width: min(88vw, calc((100svh - 9rem) * 1.75), 62rem);
+min-width: min(18rem, calc(100vw - 2.5rem));
+aspect-ratio: 1.75;</code></pre><p>The card size considers both the available width and height, with an upper limit on large browser windows. Additional rules adapt it to narrow or short viewports.</p></details>
+      <details class="website-code"><summary>JavaScript — moving a fixed text layout</summary><pre><code>animations.push(scene.animate([
+  {transform: `translate(${startLeft - endLeft}px, ${startTop - endTop}px) scale(${width / targetBounds.width}, ${height / visibleHeight})`},
+  {transform: &quot;translate(0px, 0px) scale(1, 1)&quot;}
+], timing));</code></pre><p>The destination is laid out at its final width before this animation runs. Translation and scale move the card into place without repeatedly rewrapping its text. Rotation runs alongside this using the same timing.</p></details>
+    </section>
+
+    <section class="website-section" id="screens" aria-labelledby="screens-title">
+      <h2 id="screens-title">The website in use</h2>
+      <p>Screenshots captured during the local build. Select an image to view it at full size; use the interactive preview above to try the current behaviour.</p>
+      <div class="website-gallery">
+        <figure><a href="assets/website/home.jpg" target="_blank" rel="noopener" aria-label="Open the homepage screenshot"><img src="assets/website/home.jpg" width="1280" height="720" loading="lazy" alt="Bone business card with Christian Hegarty’s name, a subtle CH monogram, Contact and Explore links."></a><figcaption><h3>01 · The business card</h3><p>The compact entry point to the portfolio.</p></figcaption></figure>
+        <figure><a href="assets/website/explore.jpg" target="_blank" rel="noopener" aria-label="Open the Explore screenshot"><img src="assets/website/explore.jpg" width="1280" height="720" loading="lazy" alt="Reverse of the card with About, Projects and CV centred vertically and horizontally."></a><figcaption><h3>02 · Navigation on the reverse</h3><p>Three destinations within the same card proportions.</p></figcaption></figure>
+        <figure><a href="assets/website/about.jpg" target="_blank" rel="noopener" aria-label="Open the About screenshot"><img src="assets/website/about.jpg" width="1265" height="712" loading="lazy" alt="About page with a large heading and portfolio statement on a wider textured paper card."></a><figcaption><h3>03 · A card that becomes a page</h3><p>Shared materials and spacing carry into the reading layout.</p></figcaption></figure>
+        <figure><a href="assets/website/card-flip.jpg" target="_blank" rel="noopener" aria-label="Open the card transition screenshot"><img src="assets/website/card-flip.jpg" width="1280" height="720" loading="lazy" alt="The CV page visible on the reverse of the card during its three-dimensional turn."></a><figcaption><h3>04 · Content during the turn</h3><p>The text is present as the page comes into view.</p></figcaption></figure>
+      </div>
+    </section>
+
+    <section class="website-section" aria-labelledby="delivery-title">
+      <h2 id="delivery-title">From local prototype to hosted portfolio</h2>
+      <p>The next stage is a private S3 origin behind CloudFront, HTTPS and password-protected access for review. GitHub will hold the version history and an automated workflow will publish approved changes.</p>
+      <p class="website-note">Planned hosting workflow: edit → local preview → commit → push → deploy.</p>
+    </section>
+    <footer class="page-footer">
+      <p class="eyebrow page-label">Explore further</p>
+      <nav aria-label="Explore the portfolio"><a href="index.html">Back to the main screen <span aria-hidden="true">↗</span></a><a href="projects.html">All projects <span aria-hidden="true">↗</span></a></nav>
+    </footer>
+  </main>
+
+  <dialog class="website-preview" id="website-preview" aria-labelledby="preview-title" aria-describedby="preview-help">
+    <div class="website-preview-header"><h2 id="preview-title">Interactive website preview</h2><button class="website-button" type="button" id="close-preview" autofocus>Close preview <span aria-hidden="true">×</span></button></div>
+    <p id="preview-help">Use Explore or Contact on the card, then select a page. Escape closes this window.</p>
+    <div class="website-preview-controls"><label for="preview-theme">Appearance <select id="preview-theme"><option value="light">Light</option><option value="dark">Night</option></select></label><button class="website-button" type="button" id="reset-preview">Reset to front</button><span id="preview-status" role="status" aria-live="polite"></span></div>
+    <iframe id="preview-frame" title="Interactive professional portfolio website" src="about:blank"></iframe>
+  </dialog>
+</body>
+</html>

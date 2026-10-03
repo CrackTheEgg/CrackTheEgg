@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Discogs Purchase Integrator: a case study in collection comparison, purchase planning and the development of a cloud application.">
+  <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#101923" media="(prefers-color-scheme: dark)">
+  <title>Discogs Purchase Integrator — Christian Hegarty</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dpi.css">
+  <link id="dark-theme" rel="stylesheet" href="dark.css" media="(prefers-color-scheme: dark)">
+  <script src="theme.js"></script>
+</head>
+<body class="content-page dpi-page">
+  <main class="page">
+    <header class="page-header">
+      <a class="wordmark" href="index.html">Christian Hegarty</a>
+      <a class="page-back" href="projects.html">← Back to projects</a>
+    </header>
+    <p class="eyebrow page-label">Project case study · In development</p>
+    <h1>Discogs Purchase Integrator</h1>
+    <p class="lede">From a collection shortlist to a more informed purchasing plan.</p>
+    <dl class="dpi-facts">
+      <div><dt>Project</dt><dd>DPI</dd></div>
+      <div><dt>Current platform</dt><dd>Local Python &amp; FastAPI</dd></div>
+      <div><dt>Integration</dt><dd>Discogs API</dd></div>
+      <div><dt>Next stage</dt><dd>Web integration &amp; AWS hosting</dd></div>
+    </dl>
+    <nav class="dpi-nav" aria-label="Case study sections">
+      <a href="#purpose">Purpose</a><a href="#workflow">Workflow</a><a href="#architecture">Architecture</a><a href="#functions">Key functions</a><a href="#screens">Application</a><a href="#progress">Progress</a>
+    </nav>
+    <section class="dpi-section" id="purpose" aria-labelledby="purpose-title">
+      <h2 id="purpose-title">Why build DPI?</h2>
+      <p>Finding records is only part of building a collection. A shortlist still needs to be checked against records already owned, releases on a wantlist and the listings available from different sellers.</p>
+      <p>DPI brings those checks into a repeatable workflow. It is being developed to reduce manual comparisons, help avoid duplicate purchases and make the trade-off between item prices and the number of sellers easier to assess.</p>
+      <p>The project also provides a practical setting for developing API integration, application logic and a path from a local prototype to a cloud-based service.</p>
+    </section>
+    <section class="dpi-section" id="workflow" aria-labelledby="workflow-title">
+      <h2 id="workflow-title">From shortlist to purchase plan</h2>
+      <p>The web interface currently covers collection and wantlist review. Listing validation and purchasing analysis run separately in the Python prototype.</p>
+      <ol class="dpi-workflow">
+        <li><span class="eyebrow">01 · Review</span><h3>Select a list</h3><p>Retrieve the releases from a selected Discogs list.</p></li>
+        <li><span class="eyebrow">02 · Compare</span><h3>Find the gaps</h3><p>Separate owned releases from missing ones, then check the wantlist.</p></li>
+        <li><span class="eyebrow">03 · Assess</span><h3>Check listings</h3><p>Assess supplied candidate listings against condition, location and seller criteria.</p></li>
+        <li><span class="eyebrow">04 · Plan</span><h3>Compare options</h3><p>Compare item costs and seller combinations. Confirm shipping and purchases in Discogs.</p></li>
+      </ol>
+    </section>
+    <section class="dpi-section" id="architecture" aria-labelledby="architecture-title">
+      <h2 id="architecture-title">Application architecture</h2>
+      <figure class="dpi-diagram">
+        <figcaption><span class="eyebrow">Current implementation</span><h3>Local collection review</h3></figcaption>
+        <ol class="dpi-flow" aria-label="Current request flow">
+          <li><strong>Web browser</strong><span>Select a list and view results</span></li>
+          <li><strong>FastAPI routes</strong><span>Handle the review request and render HTML</span></li>
+          <li><strong>Python service</strong><span>Fetch records and compare Release IDs</span></li>
+          <li><strong>Discogs API</strong><span>Lists, collection and wantlist data</span></li>
+        </ol>
+        <p class="dpi-caption">Requests travel from the browser through the Python application to Discogs. The results return as a rendered page. The access token is read on the server from local configuration.</p>
+        <div class="dpi-diagram-note"><strong>Separate purchasing prototype</strong><span>Candidate listing URLs → eligibility checks → seller and price comparisons → purchase report.</span></div>
+      </figure>
+      <figure class="dpi-diagram dpi-proposed">
+        <figcaption><span class="eyebrow">Proposed · Not deployed</span><h3>AWS application design</h3></figcaption>
+        <ol class="dpi-flow" aria-label="Proposed application flow">
+          <li><strong>Web interface</strong><span>S3 &amp; CloudFront deliver the planned frontend</span></li>
+          <li><strong>API Gateway</strong><span>Receive application requests from the browser</span></li>
+          <li><strong>Python services</strong><span>Run comparisons and purchase planning</span></li>
+          <li><strong>Discogs API</strong><span>Retrieve authorised account and listing data</span></li>
+        </ol>
+        <p class="dpi-support-label">Supporting services in the proposed design</p>
+        <ul class="dpi-support">
+          <li><strong>Cognito</strong><span>User identity and API access</span></li>
+          <li><strong>DynamoDB</strong><span>Preferences and saved analysis</span></li>
+          <li><strong>Secrets Manager &amp; KMS</strong><span>Credential storage and encryption</span></li>
+          <li><strong>CloudWatch</strong><span>Logs, metrics and monitoring</span></li>
+        </ul>
+        <p class="dpi-caption">The proposed design separates the frontend from the backend. Lambda or container hosting will be selected after measuring request volume and processing time; the current local interface uses server-rendered HTML.</p>
+      </figure>
+    </section>
+    <section class="dpi-section" id="functions" aria-labelledby="functions-title">
+      <h2 id="functions-title">Key code functions</h2>
+      <p>The main checks use Discogs Release IDs, so different editions or pressings are not treated as the same record simply because their titles match.</p>
+      <div class="dpi-function-list">
+        <article><h3>Retrieve complete account data</h3><code>fetch_all_pages()</code><p>Follows pagination for collection and wantlist endpoints, gathering records across all returned pages before comparison.</p></article>
+        <article><h3>Compare against the collection</h3><code>compare_list_with_collection()</code><p>Checks each list item against a set of owned Release IDs and returns separate owned and missing groups.</p></article>
+        <article><h3>Check wantlist status</h3><code>compare_missing_with_wantlist()</code><p>Separates missing releases already on the wantlist from those that would need adding.</p></article>
+        <article><h3>Assess purchase candidates</h3><code>evaluate_listing()</code><p>Returns reasons for rejecting a listing, including media condition, seller location, rating, availability and missing prices.</p></article>
+        <article><h3>Summarise a purchase plan</h3><code>group_plan_by_seller()</code><p>Groups selected listings by seller. Related functions calculate the item subtotal and count sellers, making alternative plans easier to compare.</p></article>
+      </div>
+      <details class="dpi-code">
+        <summary>See the collection comparison code</summary>
+        <pre><code>owned = []
+missing = []
+
+for item in list_items:
+    release_id = item.get("id")
+
+    if release_id in collection_release_ids:
+        owned.append(item)
+    else:
+        missing.append(item)
+
+return owned, missing</code></pre>
+        <p class="dpi-caption">Excerpt from the current collection comparison function. A set of collection IDs supports direct membership checks for each release.</p>
+      </details>
+    </section>
+    <section class="dpi-section" id="screens" aria-labelledby="screens-title">
+      <h2 id="screens-title">The application in use</h2>
+      <p>These views show the existing local interface rendered with illustrative records. They demonstrate the review screens without using live account data. Select an image to view it at full size.</p>
+      <div class="dpi-screens">
+        <figure>
+          <a href="assets/dpi/dpi-list-review.png" target="_blank" rel="noopener" aria-label="Open list review screenshot in a new tab"><img src="assets/dpi/dpi-list-review.png" width="761" height="725" loading="lazy" alt="List review showing four sample records labelled as in the collection, in the wantlist or not in the wantlist."></a>
+          <figcaption><h3>01 · List status</h3><p>The selected list is brought into one view, with an ownership and wantlist status for each release.</p></figcaption>
+        </figure>
+        <figure>
+          <a href="assets/dpi/dpi-collection-review.png" target="_blank" rel="noopener" aria-label="Open collection review screenshot in a new tab"><img src="assets/dpi/dpi-collection-review.png" width="1137" height="625" loading="lazy" alt="Collection review separating one owned sample record from three missing records, alongside wantlist status and disabled future action buttons."></a>
+          <figcaption><h3>02 · Collection and wantlist review</h3><p>Results separate owned and missing releases. Wantlist updates and the purchase optimiser buttons are currently disabled in the interface; connecting these actions is a next step.</p></figcaption>
+        </figure>
+      </div>
+    </section>
+    <section class="dpi-section" id="progress" aria-labelledby="progress-title">
+      <h2 id="progress-title">Progress &amp; next steps</h2>
+      <div class="dpi-progress">
+        <div><h3>Implemented locally</h3><ul><li>List selection and collection comparison in a web interface.</li><li>Wantlist status checks for missing releases.</li><li>Separate scripts for listing eligibility, purchase planning and reporting.</li></ul></div>
+        <div><h3>Next to develop</h3><ul><li>Connect purchasing analysis to the web interface.</li><li>Add confirmed wantlist updates, stronger validation and error handling.</li><li>Test larger collections and seller combinations before AWS deployment.</li></ul></div>
+      </div>
+      <aside class="dpi-boundary"><h3>A key design constraint</h3><p>The lowest item subtotal is not always the lowest delivered cost. Shipping can change the preferred seller combination, so the final delivery cost and purchase remain subject to confirmation in Discogs.</p></aside>
+    </section>
+    <footer class="page-footer">
+      <p class="eyebrow page-label">Explore further</p>
+      <nav aria-label="Explore the portfolio"><a href="projects.html">Projects <span aria-hidden="true">↗</span></a><a href="cv.html">CV <span aria-hidden="true">↗</span></a><a href="contact.html">Contact <span aria-hidden="true">↗</span></a></nav>
+    </footer>
+  </main>
+</body>
+</html>

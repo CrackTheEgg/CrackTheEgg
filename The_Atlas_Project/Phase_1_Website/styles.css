@@ -1,0 +1,339 @@
+:root {
+  color-scheme: light;
+  --bone: #f4f4f1;
+  --paper: #e9e8e2;
+  --ink: #17283a;
+  --muted-ink: #535e64;
+  --rule: rgba(23, 35, 46, .18);
+  --rule-label-gap: 1.5rem;
+  --letterpress: 0 1px 0 rgba(255, 255, 255, .9), 0 -1px 1px rgba(23, 35, 46, .12);
+  font-family: "Optima", "Candara", "Segoe UI", sans-serif;
+  background: var(--bone);
+  color: var(--ink);
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 240px; }
+button, a { -webkit-tap-highlight-color: transparent; }
+button { font: inherit; color: inherit; }
+button, a { touch-action: manipulation; }
+a { color: inherit; text-underline-offset: .25em; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 7px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* The composition follows the available browser width AND height. */
+.entrance {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(2rem, 5vh, 3.5rem);
+  padding: 2rem 1.25rem;
+  background: radial-gradient(ellipse at 50% 40%, #fafaf8 0%, var(--bone) 68%);
+}
+
+/* Fixed-size Paper 03 tiles; the SVG mirrors each neighbour to match edges. */
+.entrance::before, .content-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("background-paper-03-mirrored.svg") top left / 1200px 900px repeat;
+  filter: grayscale(1);
+  mix-blend-mode: multiply;
+  opacity: .32;
+  pointer-events: none;
+}
+
+.business-card {
+  container-type: inline-size;
+  position: relative;
+  display: block;
+  flex: none;
+  width: min(88vw, calc((100svh - 9rem) * 1.75), 62rem);
+  min-width: min(18rem, calc(100vw - 2.5rem));
+  aspect-ratio: 1.75;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-bottom-color: #d0d0c9;
+  border-right-color: #dadad3;
+  border-radius: 1px;
+  background-color: var(--paper);
+  background-image: url("card-grain.svg");
+  box-shadow: 0 2px 2px #17232e0b, 0 14px 28px -13px #17232e30, 0 35px 65px -22px #17232e26;
+  text-shadow: var(--letterpress);
+  cursor: pointer;
+  transform: none;
+  transition: box-shadow .35s ease;
+}
+/* A fine embossed edge, set just inside the card perimeter. */
+.business-card::before, .content-page .page::before, .menu-panel::before {
+  content: "";
+  position: absolute;
+  inset: clamp(3px, .65cqw, 6px);
+  border: 1px solid var(--paper);
+  border-radius: 1px;
+  box-shadow: -.7px -.7px 1px rgba(255, 255, 255, .65),
+              .7px .7px 1px rgba(70, 76, 75, .14),
+              inset .6px .6px .8px rgba(255, 255, 255, .5),
+              inset -.6px -.6px .8px rgba(70, 76, 75, .1);
+  pointer-events: none;
+}
+/* A blind emboss uses the paper colour; only its edges catch the light. */
+.card-watermark {
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding-right: .1em;
+  font-family: "Baskerville", "Georgia", serif;
+  font-size: 40cqw;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.1em;
+  color: var(--paper);
+  opacity: .625;
+  text-shadow: -.6px -.6px .9px rgba(255, 255, 255, .725), .65px .65px .9px rgba(70, 76, 75, .14);
+  pointer-events: none;
+  user-select: none;
+}
+.card-open { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; text-shadow: inherit; cursor: pointer; }
+.card-identity, .card-bottom { z-index: 1; }
+.card-bottom { position: absolute; left: 7%; right: 7%; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+.card-identity { position: absolute; top: 50%; left: 5%; right: 5%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; }
+.card-name { font-size: 5.25cqw; font-weight: 600; line-height: 1.15; letter-spacing: .115em; text-transform: uppercase; white-space: nowrap; }
+.card-bottom { bottom: 11%; font-size: clamp(.5rem, 1.42cqw, .9rem); line-height: 1.4; letter-spacing: .1em; text-transform: uppercase; }
+.card-front-contact { display: inline-flex; align-items: center; min-height: 44px; margin-block: -12px; pointer-events: auto; text-decoration: none; }
+.card-front-contact:hover { text-decoration: underline; }
+.card-enter { display: inline-flex; align-items: center; }
+.fallback-nav { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .business-card:not(.contact-card):hover { box-shadow: 0 3px 3px #17232e0b, 0 18px 34px -13px #17232e30, 0 45px 75px -22px #17232e26; }
+}
+
+/* Native dialog supplies focus trapping and makes the page behind it inert. */
+.menu-panel {
+  container-type: inline-size;
+  width: min(28rem, calc(100vw - 2.5rem));
+  max-height: calc(100svh - 2.5rem);
+  margin: auto;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-bottom-color: #d0d0c9;
+  border-right-color: #dadad3;
+  border-radius: 1px;
+  color: var(--ink);
+  background: var(--paper) url("card-grain.svg");
+  box-shadow: 0 20px 70px #17232e2b;
+}
+.menu-panel::backdrop { background: #17232e13; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+.menu-panel[open] { animation: reveal .24s ease-out; }
+.eyebrow { margin: 0; font-size: .67rem; line-height: 1.6; letter-spacing: .17em; text-transform: uppercase; color: var(--muted-ink); }
+.menu-heading h2 { margin: .8rem 0 1.6rem; font-size: 2rem; font-weight: 500; text-shadow: var(--letterpress); }
+.menu-links { display: grid; }
+.menu-links a { min-height: 58px; display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .85rem 0; border-top: 1px solid var(--rule); font-size: 1.2rem; text-decoration: none; text-shadow: var(--letterpress); }
+.menu-links a:last-child { border-bottom: 1px solid var(--rule); }
+.menu-links a > span:last-child { font-size: .95rem; color: var(--muted-ink); transition: transform .2s ease; }
+.menu-links a:hover > span:last-child { transform: translate(2px, -2px); }
+.back-button { display: inline-flex; align-items: center; gap: .7rem; min-height: 44px; padding: .4rem 0; margin-top: 1.25rem; border: 0; background: transparent; cursor: pointer; font-size: .95rem; }
+body.menu-open { overflow: hidden; }
+@keyframes reveal { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Keep the viewport and typography stable across card and reading pages. */
+html { scrollbar-gutter: stable both-edges; }
+
+/* Content cards grow with their text; the document scrolls normally. */
+.content-page {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 4rem);
+  background: radial-gradient(ellipse at 50% 40%, #fafaf8 0%, var(--bone) 68%);
+}
+.content-page .page {
+  position: relative;
+  container-type: inline-size;
+  width: 100%;
+  background: var(--paper) url("card-grain.svg");
+  border: 1px solid rgba(255, 255, 255, .65);
+  border-bottom-color: #d0d0c9;
+  border-right-color: #dadad3;
+  border-radius: 1px;
+  box-shadow: 0 2px 2px #17232e0b, 0 14px 28px -13px #17232e30, 0 35px 65px -22px #17232e26;
+}
+
+/* Initial destination pages share the stationery styling. */
+.page { max-width: 76rem; margin-inline: auto; padding: clamp(1.5rem, 5vw, 4.5rem); }
+.page-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .5rem 1.5rem; margin-bottom: clamp(2rem, 6vmin, 4.5rem); }
+.page-header a { display: inline-flex; align-items: center; min-height: 44px; }
+.wordmark { font-size: .75rem; letter-spacing: .13em; text-transform: uppercase; text-decoration: none; }
+.page-back { font-size: .85rem; white-space: nowrap; }
+.page h1 { margin: .75rem 0 1.25rem; font-size: clamp(2rem, 6cqw, 4.5rem); line-height: 1.1; font-weight: 500; text-shadow: var(--letterpress); }
+.page p { max-width: 42rem; margin: 0 0 1.25rem; font-size: 1.0625rem; line-height: 1.7; }
+.page > p:last-child { margin-bottom: 0; }
+.page .eyebrow { margin: 0; font-size: .67rem; }
+.page .lede { font-size: clamp(1.2rem, 2.5vw, 1.6rem); line-height: 1.65; }
+.project-preview { margin-top: 3rem; padding: 1.5rem 0; border-block: 1px solid var(--rule); }
+.project-preview h2 { font-weight: 500; font-size: 1.7rem; }
+.page-note { color: var(--muted-ink); font-size: .9rem !important; }
+.contact-link { display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+  .business-card { transform: none; width: calc(100vw - 2.5rem); }
+  .entrance { gap: 2.5rem; }
+  .page-header { gap: 1rem; }
+}
+@media (max-height: 500px) and (min-width: 601px) {
+  .entrance { gap: 1rem; padding-block: 1rem; }
+  .business-card { width: min(72vw, calc((100svh - 5rem) * 1.75)); transform: none; }
+  .menu-panel { padding: 1rem 2rem; }
+  .menu-heading h2 { margin: .25rem 0 .75rem; font-size: 1.5rem; }
+  .menu-links a { min-height: 44px; padding-block: .5rem; }
+  .back-button { margin-top: .5rem; }
+}
+/* Short landscape windows need compact spacing even when they are wide. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .content-page { padding-block: 1rem; }
+  .content-page .page { padding-block: 1.5rem; }
+  .page-header { margin-bottom: 1.5rem; }
+  .page h1 { font-size: clamp(2rem, 4cqw, 2.75rem); margin-bottom: 1rem; }
+  .page .lede { font-size: 1.2rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* Shared stationery rules for every reading page. */
+.content-page .page-header {
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: var(--rule-label-gap);
+}
+.page .page-label {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+.page-footer {
+  margin-top: clamp(3rem, 7vw, 6rem);
+  padding-top: var(--rule-label-gap);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+}
+.page-footer nav { display: flex; flex-wrap: wrap; gap: .5rem 2rem; }
+.page-footer a { display: inline-flex; min-height: 44px; align-items: center; gap: .75rem; text-decoration: none; }
+.page-footer a:hover { text-decoration: underline; }
+.page-footer a span { font-size: .85em; }
+@media (max-width: 700px) {
+  .page-footer { align-items: flex-start; flex-direction: column; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .content-page .page-header { padding-bottom: .75rem; }
+  .page-footer { margin-top: 2rem; }
+}
+
+/* Contact is the reverse of the homepage card and shares its exact sizing. */
+.contact-card { cursor: auto; }
+.contact-card-copy {
+  position: absolute;
+  inset: 16% 7%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2cqw;
+  text-align: center;
+}
+.contact-card-email, .contact-card-phone { text-decoration: none; display: inline-flex; align-items: center; min-height: 44px; max-width: 100%; font-size: clamp(.7rem, 3cqw, 1.5rem); overflow-wrap: anywhere; }
+.contact-card-back { position: absolute; left: 7%; bottom: 4%; display: inline-flex; align-items: center; min-height: 44px; font-size: clamp(.7rem, 2cqw, 1rem); }
+
+/* A temporary, non-interactive pair of faces turns over before navigation. */
+.card-flip-scene { position: fixed; z-index: 10; perspective: 1400px; pointer-events: none; }
+.card-flip-rotor { width: 100%; height: 100%; transform-style: preserve-3d; }
+.card-flip-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  margin: 0;
+  transform: none;
+  transition: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.card-flip-reverse { transform: rotateY(180deg); }
+.card-flip-scene .business-card { width: 100%; height: 100%; min-width: 0; margin: 0; transform: none; transition: none; }
+
+.project-detail-link { display: inline-flex; align-items: center; min-height: 44px; gap: .5rem; }
+
+/* Explore is an alternative reverse face, using the same card proportions. */
+.explore-card { cursor: auto; }
+.explore-card-links {
+  position: absolute;
+  inset: 18% 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .5cqw;
+}
+.explore-card-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding-inline: .75rem;
+  font-size: clamp(1rem, 3.5cqw, 1.8rem);
+  text-decoration: none;
+}
+.explore-card-links a:hover { text-decoration: underline; }
+@container (max-width: 20rem) {
+  .explore-card-links { flex-direction: row; gap: 0; }
+}
+
+/* The About face opens into the reading page after the turn. */
+.page-flip-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(1.5rem, 4cqw, 2.5rem);
+}
+html.page-arriving .page { visibility: hidden; }
+.page-arrival-card {
+  position: fixed;
+  z-index: 20;
+  min-width: 0;
+  max-width: none;
+  aspect-ratio: auto;
+  margin: 0;
+  transform: none;
+  transition: none;
+  pointer-events: none;
+  cursor: auto;
+}
+
+/* The complete reading page is visible on the reverse as the turn settles. */
+.card-flip-face.page-flip-face {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  background: none;
+  isolation: auto;
+}
+.card-flip-face.page-flip-face::before { content: none; }
+.card-flip-face.page-flip-face .page { cursor: auto; overflow: hidden; }

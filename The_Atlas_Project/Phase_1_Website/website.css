@@ -1,0 +1,63 @@
+/* Case study content uses the same reading card as the rest of the portfolio. */
+.website-case h1 { max-width: none; }
+.website-case .lede { max-width: 48rem; }
+.website-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.website-facts dt { font-size: .67rem; letter-spacing: .13em; text-transform: uppercase; color: var(--muted-ink); margin-bottom: .4rem; }
+.website-facts dd { margin: 0; font-size: .95rem; line-height: 1.5; }
+.website-nav { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 2rem 0 .5rem; }
+.website-nav a { display: inline-flex; align-items: center; min-height: 44px; }
+.website-section { border-top: 1px solid var(--rule); padding-top: 1.5rem; margin-top: 3rem; scroll-margin-top: 1.5rem; }
+.website-nav + .website-section { margin-top: 0; }
+.website-section h2 { font-size: clamp(1.65rem, 3.5cqw, 2.3rem); font-weight: 500; line-height: 1.2; margin: 0 0 1.5rem; }
+.website-section h3 { font-size: 1.2rem; font-weight: 500; margin: 0 0 .75rem; line-height: 1.4; }
+.website-section > p { max-width: none; }
+.website-columns, .website-map-branches, .website-themes, .website-gallery { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+.website-map { border: 1px solid var(--rule); margin: 2rem 0; padding: clamp(1rem, 3cqw, 2rem); }
+.website-map-root { border-bottom: 1px solid var(--rule); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+.website-map-root strong { display: block; font-size: 1.25rem; font-weight: 500; }
+.website-map-root span { color: var(--muted-ink); font-size: .9rem; }
+.website-map ul { margin: 0; padding-left: 1.2rem; line-height: 1.8; }
+.website-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; list-style: none; padding: 0; margin: 2rem 0; counter-reset: step; }
+.website-steps li { border-left: 1px solid var(--rule); padding-left: 1rem; counter-increment: step; }
+.website-steps h3::before { content: counter(step, decimal-leading-zero) " · "; color: var(--muted-ink); }
+.website-steps p { font-size: .95rem; }
+.website-try { border: 1px solid var(--rule); padding: clamp(1.25rem, 3cqw, 2rem); margin: 2rem 0 1.25rem; }
+.website-button { display: inline-flex; align-items: center; justify-content: center; gap: .6rem; min-height: 44px; padding: .6rem 1rem; border: 1px solid var(--rule); border-radius: 2px; background: transparent; color: var(--ink); cursor: pointer; font: inherit; text-decoration: none; }
+.website-button[hidden] { display: none; }
+.website-button:hover { background: #17283a0a; }
+.website-case .website-note { color: var(--muted-ink); font-size: .95rem; }
+.website-themes { margin: 2rem 0; }
+.website-swatch { aspect-ratio: 1.8; display: grid; place-items: center; padding: 1.5rem; border: 1px solid var(--rule); margin-bottom: 1.25rem; }
+.website-swatch span { display: grid; place-items: center; width: 86%; aspect-ratio: 1.75; padding: .5rem; font-size: clamp(.55rem, 1.4cqw, .85rem); letter-spacing: .08em; text-transform: uppercase; background: #e9e8e2 url("card-grain.svg"); color: #17283a; border: 1px solid #ffffffa6; box-shadow: 0 12px 24px #17283a20; text-align: center; }
+.website-swatch-light { background: #f4f4f1; }
+.website-swatch-dark { background: radial-gradient(ellipse, #263644, #101923); }
+.website-swatch-dark span { background-color: #d8d7d0; box-shadow: 0 0 25px 8px #ffdda825; }
+.website-code { border-bottom: 1px solid var(--rule); padding: .75rem 0; }
+.website-code summary { min-height: 44px; padding-block: .6rem; cursor: pointer; }
+.website-code pre { max-width: 100%; overflow-x: auto; padding: 1rem; border: 1px solid var(--rule); font-size: .8rem; line-height: 1.7; }
+.website-code p { font-size: .95rem; max-width: none; }
+.website-gallery { margin-top: 2rem; gap: 2.5rem 2rem; }
+.website-gallery figure { min-width: 0; margin: 0; }
+.website-gallery a { display: block; }
+.website-gallery img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+.website-gallery figcaption { margin-top: 1rem; }
+.website-gallery p { font-size: .95rem; }
+.website-preview { box-sizing: border-box; width: min(74rem, calc(100% - 2rem)); max-width: none; max-height: calc(100svh - 2rem); padding: clamp(1rem, 2vw, 1.5rem); margin: auto; overflow: auto; color: var(--ink); color-scheme: light; background: var(--paper) url("card-grain.svg"); border: 1px solid var(--rule); box-shadow: 0 20px 80px #0005; }
+.website-preview::backdrop { background: #10192370; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+.website-preview-header, .website-preview-controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem 1rem; }
+.website-preview-header h2 { font-size: 1.3rem; font-weight: 500; margin: 0; }
+.website-preview > p { font-size: .95rem; line-height: 1.5; }
+.website-preview-controls { justify-content: flex-start; margin-bottom: 1rem; }
+.website-preview-controls label { display: inline-flex; align-items: center; gap: .75rem; }
+.website-preview select { font: inherit; color: inherit; background: var(--paper); border: 1px solid var(--rule); min-height: 44px; padding: .4rem .6rem; }
+#preview-status { color: var(--muted-ink); font-size: .85rem; }
+.website-preview iframe { display: block; width: 100%; height: clamp(20rem, 60svh, 40rem); border: 1px solid var(--rule); background: var(--bone); }
+body.website-preview-open { overflow: hidden; }
+@container (max-width: 42rem) {
+  .website-columns, .website-map-branches, .website-gallery, .website-steps { grid-template-columns: minmax(0, 1fr); }
+  .website-facts { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+}
+@container (max-width: 26rem) {
+  .website-themes { grid-template-columns: minmax(0, 1fr); }
+  .website-swatch span { font-size: .75rem; }
+}

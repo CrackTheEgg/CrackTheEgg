@@ -1,0 +1,55 @@
+/* Project case studies retain the shared stationery dimensions. */
+.dpi-page h1 { max-width: none; }
+.dpi-page .lede { max-width: 48rem; }
+.dpi-facts { display: grid; grid-template-columns: .5fr 1fr 1fr 1fr; gap: 1.5rem; margin: 2rem 0 1rem; }
+.dpi-facts dt { font-size: .67rem; letter-spacing: .13em; text-transform: uppercase; color: var(--muted-ink); margin-bottom: .4rem; }
+.dpi-facts dd { margin: 0; font-size: .95rem; line-height: 1.5; }
+.dpi-nav { display: flex; flex-wrap: wrap; gap: .25rem 1.5rem; margin: 2.5rem 0 .5rem; }
+.dpi-nav a { display: inline-flex; align-items: center; min-height: 44px; }
+.dpi-section { border-top: 1px solid var(--rule); padding-top: 1.5rem; margin-top: 3rem; scroll-margin-top: 1.5rem; }
+.dpi-nav + .dpi-section { margin-top: 0; }
+.dpi-section h2 { font-size: clamp(1.65rem, 3.5cqw, 2.3rem); font-weight: 500; line-height: 1.2; margin: 0 0 1.5rem; }
+.dpi-section h3 { font-size: 1.2rem; font-weight: 500; margin: .5rem 0 .75rem; line-height: 1.4; }
+.dpi-section > p { max-width: none; }
+.dpi-workflow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; list-style: none; padding: 0; margin: 2rem 0 0; }
+.dpi-workflow li { border-left: 1px solid var(--rule); padding-left: 1rem; }
+.dpi-workflow p, .dpi-page .dpi-caption { font-size: .9rem; line-height: 1.65; margin: 0; }
+.dpi-diagram { margin: 2rem 0; padding: clamp(1rem, 3cqw, 2rem); border: 1px solid var(--rule); }
+.dpi-proposed { border-style: dashed; }
+.dpi-flow { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+.dpi-flow li { position: relative; padding: 1rem .75rem; border: 1px solid var(--rule); display: flex; flex-direction: column; justify-content: center; text-align: center; }
+.dpi-flow li:not(:last-child)::after { content: '→'; position: absolute; width: 1.5rem; right: -1.5rem; top: 50%; transform: translateY(-50%); }
+.dpi-flow strong, .dpi-support strong { font-size: .95rem; font-weight: 500; }
+.dpi-flow span, .dpi-support span { display: block; font-size: .82rem; line-height: 1.5; color: var(--muted-ink); margin-top: .4rem; }
+.dpi-diagram-note { border-top: 1px solid var(--rule); margin-top: 1.5rem; padding-top: 1rem; font-size: .9rem; line-height: 1.6; }
+.dpi-diagram-note strong { display: block; font-weight: 500; }
+.dpi-page .dpi-support-label { font-size: .85rem; margin: 1.5rem 0 .75rem; }
+.dpi-support { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; margin: 0 0 1.5rem; }
+.dpi-function-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 3rem; }
+.dpi-function-list article { padding: .5rem 0; }
+.dpi-function-list code { overflow-wrap: anywhere; font-size: .8rem; color: var(--muted-ink); }
+.dpi-function-list p { margin: .75rem 0 0; font-size: 1rem; }
+.dpi-code { margin-top: 1.5rem; border-block: 1px solid var(--rule); padding: .75rem 0; }
+.dpi-code summary { min-height: 44px; padding-block: .6rem; cursor: pointer; }
+.dpi-code pre { overflow-x: auto; padding: 1rem; border: 1px solid var(--rule); font-size: .85rem; line-height: 1.65; }
+.dpi-screens { display: grid; gap: 2.5rem; margin-top: 2rem; }
+.dpi-screens figure { margin: 0; }
+.dpi-screens a { display: block; width: fit-content; max-width: 100%; margin-inline: auto; }
+.dpi-screens img { display: block; max-width: 100%; height: auto; border: 1px solid var(--rule); }
+.dpi-screens figure:first-child img { width: min(100%, 38rem); }
+.dpi-screens figcaption { margin-top: 1.25rem; }
+.dpi-screens figcaption p { max-width: none; font-size: .95rem; }
+.dpi-progress { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem; }
+.dpi-progress ul { padding-left: 1.25rem; line-height: 1.7; }
+.dpi-progress li + li { margin-top: .5rem; }
+.dpi-boundary { border-left: 2px solid var(--rule); padding-left: 1.25rem; margin-top: 2rem; }
+.dpi-boundary p { max-width: none; margin-bottom: 0; }
+@container (max-width: 46rem) {
+  .dpi-flow { grid-template-columns: minmax(0, 1fr); }
+  .dpi-flow li:not(:last-child)::after { content: '↓'; right: auto; top: auto; left: 50%; bottom: -1.5rem; height: 1.5rem; transform: translateX(-50%); }
+  .dpi-workflow, .dpi-support, .dpi-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (max-width: 30rem) {
+  .dpi-function-list, .dpi-progress, .dpi-workflow { grid-template-columns: minmax(0, 1fr); }
+  .dpi-code pre { font-size: .75rem; }
+}

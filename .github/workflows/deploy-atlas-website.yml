@@ -1,0 +1,36 @@
+name: Deploy Atlas Website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "The_Atlas_Project/Phase_1_Website/**"
+
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy website to AWS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::739275438093:role/AtlasWebsite-GitHubDeployRole
+          aws-region: eu-west-2
+      - name: Deploy website to S3
+        run: |
+          aws s3 sync The_Atlas_Project/Phase_1_Website/ s3://atlas-website-prod-739275438093/ --delete
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id E6NQ1IKHRLQM1 \
+            --paths "/*"

@@ -1,0 +1,19 @@
+/* About content inside the shared stationery layout. */
+.about-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: clamp(2rem, 6vw, 5rem); }
+.about-page h1 { margin: 0; font-size: clamp(2.65rem, 5.6vw, 4.9rem); line-height: 1.13; letter-spacing: -.035em; }
+.about-copy { padding-top: 0; }
+.about-copy p { margin: 0 0 1.5rem; font-size: 1.0625rem; line-height: 1.85; }
+.about-copy .lede { margin-bottom: 2rem; font-size: clamp(1.3rem, 2.1vw, 1.6rem); line-height: 1.55; text-wrap: pretty; }
+.about-copy p:last-child { margin-bottom: 0; }
+@media (max-width: 700px) {
+  .about-layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .about-copy { padding-top: 0; }
+  .about-page h1 { font-size: clamp(2.65rem, 10vw, 4rem); }
+}
+@container (max-width: 42rem) {
+  .about-layout { grid-template-columns: minmax(0, 1fr); gap: 2rem; }
+  .about-copy { padding-top: 0; }
+}
+@media (max-height: 500px) and (orientation: landscape) {
+  .about-page h1 { font-size: clamp(2.25rem, 4.5vw, 3rem); }
+}
