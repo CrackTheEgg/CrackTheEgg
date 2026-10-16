@@ -3,7 +3,7 @@
 import unittest
 from unittest.mock import patch
 
-from aws_data import get_project_data, health_metrics, month_forecast, traffic_metrics
+from aws_data import cost_tag_has_usage, get_project_data, health_metrics, month_forecast, traffic_metrics
 
 
 class FakeCloudWatch:
@@ -32,6 +32,28 @@ class FakeSession:
 
 
 class TrafficMetricsTests(unittest.TestCase):
+    def test_cost_tag_requires_exact_value_in_cost_explorer(self):
+        class FakeCostExplorer:
+            def get_tags(self, **request):
+                self.request = request
+                return {"Tags": ["Atlas-Other", "Atlas"]}
+        class CostSession:
+            def __init__(self): self.client_instance = FakeCostExplorer()
+            def client(self, service, region_name):
+                self.assertion = (service, region_name)
+                return self.client_instance
+        session = CostSession()
+        self.assertTrue(cost_tag_has_usage(session, "Project", "Atlas"))
+        self.assertEqual(session.assertion, ("ce", "us-east-1"))
+        self.assertEqual(session.client_instance.request["TagKey"], "Project")
+        class OtherCostExplorer:
+            def get_tags(self, **_request):
+                return {"Tags": ["Atlas-Other"]}
+        class OtherSession:
+            def client(self, *_args, **_kwargs):
+                return OtherCostExplorer()
+        self.assertFalse(cost_tag_has_usage(OtherSession(), "Project", "Atlas"))
+
     def test_unavailable_credentials_keep_project_visible_without_fake_readings(self):
         project = {"name": "Atlas website", "regions": ["eu-west-2"],
                    "cloudFrontDistributionId": "EXAMPLE"}

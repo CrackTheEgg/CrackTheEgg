@@ -15,7 +15,7 @@ from math import isfinite
 from pathlib import Path
 from urllib.parse import urlparse
 
-from aws_data import get_project_data
+from aws_data import aws_session, cost_tag_has_usage, get_project_data
 
 
 BASE = Path(__file__).resolve().parent
@@ -42,7 +42,7 @@ def configured_projects(path: Path = PROJECTS_FILE) -> list[dict]:
             raise ValueError("Public projects need a name")
         if item.get("tagValue") is not None and (not isinstance(item["tagValue"], str) or not item["tagValue"]):
             raise ValueError("tagValue must be a nonempty string when configured")
-        if not isinstance(item.get("costDataReady", False), bool):
+        if not isinstance(item.get("costDataReady", True), bool):
             raise ValueError("costDataReady must be a boolean")
         if not isinstance(item.get("previewProtected", False), bool):
             raise ValueError("previewProtected must be a boolean")
@@ -125,16 +125,42 @@ def collect(path: Path = PROJECTS_FILE, previous: dict | None = None) -> dict:
                 cost_recent = age is not None and timedelta(0) <= age < timedelta(hours=24) and checked.strftime("%Y-%m") == datetime.now(timezone.utc).strftime("%Y-%m")
             except ValueError:
                 cost_recent = False
-            costs_configured = item.get("showCosts") is True and item.get("costDataReady", True) is True and bool(item.get("tagValue"))
+            current_month = datetime.now(timezone.utc).strftime("%Y-%m")
+            cost_ready = item.get("costDataReady", True) is True
+            if item.get("costDataReady") is False and item.get("showCosts") is True and item.get("tagValue"):
+                cost_ready = old.get("costReady") is True and old.get("costReadyMonth") == current_month
+                probe_time = old.get("costProbeCheckedAt")
+                try:
+                    probe_checked = datetime.fromisoformat(probe_time) if isinstance(probe_time, str) else None
+                    probe_recent = (probe_checked is not None and probe_checked.tzinfo is not None
+                                    and timedelta(0) <= datetime.now(timezone.utc) - probe_checked < timedelta(hours=6)
+                                    and probe_checked.strftime("%Y-%m") == current_month)
+                except ValueError:
+                    probe_recent = False
+                if not cost_ready and not probe_recent:
+                    try:
+                        cost_ready = cost_tag_has_usage(
+                            aws_session(item), os.environ.get("ATLAS_PROJECT_TAG_KEY", "Project"), item["tagValue"])
+                    except Exception:
+                        cost_ready = False
+                    probe_time = datetime.now(timezone.utc).isoformat()
+            else:
+                probe_time = None
+            effective_item = {**item, "costDataReady": cost_ready}
+            costs_configured = item.get("showCosts") is True and cost_ready and bool(item.get("tagValue"))
             reuse_cost = costs_configured and cost_recent and old.get("monthCost") is not None
-            data = get_project_data(item, include_costs=costs_configured and not reuse_cost)
+            data = get_project_data(effective_item, include_costs=costs_configured and not reuse_cost)
             if reuse_cost:
                 for field in ("monthCost", "currency", "dailyCost", "services", "costCheckedAt",
                               "monthForecast", "forecastCurrency", "forecastCheckedAt"):
                     data[field] = old.get(field)
             elif item.get("showCosts") is True and data.get("monthCost") is not None:
                 data["costCheckedAt"] = datetime.now(timezone.utc).isoformat()
-            results.append(public_project(item, data))
+            published = public_project(effective_item, data)
+            published["costReady"] = cost_ready
+            published["costReadyMonth"] = current_month if cost_ready else None
+            published["costProbeCheckedAt"] = probe_time
+            results.append(published)
         except Exception:
             results.append({
                 "id": item["id"], "name": item["name"], "source": "aws",

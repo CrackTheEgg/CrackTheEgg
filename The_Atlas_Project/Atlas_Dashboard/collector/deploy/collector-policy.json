@@ -4,7 +4,7 @@
     {
       "Sid": "ReadProjectMetrics",
       "Effect": "Allow",
-      "Action": ["cloudwatch:GetMetricStatistics", "tag:GetResources", "ce:GetCostAndUsage", "ce:GetCostForecast"],
+      "Action": ["cloudwatch:GetMetricStatistics", "tag:GetResources", "ce:GetTags", "ce:GetCostAndUsage", "ce:GetCostForecast"],
       "Resource": "*"
     },
     {

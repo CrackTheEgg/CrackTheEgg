@@ -81,7 +81,9 @@ class PublicSnapshotTests(unittest.TestCase):
         current = {"monthCost": 0, "monthForecast": 0,
                    "services": [{"name": "Amazon CloudFront", "cost": 0}],
                    "resources": [], "warnings": [], "checkedAt": datetime.now(timezone.utc).isoformat()}
-        with patch.object(public_snapshot, "get_project_data", return_value=current) as reader:
+        with patch.object(public_snapshot, "cost_tag_has_usage", return_value=False), \
+             patch.object(public_snapshot, "aws_session"), \
+             patch.object(public_snapshot, "get_project_data", return_value=current) as reader:
             snapshot = public_snapshot.collect(config)
         reader.assert_called_once()
         self.assertFalse(reader.call_args.kwargs["include_costs"])
@@ -92,6 +94,36 @@ class PublicSnapshotTests(unittest.TestCase):
         self.assertEqual(website["services"], [])
         self.assertNotIn("E6NQ1IKHRLQM1", json.dumps(snapshot))
         self.assertNotIn('"Atlas"', json.dumps(snapshot))
+
+    def test_atlas_costs_start_automatically_after_tagged_usage_appears(self):
+        config = Path(__file__).resolve().parent / "public_projects.json"
+        current = {"monthCost": 4.25, "currency": "USD", "dailyCost": [{"date": "2026-10-16", "cost": 4.25}],
+                   "services": [{"name": "Amazon CloudFront", "cost": 4.25}],
+                   "monthForecast": 7.5, "forecastCurrency": "USD", "resources": [],
+                   "warnings": [], "checkedAt": datetime.now(timezone.utc).isoformat()}
+        with patch.object(public_snapshot, "cost_tag_has_usage", return_value=True) as probe, \
+             patch.object(public_snapshot, "aws_session"), \
+             patch.object(public_snapshot, "get_project_data", return_value=current) as reader:
+            snapshot = public_snapshot.collect(config)
+        probe.assert_called_once()
+        self.assertTrue(reader.call_args.kwargs["include_costs"])
+        website = snapshot["projects"][0]
+        self.assertTrue(website["costReady"])
+        self.assertEqual(website["monthCost"], 4.25)
+        self.assertEqual(website["monthForecast"], 7.5)
+
+    def test_missing_cost_data_is_rechecked_only_after_six_hours(self):
+        config = Path(__file__).resolve().parent / "public_projects.json"
+        previous = {"projects": [{"id": "atlas-website", "costReady": False,
+                                  "costProbeCheckedAt": datetime.now(timezone.utc).isoformat()}]}
+        current = {"monthCost": None, "resources": [], "warnings": [],
+                   "checkedAt": datetime.now(timezone.utc).isoformat()}
+        with patch.object(public_snapshot, "cost_tag_has_usage") as probe, \
+             patch.object(public_snapshot, "get_project_data", return_value=current) as reader:
+            snapshot = public_snapshot.collect(config, previous=previous)
+        probe.assert_not_called()
+        self.assertFalse(reader.call_args.kwargs["include_costs"])
+        self.assertIsNone(snapshot["projects"][0]["monthCost"])
 
     def test_recent_cost_is_reused_while_compute_refreshes(self):
         now = datetime.now(timezone.utc).isoformat()

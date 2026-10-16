@@ -62,6 +62,26 @@ def month_cost(session, tag_key: str, tag_value: str) -> dict:
     }
 
 
+def cost_tag_has_usage(session, tag_key: str, tag_value: str) -> bool:
+    """Require a Cost Explorer tag value for this month before publishing costs."""
+    today = datetime.now(timezone.utc).date()
+    request = {
+        "TimePeriod": {"Start": today.replace(day=1).isoformat(),
+                       "End": (today + timedelta(days=1)).isoformat()},
+        "TagKey": tag_key,
+        "SearchString": tag_value,
+    }
+    client = session.client("ce", region_name="us-east-1")
+    while True:
+        response = client.get_tags(**request)
+        if tag_value in response.get("Tags", []):
+            return True
+        token = response.get("NextPageToken")
+        if not token:
+            return False
+        request["NextPageToken"] = token
+
+
 def month_forecast(session, tag_key: str, tag_value: str) -> dict:
     """Ask Cost Explorer for the current month's tagged unblended-cost estimate."""
     today = datetime.now(timezone.utc).date()
