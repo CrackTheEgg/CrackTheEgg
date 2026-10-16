@@ -1,0 +1,27 @@
+/* Dashboard case study: shared portfolio paper, with a contained app preview. */
+.dashboard-case h1 { font-size: clamp(2rem, 5.4cqw, 4rem); }
+.dashboard-actions { margin: 1.75rem 0 2rem; }
+.dashboard-case .dashboard-primary { background: #17283a; color: #f4f4f1; border-color: #17283a; text-shadow: none; }
+.dashboard-case .dashboard-primary:hover { background: #294259; }
+.dashboard-actions .website-note { margin: .75rem 0 0; }
+.dashboard-image { margin: 2.5rem 0; }
+.dashboard-image a { display: block; border: 1px solid var(--rule); background: #071122; }
+.dashboard-image img { display: block; width: 100%; height: auto; aspect-ratio: 1.4; object-fit: cover; object-position: top; }
+.dashboard-image figcaption { margin-top: .85rem; color: var(--muted-ink); font-size: .9rem; line-height: 1.6; }
+.dashboard-flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); list-style: none; padding: 0; margin: 2rem 0; gap: 1rem; }
+.dashboard-flow li { padding: 1.15rem; border: 1px solid var(--rule); min-width: 0; }
+.dashboard-flow .eyebrow { display: block; margin-bottom: 1rem; }
+.dashboard-flow h3 { font-size: 1.1rem; }
+.dashboard-flow p { font-size: .95rem; margin-bottom: 0; }
+.dashboard-status { margin: 1.5rem 0 0; }
+.dashboard-status > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr); gap: 2rem; padding: 1.5rem 0; border-top: 1px solid var(--rule); }
+.dashboard-status dt { font-size: 1.15rem; line-height: 1.5; }
+.dashboard-status dd { margin: 0; font-size: 1.0625rem; line-height: 1.7; }
+.dashboard-state { display: block; width: fit-content; margin-top: .5rem; padding: .15rem .5rem; border: 1px solid var(--rule); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+.dashboard-state-pending { color: var(--muted-ink); }
+@container (max-width: 52rem) { .dashboard-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@container (max-width: 32rem) {
+  .dashboard-flow { grid-template-columns: minmax(0, 1fr); }
+  .dashboard-status > div { grid-template-columns: minmax(0, 1fr); gap: .75rem; }
+  .dashboard-case h1 { font-size: clamp(2rem, 8cqw, 2.75rem); }
+}
