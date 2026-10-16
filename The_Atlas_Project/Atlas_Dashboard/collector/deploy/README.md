@@ -1,0 +1,9 @@
+# Atlas dashboard AWS release
+
+The public dashboard HTML, CSS and JavaScript are deployed by the existing Atlas website workflow to the site's private S3 bucket and served through CloudFront. The website remains behind the existing Atlas Preview password until the owner chooses to remove it.
+
+`AtlasDashboard-PublicCollector` runs every 10 minutes in `eu-west-2`. It reads CloudWatch traffic and error metrics and the Atlas resource tag, then writes only `atlas-dashboard/data/latest.json` in the website bucket. The website deployment excludes `atlas-dashboard/data/*` from its `s3 sync --delete` operation. The JSON contains only approved public fields. It omits AWS account IDs, ARNs, distribution IDs, billing records and credentials.
+
+The collector execution role's trust and inline policy are in this directory. Its S3 object permissions target one snapshot key. S3 `ListBucket` is needed so a first run can distinguish a missing snapshot from an access denial. The log group `/aws/lambda/AtlasDashboard-PublicCollector` retains 14 days of logs. The GitHub OIDC role can update and invoke only that Lambda function. The workflow in `.github/workflows/deploy-atlas-dashboard-collector.yml` tests and deploys collector code from `The_Atlas_Project/Atlas_Dashboard/collector/`.
+
+The verified website tag is `Project = Atlas`. AWS Billing activated the `Project` cost allocation tag on 16 October 2026, but Cost Explorer had not yet returned the `Atlas` tag value. `costDataReady` remains false. Turn it on only after a read-only Cost Explorer check confirms attributable data, then redeploy the collector through GitHub. Visits, page views and availability remain unavailable until a RUM monitor and Synthetics canary are separately approved and installed. CloudFront 4xx includes expected preview-password challenges.

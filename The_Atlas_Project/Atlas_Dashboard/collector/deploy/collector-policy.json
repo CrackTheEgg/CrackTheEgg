@@ -1,0 +1,29 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadProjectMetrics",
+      "Effect": "Allow",
+      "Action": ["cloudwatch:GetMetricStatistics", "tag:GetResources", "ce:GetCostAndUsage", "ce:GetCostForecast"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ReadAndPublishPublicSnapshot",
+      "Effect": "Allow",
+      "Action": ["s3:GetObject", "s3:PutObject"],
+      "Resource": "arn:aws:s3:::atlas-website-prod-739275438093/atlas-dashboard/data/latest.json"
+    },
+    {
+      "Sid": "DetectFirstSnapshot",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::atlas-website-prod-739275438093"
+    },
+    {
+      "Sid": "WriteCollectorLogs",
+      "Effect": "Allow",
+      "Action": ["logs:CreateLogStream", "logs:PutLogEvents"],
+      "Resource": "arn:aws:logs:eu-west-2:739275438093:log-group:/aws/lambda/AtlasDashboard-PublicCollector:*"
+    }
+  ]
+}

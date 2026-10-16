@@ -1,0 +1,9 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [{
+    "Sid": "DeployAndRefreshCollector",
+    "Effect": "Allow",
+    "Action": ["lambda:GetFunction", "lambda:GetFunctionConfiguration", "lambda:UpdateFunctionCode", "lambda:InvokeFunction"],
+    "Resource": "arn:aws:lambda:eu-west-2:739275438093:function:AtlasDashboard-PublicCollector"
+  }]
+}

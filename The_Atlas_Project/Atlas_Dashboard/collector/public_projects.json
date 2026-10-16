@@ -1,0 +1,15 @@
+[
+  {
+    "id": "atlas-website",
+    "name": "Atlas website",
+    "url": "https://christianhegarty.com",
+    "public": true,
+    "tagValue": "Atlas",
+    "costDataReady": false,
+    "previewProtected": true,
+    "regions": ["eu-west-2"],
+    "cloudFrontDistributionId": "E6NQ1IKHRLQM1",
+    "showCosts": true,
+    "showResourceNames": false
+  }
+]

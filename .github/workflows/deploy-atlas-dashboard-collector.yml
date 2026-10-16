@@ -1,0 +1,63 @@
+name: Deploy Atlas Dashboard Collector
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "The_Atlas_Project/Atlas_Dashboard/collector/**"
+      - ".github/workflows/deploy-atlas-dashboard-collector.yml"
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: atlas-dashboard-collector
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Test and deploy collector
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: The_Atlas_Project/Atlas_Dashboard/collector
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Test collector and public data boundary
+        run: python3 -m unittest discover -p 'test_*.py' -v
+      - name: Package collector
+        run: python3 -m zipfile -c collector.zip aws_data.py public_snapshot.py public_projects.json
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v5
+        with:
+          role-to-assume: arn:aws:iam::739275438093:role/AtlasDashboard-GitHubDeployRole
+          aws-region: eu-west-2
+      - name: Update collector code
+        run: |
+          aws lambda update-function-code \
+            --function-name AtlasDashboard-PublicCollector \
+            --zip-file fileb://collector.zip
+          aws lambda wait function-updated --function-name AtlasDashboard-PublicCollector
+      - name: Refresh dashboard snapshot
+        run: |
+          aws lambda invoke \
+            --function-name AtlasDashboard-PublicCollector \
+            --payload '{}' \
+            --cli-binary-format raw-in-base64-out \
+            /tmp/atlas-dashboard-collector-result.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('/tmp/atlas-dashboard-collector-result.json').read_text())
+          if result.get('projectCount', 0) < 1 or result.get('key') != 'atlas-dashboard/data/latest.json':
+              raise SystemExit('Collector refresh did not publish a valid snapshot')
+          PY

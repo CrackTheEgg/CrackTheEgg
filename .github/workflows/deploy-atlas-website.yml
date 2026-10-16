@@ -28,7 +28,7 @@ jobs:
           aws-region: eu-west-2
       - name: Deploy website to S3
         run: |
-          aws s3 sync The_Atlas_Project/Phase_1_Website/ s3://atlas-website-prod-739275438093/ --delete
+          aws s3 sync The_Atlas_Project/Phase_1_Website/ s3://atlas-website-prod-739275438093/ --delete --exclude "atlas-dashboard/data/*"
       - name: Invalidate CloudFront cache
         run: |
           aws cloudfront create-invalidation \
