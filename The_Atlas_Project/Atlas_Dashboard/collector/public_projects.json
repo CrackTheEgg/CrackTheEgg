@@ -10,6 +10,8 @@
     "previewProtected": true,
     "regions": ["eu-west-2"],
     "cloudFrontDistributionId": "E6NQ1IKHRLQM1",
+    "rumAppMonitor": "AtlasWebsiteAnalytics",
+    "rumRegion": "eu-west-2",
     "showCosts": true,
     "showResourceNames": false
   },

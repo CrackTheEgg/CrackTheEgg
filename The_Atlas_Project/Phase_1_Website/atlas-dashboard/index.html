@@ -5,8 +5,10 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#071122">
   <title>Atlas | AWS Metrics Dashboard</title>
+  <link rel="stylesheet" href="../analytics.css?v=20261022-1">
+  <script src="../analytics.js?v=20261022-1" defer></script>
   <link rel="stylesheet" href="./style.css?v=f4e947954d79">
-  <script src="./app.js?v=e00c41d4bc1c" defer></script>
+  <script src="./app.js?v=5d6e6b50ad4e" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -59,7 +61,7 @@
 
         <div class="section-heading overview-section" id="traffic-summary"><div><div class="eyebrow subtle">04 / TRAFFIC OVERVIEW</div><h2>Traffic across live projects</h2><p>Month to date · requests include pages, assets and prefetches.</p></div></div>
         <section class="traffic-grid" aria-label="Traffic across live projects">
-          <article class="traffic-card"><span class="overline">TRACKED VISITS</span><strong id="overview-visits">—</strong><p>Sessions; shown when analytics is connected</p></article>
+          <article class="traffic-card"><span class="overline">TRACKED VISITS</span><strong id="overview-visits">—</strong><p>Sessions from visitors who accept analytics</p></article>
           <article class="traffic-card"><span class="overline">PAGE VIEWS</span><strong id="overview-pageviews">—</strong><p>Tracked page view events</p></article>
           <article class="traffic-card"><span class="overline">CLOUDFRONT REQUESTS</span><strong id="overview-requests">—</strong><p>Delivery requests, not visitor counts</p></article>
           <article class="traffic-card"><span class="overline">DATA DELIVERED</span><strong id="overview-transfer">—</strong><p>CloudFront bytes downloaded</p></article>
@@ -82,7 +84,7 @@
 
         <div class="section-heading" id="traffic"><div><div class="eyebrow subtle">02 / AUDIENCE &amp; DELIVERY</div><h2>Project traffic</h2><p>Month to date · visits and page views require website analytics.</p></div><span id="traffic-status" class="status-pill">Awaiting analytics</span></div>
         <section class="traffic-grid" aria-label="Project traffic statistics">
-          <article class="traffic-card"><span class="overline">VISITS</span><strong id="visits-value">—</strong><p>Tracked sessions, not unique people</p></article>
+          <article class="traffic-card"><span class="overline">VISITS</span><strong id="visits-value">—</strong><p>Consented sessions, not unique people</p></article>
           <article class="traffic-card"><span class="overline">PAGE VIEWS</span><strong id="pageviews-value">—</strong><p>Tracked page view events</p></article>
           <article class="traffic-card"><span class="overline">CLOUDFRONT REQUESTS</span><strong id="requests-value">—</strong><p>Includes pages, assets and prefetches</p></article>
           <article class="traffic-card"><span class="overline">DATA DELIVERED</span><strong id="transfer-value">—</strong><p>CloudFront bytes downloaded</p></article>

@@ -23,7 +23,7 @@ Open http://127.0.0.1:8765. Stop the server with Ctrl+C. It listens only on this
 - `background-paper-03.jpg`: Paper and Fabrics-03 from the user’s Joel Grimes Assets collection, used as a faint grayscale background overlay. The original asset remains in the shared Photoshop Assets folder.
 - `about.html`, `contact.html`, `projects.html`, `cv.html`: initial destination pages, ready for fuller content.
 
-No packages, external fonts, analytics, or build step are required.
+No packages, external fonts, or build step are required. Opt-in CloudWatch RUM analytics loads only after consent on the hosted site; local previews do not send events.
 
 ## Agreed design
 

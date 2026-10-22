@@ -22,7 +22,7 @@ function renderTraffic(data) {
   const analyticsReady = traffic.visits != null || traffic.pageViews != null;
   setText('traffic-status', analyticsReady ? 'Analytics connected' : 'Awaiting analytics');
   const updated = traffic.checkedAt ? new Date(traffic.checkedAt).toLocaleString() : null;
-  setText('traffic-updated', updated ? `Traffic checked ${updated}. Visits are sessions; CloudFront requests include assets and prefetches.` : 'Visits and page views appear after project analytics is connected. CloudFront delivery metrics appear when configured.');
+  setText('traffic-updated', updated ? `Traffic checked ${updated}. Visits count sessions after analytics consent; CloudFront requests include assets and prefetches.` : 'Visits and page views appear after visitors accept analytics. CloudFront delivery metrics appear when configured.');
 }
 
 function renderHealth(data) {
@@ -187,7 +187,7 @@ function renderOverviewTraffic(projects) {
   setText('overview-requests', fmtNumber(sumIfComplete('requests')));
   setText('overview-transfer', fmtTransfer(sumIfComplete('bytesDownloaded')));
   setText('overview-traffic-note', live.length
-    ? `Across ${live.length} live project${live.length === 1 ? '' : 's'}. Missing project readings stay unavailable; CloudFront requests are not visits. Projects sharing one distribution may overlap.`
+    ? `Across ${live.length} live project${live.length === 1 ? '' : 's'}. Visits count consented sessions; missing readings stay unavailable. CloudFront requests are not visits. Projects sharing one distribution may overlap.`
     : 'No live project traffic is available yet.');
 }
 
