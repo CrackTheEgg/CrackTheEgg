@@ -1,0 +1,58 @@
+/* Shared account navigation; sign-out confirmation is handled by Lambda. */
+.session-sign-out {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: .5rem .85rem;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-size: .875rem;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.session-sign-out:hover { text-decoration: underline; text-underline-offset: .2em; }
+.session-sign-out:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.page-header-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem 1.25rem; }
+.card-bottom:has(.card-session-nav) { display: grid; grid-template-columns: 1fr auto 1fr; }
+.card-bottom .card-session-nav { display: flex; justify-content: center; pointer-events: auto; }
+.card-bottom .session-sign-out {
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  font-size: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+.card-bottom .card-enter { justify-self: end; }
+.top-actions .session-sign-out { color: #dce9ff; border-color: #829bb8; }
+@media (max-width: 600px) {
+  .topbar { height: auto; min-height: 70px; flex-wrap: wrap; gap: .5rem; padding-block: .75rem; }
+  .top-actions { flex-wrap: wrap; gap: .75rem; }
+}
+@media print {
+  .session-sign-out, .card-session-nav { display: none; }
+}
+
+/* Reverse and contact cards mirror the existing bottom-left back link. */
+.business-card .card-corner-sign-out {
+  position: absolute;
+  right: 7%;
+  bottom: 4%;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  font-size: clamp(.7rem, 2cqw, 1rem);
+  line-height: inherit;
+  text-decoration: underline;
+  text-underline-offset: .25em;
+}
+
+/* Preserve header spacing while displaying a plain sign-out link. */
+.session-sign-out.session-sign-out-plain { border-color: transparent; }
