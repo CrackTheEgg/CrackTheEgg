@@ -134,7 +134,9 @@ function renderAccount(account = {}) {
     ? 'Confirmed direct charges plus DNS; other project costs may still be missing'
     : 'Known direct AWS charges plus allocated hosted-zone DNS');
   setText('account-direct', fmtMoney(account.directProjectCost, currency));
-  setText('account-direct-note', account.directProjectPartial ? 'Partial: some projects have no tagged cost data yet' : 'All configured projects included');
+  setText('account-direct-note', account.directProjectPartial
+    ? 'Partial tagged charges; DNS appears separately'
+    : 'Tagged charges; DNS appears separately');
   setText('account-dns', fmtMoney(account.allocatedDnsCost, currency));
   setText('account-shared', fmtMoney(account.sharedUnallocatedCost, currency));
   setText('account-shared-note', account.sharedIncludesUnattributedProjects ? 'Includes charges awaiting project attribution' : 'Remaining shared or unallocated charges');
