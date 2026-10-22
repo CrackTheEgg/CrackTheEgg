@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="How Christian Hegarty’s professional portfolio was built: site structure, responsive cards, page transitions, dark mode, AWS hosting and automated deployment.">
+  <meta name="description" content="How Christian Hegarty’s professional portfolio was built: site structure, responsive cards, page transitions, dark mode, AWS hosting, automated deployment and secure owner access.">
   <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#101923" media="(prefers-color-scheme: dark)">
   <title>Professional Portfolio Website — Christian Hegarty</title>
@@ -32,7 +32,7 @@
       <div><dt>Hosting</dt><dd>AWS · Automated deployment</dd></div>
     </dl>
     <nav class="website-nav" aria-label="Case study sections">
-      <a href="#structure">Structure</a><a href="#design">Design</a><a href="#motion">Card flip</a><a href="#appearance">Night mode</a><a href="#code">Code</a><a href="#screens">Screenshots</a><a href="#hosting">AWS hosting</a>
+      <a href="#structure">Structure</a><a href="#design">Design</a><a href="#motion">Card flip</a><a href="#appearance">Night mode</a><a href="#code">Code</a><a href="#screens">Screenshots</a><a href="#hosting">AWS hosting</a><a href="#security">Security</a>
     </nav>
 
     <section class="website-section" id="structure" aria-labelledby="structure-title">
@@ -116,6 +116,19 @@ aspect-ratio: 1.75;</code></pre><p>The card size considers both the available wi
       <p>GitHub Actions publishes website changes pushed to the main branch. The workflow uses OpenID Connect (OIDC) to obtain temporary AWS credentials, synchronises the website files to S3 and invalidates the CloudFront cache. Deployment permissions are limited to the website bucket and distribution.</p>
       <p>This replaces manual uploads with a repeatable release process. The initial deployment has been completed and verified at <a href="https://christianhegarty.com">christianhegarty.com</a> and <a href="https://www.christianhegarty.com">www.christianhegarty.com</a>.</p>
       <p class="website-note">Release workflow: edit → local preview → commit → push → GitHub Actions → S3 → CloudFront.</p>
+    </section>
+
+    <section class="website-section" id="security" aria-labelledby="security-title">
+      <h2 id="security-title">Security and access control</h2>
+      <p>The portfolio uses a private Amazon S3 bucket behind CloudFront, with HTTPS enforced. S3 blocks public access, and CloudFront uses Origin Access Control to retrieve website files.</p>
+      <h3>Owner access with multi-factor authentication</h3>
+      <p>During development, access is restricted to the owner through Amazon Cognito. Self-registration is disabled, and sign-in requires a password and an authenticator app code.</p>
+      <p>A custom Lambda@Edge handler checks authentication before CloudFront serves protected pages and assets, including cached content. It validates signed identity tokens and checks that they belong to the approved owner. The login flow uses authorization codes with PKCE, state and nonce checks.</p>
+      <h3>Session handling and sign-out</h3>
+      <p>Session cookies use Secure, HttpOnly and SameSite protections. Sessions can refresh within an eight-hour maximum duration, and authentication credentials are removed before requests reach S3. Sign-out clears the browser’s session cookies and requests revocation of the refresh token.</p>
+      <h3>Validation completed</h3>
+      <p>Validation covered password changes, authenticator setup, navigation between pages without repeated login, and sign-out followed by a protected dashboard redirect back to login. The handler also passes 45 local automated tests covering authentication checks, session handling and failure cases.</p>
+      <p class="website-note"><strong>Known limitation:</strong> an already-issued identity token can remain valid until it expires, even after its refresh token is revoked.</p>
     </section>
     <footer class="page-footer">
       <p class="eyebrow page-label">Explore further</p>
