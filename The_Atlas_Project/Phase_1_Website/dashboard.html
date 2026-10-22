@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Atlas AWS Metrics Dashboard: live CloudFront traffic and error metrics, a scheduled AWS collector and a project view designed for resource monitoring and cost reporting.">
+  <meta name="description" content="Atlas AWS Metrics Dashboard: actual AWS account costs, project cost attribution, opt-in visitor analytics and operational metrics in one place.">
   <meta name="theme-color" content="#f4f4f1" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#101923" media="(prefers-color-scheme: dark)">
   <title>Atlas AWS Metrics Dashboard — Christian Hegarty</title>
@@ -23,8 +23,8 @@
     </header>
     <p class="eyebrow page-label">Project case study · Live on AWS</p>
     <h1>Atlas AWS Metrics Dashboard</h1>
-    <p class="lede">A shared view of the traffic, reliability, resources and running costs of projects hosted on AWS.</p>
-    <p>The dashboard brings operational information into the portfolio, starting with this website. It shows live AWS account costs and CloudFront delivery metrics. Opt-in visitor analytics is connected for session and page-view counts as visitors accept tracking.</p>
+    <p class="lede">The portfolio’s AWS costs, traffic and operational data in one place.</p>
+    <p>The Atlas AWS Metrics Dashboard is a working project hosted alongside the Atlas website on AWS, with the existing Atlas Preview password controlling access.</p>
     <div class="dashboard-actions">
       <a class="website-button dashboard-primary" href="https://christianhegarty.com/atlas-dashboard/index.html" target="_blank" rel="noopener noreferrer" aria-describedby="dashboard-access">View live dashboard <span aria-hidden="true">↗</span></a>
       <p class="website-note" id="dashboard-access">Opens in a new tab · Atlas Preview password required.</p>
@@ -36,10 +36,10 @@
     </dl>
     <figure class="dashboard-image">
       <a href="assets/dashboard/dashboard-interface.jpg" target="_blank" rel="noopener" aria-label="View the full dashboard screenshot (opens in a new tab)"><img src="assets/dashboard/dashboard-interface.jpg" width="1265" height="1824" alt="Atlas dashboard interface in dark blue, silver and hot pink, with sections for traffic, reliability, costs and AWS resources. This local preview shows unavailable values."></a>
-      <figcaption>Interface captured locally, without the production data feed. Select the image to see the full dashboard; the live version provides CloudFront metrics.</figcaption>
+      <figcaption>Earlier interface captured locally, without the production data feed. Select the image to view it in full; the live dashboard now includes the account cost overview and individual project views described below.</figcaption>
     </figure>
     <nav class="website-nav" aria-label="Case study sections">
-      <a href="#purpose">Purpose</a><a href="#architecture">Architecture</a><a href="#status">Current status</a><a href="#privacy">Privacy</a><a href="#next">Next steps</a>
+      <a href="#purpose">Purpose</a><a href="#costs">Cost overview</a><a href="#architecture">Architecture</a><a href="#status">Current status</a><a href="#privacy">Privacy</a><a href="#next">Next steps</a>
     </nav>
 
     <section class="website-section" id="purpose" aria-labelledby="purpose-title">
@@ -47,9 +47,16 @@
       <p>Publishing an application is only the start. Understanding how it is being used, how it responds and what it costs means bringing information together from several AWS services.</p>
       <p>This project creates one place to review those signals across the portfolio. The website is the first connected project, providing a working foundation for monitoring future applications.</p>
       <div class="website-columns">
-        <div><h3>A focused project view</h3><p>Traffic, reliability, resource inventory and cost reporting sit together, with project cards ready for additional hosted applications.</p></div>
-        <div><h3>A distinct visual identity</h3><p>A responsive cyberpunk interface combines dark blue panels, white type and silver edges with hot pink accents for emphasis. Clear labels distinguish measured values from data that is not yet available.</p></div>
+        <div><h3>A focused project view</h3><p>Visitors select a card in Explore each project to open its detailed view and return to the overview when finished. Each view brings together available cost trends, costs by AWS service, traffic, CloudFront error rates and a resource inventory.</p></div>
+        <div><h3>A distinct visual identity</h3><p>The responsive interface uses dark blue, white and silver with hot pink accents, giving the monitoring project its own visual identity within the Atlas portfolio.</p></div>
       </div>
+    </section>
+
+    <section class="website-section" id="costs" aria-labelledby="costs-title">
+      <h2 id="costs-title">Understanding the AWS account total</h2>
+      <p>The overview leads with the <strong>actual month-to-date AWS account cost</strong> from Cost Explorer. It shows the charges behind that total—direct project running costs, allocated Route 53 DNS, one-off domain charges and tax—then groups them into overall project running costs, setup and one-off charges, and shared or unattributed costs.</p>
+      <p>Allocated DNS is a share of the real AWS charge, so it is not added to the account total a second time.</p>
+      <p>The dashboard displays figures that AWS has supplied and clearly marks figures that are unavailable or only partly attributed.</p>
     </section>
 
     <section class="website-section" id="architecture" aria-labelledby="architecture-title">
@@ -61,6 +68,7 @@
         <li><span class="eyebrow">03 · Publish</span><h3>Private S3</h3><p>The collector writes the approved snapshot to a dedicated object in the website bucket. Website deployments preserve this data.</p></li>
         <li><span class="eyebrow">04 · Display</span><h3>CloudFront &amp; browser</h3><p>CloudFront serves the dashboard and snapshot over HTTPS. JavaScript renders the selected project behind the existing preview password.</p></li>
       </ol>
+      <p>Website and collector changes are deployed through GitHub Actions to the existing S3 and CloudFront setup.</p>
       <p class="website-note">The browser checks for a new snapshot every minute. AWS collection runs every ten minutes; source metrics can lag. Cost data is checked separately at a slower interval.</p>
     </section>
 
@@ -71,8 +79,8 @@
         <div><dt>CloudFront delivery <span class="dashboard-state">Live</span></dt><dd>Request counts and data delivered for the portfolio website. Requests include pages, assets and prefetches; they do not represent visits or page views.</dd></div>
         <div><dt>CloudFront error rates <span class="dashboard-state">Live</span></dt><dd>4xx and 5xx rates provide delivery diagnostics. The preview password causes expected 4xx responses, so the 4xx rate is not an application failure rate.</dd></div>
         <div><dt>Collection &amp; resource view <span class="dashboard-state">Live</span></dt><dd>A scheduled collector refreshes the published AWS snapshot every ten minutes. Project resources use generic labels in the visitor view.</dd></div>
-        <div><dt>Costs &amp; forecast <span class="dashboard-state">Partly live</span></dt><dd>The dashboard leads with the actual month-to-date AWS account total and separates project running costs, setup charges and unattributed costs. Direct project costs are still partial; daily trends, service costs and forecasts appear when AWS has attributable data.</dd></div>
-        <div><dt>Visits &amp; page views <span class="dashboard-state">Connected</span></dt><dd>CloudWatch RUM counts sessions and page views only after a visitor accepts the analytics notice. Counts begin from activation and may take time to appear. CloudFront requests remain separate.</dd></div>
+        <div><dt>Costs &amp; forecast <span class="dashboard-state">Partly live</span></dt><dd>The actual month-to-date AWS account total is live. The overview separates overall project running costs, setup and one-off charges, and shared or unattributed costs. Project trends, service costs and forecasts display available AWS figures, with incomplete attribution and unavailable values clearly marked.</dd></div>
+        <div><dt>Visits &amp; page views <span class="dashboard-state">Connected</span></dt><dd>After a visitor accepts the analytics notice, CloudWatch RUM counts sessions and page views. “Visits” means consenting sessions, not unique people. These counts stay separate from CloudFront requests, which also include images, scripts and other assets.</dd></div>
         <div><dt>Availability <span class="dashboard-state dashboard-state-pending">Planned</span></dt><dd>Scheduled checks are needed to measure successful responses over time. Availability is not inferred from the current error rates.</dd></div>
       </dl>
     </section>
@@ -85,11 +93,7 @@
 
     <section class="website-section" id="next" aria-labelledby="next-title">
       <h2 id="next-title">Next steps</h2>
-      <ol class="website-steps">
-        <li><h3>Validate cost reporting</h3><p>Confirm tagged project totals, daily trends and service breakdowns when AWS publishes them. Check the forecast once enough history is available.</p></li>
-        <li><h3>Validate visits and add checks</h3><p>Verify session and page-view totals after visitors opt in, then introduce scheduled availability checks that account for preview access.</p></li>
-        <li><h3>Connect more projects</h3><p>Add each application as it goes live, using the same collection and privacy rules to keep project views consistent.</p></li>
-      </ol>
+      <p>Add new projects to the dashboard as they go live on AWS, bringing their costs, traffic and operational data into the shared overview. Each project will follow the existing collection and privacy rules, with its own detailed view.</p>
       <a class="website-button dashboard-primary" href="https://christianhegarty.com/atlas-dashboard/index.html" target="_blank" rel="noopener noreferrer" aria-describedby="dashboard-access">View live dashboard <span aria-hidden="true">↗</span></a>
     </section>
     <footer class="page-footer">
