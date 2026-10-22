@@ -15,8 +15,6 @@
       <div class="side-label">WORKSPACE</div>
       <nav class="nav-list">
         <a href="#overview" class="nav-item active"><span class="nav-icon">◫</span> Overview <span class="nav-arrow">↗</span></a>
-        <a href="#traffic" class="nav-item"><span class="nav-icon">◈</span> Project traffic</a>
-        <a href="#reliability" class="nav-item"><span class="nav-icon">◇</span> Reliability</a>
         <a href="#projects" class="nav-item"><span class="nav-icon">⬡</span> AWS projects</a>
       </nav>
       <div class="sidebar-bottom">
@@ -27,18 +25,50 @@
 
     <main id="overview" class="main-content">
       <header class="topbar">
-        <div class="breadcrumb">Workspace <span>/</span> Dashboard <span>/</span> <strong>Overview</strong></div>
+        <div class="breadcrumb">Workspace <span>/</span> Dashboard <span>/</span> <strong id="breadcrumb-current">Overview</strong></div>
         <div class="top-actions"><span id="clock" class="clock"></span><button id="refresh" class="refresh-button" type="button" aria-label="Refresh dashboard">↻ <span>Refresh</span></button></div>
       </header>
 
       <div class="page-content">
+        <section id="overview-view" class="dashboard-view" aria-label="AWS account overview">
         <section class="hero">
-          <div><div class="eyebrow"><span class="eyebrow-line"></span> AWS INTELLIGENCE</div><h1>Every project.<br><em>One view.</em></h1><p>See each hosted project’s traffic, AWS resources and running costs.</p></div>
+          <div><div class="eyebrow"><span class="eyebrow-line"></span> AWS INTELLIGENCE</div><h1>Every project.<br><em>One view.</em></h1><p>See total AWS spend first, then open a project for its costs, traffic and reliability.</p></div>
           <div class="hero-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="orbit-core">A</div><span class="orbit-dot dot-one"></span><span class="orbit-dot dot-two"></span><span class="orbit-dot dot-three"></span></div>
         </section>
 
         <div id="file-preview" class="notice" hidden><span class="notice-icon">↗</span><span>AWS project metrics appear when the live snapshot is connected.</span></div>
-        <div class="section-heading project-heading" id="projects"><div><div class="eyebrow subtle">01 / AWS PROJECTS</div><h2>Project overview</h2><p>Traffic, service costs and infrastructure for the selected app.</p><a id="project-link" class="project-site-link" href="https://christianhegarty.com" target="_blank" rel="noopener noreferrer">Visit Atlas website ↗</a></div><label class="project-picker"><span>PROJECT</span><select id="project-select" aria-label="Select project" disabled><option value="atlas-website">Atlas website</option></select><span class="select-chevron">⌄</span></label></div>
+        <div id="feed-notice" class="notice" hidden><span class="notice-icon">✳</span><span>Waiting for AWS data.</span></div>
+        <div class="section-heading"><div><div class="eyebrow subtle">01 / ACCOUNT OVERVIEW</div><h2>AWS running costs</h2><p>Month to date · costs published by AWS Cost Explorer.</p></div><span id="account-status" class="status-pill">Awaiting Cost Explorer</span></div>
+        <section class="account-overview" aria-label="AWS operating cost overview">
+          <article class="overview-primary"><span class="overline">AWS OPERATING COSTS</span><strong id="operating-total">—</strong><p>Account spend excluding one-off domain charges and tax</p></article>
+          <article class="overview-cost"><span class="overline">KNOWN PROJECT COSTS</span><strong id="project-operating">—</strong><p id="project-operating-note">Direct AWS charges plus allocated hosted-zone DNS</p></article>
+          <article class="overview-cost"><span class="overline">SHARED / NOT YET ATTRIBUTED</span><strong id="account-shared">—</strong><p id="account-shared-note">Includes costs awaiting project attribution</p></article>
+        </section>
+        <section class="account-ledger" aria-label="AWS account total and non-operating charges">
+          <div><span>Actual AWS account total</span><strong id="account-total">—</strong></div>
+          <div><span>Confirmed direct project costs</span><strong id="account-direct">—</strong><small id="account-direct-note">Awaiting tagged costs</small></div>
+          <div><span>Allocated Route 53 DNS</span><strong id="account-dns">—</strong></div>
+          <div><span>One-off domain charges</span><strong id="account-domain">—</strong></div>
+          <div><span>Tax</span><strong id="account-tax">—</strong></div>
+        </section>
+        <p id="account-reconciliation" class="allocation-note">Awaiting AWS account costs.</p>
+
+        <div class="section-heading overview-section" id="projects"><div><div class="eyebrow subtle">02 / PROJECTS</div><h2>Explore each project</h2><p>Open a project for its costs, traffic, reliability and resources.</p></div></div>
+        <div id="project-cards" class="project-card-grid" aria-label="AWS projects"></div>
+
+        <div class="section-heading overview-section" id="traffic-summary"><div><div class="eyebrow subtle">03 / TRAFFIC OVERVIEW</div><h2>Traffic across live projects</h2><p>Month to date · requests include pages, assets and prefetches.</p></div></div>
+        <section class="traffic-grid" aria-label="Traffic across live projects">
+          <article class="traffic-card"><span class="overline">TRACKED VISITS</span><strong id="overview-visits">—</strong><p>Sessions; shown when analytics is connected</p></article>
+          <article class="traffic-card"><span class="overline">PAGE VIEWS</span><strong id="overview-pageviews">—</strong><p>Tracked page view events</p></article>
+          <article class="traffic-card"><span class="overline">CLOUDFRONT REQUESTS</span><strong id="overview-requests">—</strong><p>Delivery requests, not visitor counts</p></article>
+          <article class="traffic-card"><span class="overline">DATA DELIVERED</span><strong id="overview-transfer">—</strong><p>CloudFront bytes downloaded</p></article>
+        </section>
+        <p id="overview-traffic-note" class="traffic-updated">Awaiting live project traffic.</p>
+        </section>
+
+        <section id="detail-view" class="dashboard-view" aria-label="Project details" hidden>
+        <a href="#overview" class="back-link">← Back to overview</a>
+        <div class="section-heading project-heading" id="project-detail-heading"><div><div class="eyebrow subtle">PROJECT DETAIL</div><h2 id="detail-title">Project</h2><p>Costs, traffic, reliability and resources for this project.</p><a id="project-link" class="project-site-link" href="https://christianhegarty.com" target="_blank" rel="noopener noreferrer">Visit project ↗</a></div><label class="project-picker"><span>PROJECT</span><select id="project-select" aria-label="Select project" disabled><option value="atlas-website">Atlas website</option></select><span class="select-chevron">⌄</span></label></div>
         <div id="project-notice" class="notice"><span class="notice-icon">✳</span><span>No AWS project snapshot is connected yet.</span></div>
         <section class="allocation-panel" aria-label="Selected project operating costs">
           <div class="allocation-heading"><div><span class="overline">PROJECT COST SUMMARY</span><h3>What this project costs</h3></div><span id="project-deploy-status" class="status-pill">Awaiting data</span></div>
@@ -73,19 +103,8 @@
           <article class="cloud-card service-card"><div class="cloud-card-header"><div><span class="overline">DIRECT AWS CHARGES</span><h3>By service</h3></div><span class="dots">•••</span></div><div id="service-list" class="service-list"></div></article>
           <article class="cloud-card forecast-card"><div class="cloud-card-header"><div><span class="overline">MONTH-END ESTIMATE</span><h3>AWS forecast</h3></div><span class="forecast-symbol" aria-hidden="true">↗</span></div><div class="cost-amount" id="forecast-amount">—</div><p class="card-desc">Projected full-month cost · estimate</p><p id="forecast-note" class="forecast-note">Forecast unavailable until AWS has enough cost history.</p><p id="forecast-updated" class="forecast-updated">No forecast yet</p></article>
         </section>
-        <section class="account-panel" aria-label="AWS account cost reconciliation">
-          <div class="allocation-heading"><div><span class="overline">AWS ACCOUNT · MONTH TO DATE</span><h3>Where the total goes</h3></div><span id="account-status" class="status-pill">Awaiting Cost Explorer</span></div>
-          <div class="account-grid">
-            <div class="account-total"><span>Actual AWS account total</span><strong id="account-total">—</strong><small>Cost Explorer unblended cost; allocations are already included</small></div>
-            <div><span>Confirmed direct project costs</span><strong id="account-direct">—</strong><small id="account-direct-note">Awaiting tagged costs</small></div>
-            <div><span>Allocated hosted-zone DNS</span><strong id="account-dns">—</strong></div>
-            <div><span>Shared / not yet attributed</span><strong id="account-shared">—</strong><small id="account-shared-note">Includes costs awaiting project attribution</small></div>
-            <div><span>Domain registration / renewal</span><strong id="account-domain">—</strong><small>One-off, outside operating costs</small></div>
-            <div><span>Tax</span><strong id="account-tax">—</strong><small>Shown separately</small></div>
-          </div>
-          <p id="account-reconciliation" class="allocation-note">Awaiting AWS account costs.</p>
-        </section>
         <section class="resource-panel"><div class="resource-header"><div><span class="overline">RESOURCE INVENTORY</span><h3>What’s running</h3></div><div class="resource-count"><span id="resource-count">—</span> tagged resources</div></div><div class="table-scroll"><table><thead><tr><th>RESOURCE</th><th>TYPE</th><th>REGION</th><th>STATE</th><th>CPU ACTIVITY</th></tr></thead><tbody id="resource-body"></tbody></table></div><div class="resource-footer"><span id="sync-text">Waiting for sync</span><span>↗ ATLAS PROJECT MONITOR</span></div></section>
+        </section>
         <footer class="page-footer"><span>ATLAS / CONTROL ROOM</span><span>AWS snapshot checked every 60 seconds · Cost and analytics data may lag</span></footer>
       </div>
     </main>

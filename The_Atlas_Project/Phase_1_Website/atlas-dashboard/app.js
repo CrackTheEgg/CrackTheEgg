@@ -5,7 +5,6 @@ const fmtPercent = (value) => value == null ? '—' : `${fmtNumber(value, 2)}%`;
 const fmtTransfer = (bytes) => bytes == null ? '—' : bytes >= 1024 ** 3 ? `${fmtNumber(bytes / 1024 ** 3, 2)} GB` : `${fmtNumber(bytes / 1024 ** 2, 1)} MB`;
 const setText = (id, value) => { $(id).textContent = value; };
 const staticPreview = window.location.protocol === 'file:';
-let selectedProject = null;
 
 async function getJSON(path) {
   const response = await fetch(path, { cache: 'no-store' });
@@ -124,6 +123,15 @@ function renderProject(data) {
 function renderAccount(account = {}) {
   const currency = account.currency || 'USD';
   setText('account-status', account.checkedAt ? 'Cost Explorer reading' : 'Awaiting Cost Explorer');
+  const operating = [account.total, account.domainRegistrationCost, account.tax].every(value => value != null)
+    ? Math.round((account.total - account.domainRegistrationCost - account.tax) * 100) / 100 : null;
+  const projectOperating = account.directProjectCost != null && account.allocatedDnsCost != null
+    ? Math.round((account.directProjectCost + account.allocatedDnsCost) * 100) / 100 : null;
+  setText('operating-total', fmtMoney(operating, currency));
+  setText('project-operating', fmtMoney(projectOperating, currency));
+  setText('project-operating-note', account.directProjectPartial
+    ? 'Confirmed direct charges plus DNS; other project costs may still be missing'
+    : 'Direct AWS charges plus allocated hosted-zone DNS');
   setText('account-total', fmtMoney(account.total, currency));
   setText('account-direct', fmtMoney(account.directProjectCost, currency));
   setText('account-direct-note', account.directProjectPartial ? 'Partial: some projects have no tagged cost data yet' : 'All configured projects included');
@@ -140,21 +148,83 @@ function renderAccount(account = {}) {
   setText('account-reconciliation', `${checked}${dnsNote} Allocations redistribute the AWS total and are not added to it. ${account.warning || ''}`);
 }
 
+function renderOverviewProjects(projects) {
+  const parent = $('project-cards');
+  parent.replaceChildren();
+  for (const project of projects) {
+    const allocation = project.costAllocation || {};
+    const card = document.createElement('a');
+    card.className = 'project-card';
+    card.href = `#project/${encodeURIComponent(project.id)}`;
+    card.setAttribute('aria-label', `Open ${project.name} details`);
+    const top = document.createElement('div'); top.className = 'project-card-top';
+    const label = document.createElement('span'); label.className = 'overline'; label.textContent = 'AWS PROJECT';
+    const status = document.createElement('span'); status.className = 'status-pill';
+    status.textContent = project.deploymentStatus === 'not deployed' ? 'DNS only' : 'Live app';
+    top.append(label, status);
+    const title = document.createElement('h3'); title.textContent = project.name;
+    const cost = document.createElement('div'); cost.className = 'project-cost';
+    cost.textContent = fmtMoney(allocation.combinedOperatingCost ?? allocation.allocatedDnsCost, project.currency);
+    const meta = document.createElement('p'); meta.className = 'project-meta';
+    meta.textContent = allocation.combinedOperatingCost != null ? 'Confirmed operating cost this month'
+      : allocation.allocatedDnsCost != null ? 'Allocated DNS only · direct AWS cost unavailable' : 'Operating cost unavailable';
+    const traffic = document.createElement('p'); traffic.className = 'project-meta';
+    traffic.textContent = project.traffic?.requests == null ? 'Traffic unavailable' : `${fmtNumber(project.traffic.requests)} CloudFront requests this month`;
+    const open = document.createElement('span'); open.className = 'project-open'; open.textContent = 'Open project details ↗';
+    card.append(top, title, cost, meta, traffic, open);
+    parent.append(card);
+  }
+}
+
+function renderOverviewTraffic(projects) {
+  const live = projects.filter(project => project.deploymentStatus !== 'not deployed');
+  const sumIfComplete = key => live.length && live.every(project => project.traffic?.[key] != null)
+    ? live.reduce((sum, project) => sum + Number(project.traffic[key]), 0) : null;
+  setText('overview-visits', fmtNumber(sumIfComplete('visits')));
+  setText('overview-pageviews', fmtNumber(sumIfComplete('pageViews')));
+  setText('overview-requests', fmtNumber(sumIfComplete('requests')));
+  setText('overview-transfer', fmtTransfer(sumIfComplete('bytesDownloaded')));
+  setText('overview-traffic-note', live.length
+    ? `Across ${live.length} live project${live.length === 1 ? '' : 's'}. Missing project readings stay unavailable; CloudFront requests are not visits. Projects sharing one distribution may overlap.`
+    : 'No live project traffic is available yet.');
+}
+
+function showDashboardRoute(projects, scroll = false) {
+  let route = '';
+  try { route = decodeURIComponent(location.hash.slice(1)); } catch { route = ''; }
+  const match = /^project\/([a-z0-9-]+)$/.exec(route);
+  const legacyDetail = route === 'traffic' || route === 'reliability';
+  const selected = projects.find(project => project.id === (match?.[1] || (legacyDetail ? projects[0]?.id : null)));
+  const detail = Boolean(selected);
+  $('overview-view').hidden = detail;
+  $('detail-view').hidden = !detail;
+  const navItems = document.querySelectorAll('.nav-item');
+  navItems.forEach(item => item.classList.toggle('active', detail ? item.hash === '#projects' : item.hash === (route === 'projects' ? '#projects' : '#overview')));
+  if (selected) {
+    setText('breadcrumb-current', selected.name);
+    setText('detail-title', selected.name);
+    const select = $('project-select');
+    select.value = selected.id;
+    select.disabled = false;
+    renderProject(selected);
+    const projectLink = $('project-link');
+    projectLink.hidden = !selected.url;
+    if (selected.url) { projectLink.href = selected.url; projectLink.textContent = `Visit ${selected.name} ↗`; }
+    else projectLink.removeAttribute('href');
+  } else {
+    setText('breadcrumb-current', 'Overview');
+  }
+  if (scroll) {
+    if (legacyDetail) $(route).scrollIntoView();
+    else if (!detail && route === 'projects') $('projects').scrollIntoView();
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
 
 // The public site reads only an allowlisted AWS snapshot.
 let publicProjects = [];
-let selectedPublicProject = null;
 let lastSnapshotAt = null;
-const projectLink = $('project-link');
-
-function displayPublicProject() {
-  const project = publicProjects.find(item => item.id === selectedPublicProject);
-  if (!project) return;
-  renderProject(project);
-  projectLink.hidden = !project.url;
-  if (project.url) { projectLink.href = project.url; projectLink.textContent = `Visit ${project.name} ↗`; }
-  else projectLink.removeAttribute('href');
-}
 
 async function loadPublicSnapshot() {
   try {
@@ -167,24 +237,24 @@ async function loadPublicSnapshot() {
     if (!publicProjects.length) throw new Error('No public projects configured');
     lastSnapshotAt = snapshot.generatedAt;
     renderAccount(snapshot.accountCost || {});
+    renderOverviewProjects(publicProjects);
+    renderOverviewTraffic(publicProjects);
     const select = $('project-select');
     select.replaceChildren(...publicProjects.map(project => new Option(project.name, project.id)));
-    if (!publicProjects.some(project => project.id === selectedPublicProject)) selectedPublicProject = publicProjects[0].id;
-    select.value = selectedPublicProject;
     select.disabled = false;
-    displayPublicProject();
+    showDashboardRoute(publicProjects);
     const age = Date.now() - Date.parse(snapshot.generatedAt);
+    const notice = $('feed-notice');
     if (!Number.isFinite(age) || age > 15 * 60 * 1000) {
-      const notice = $('project-notice');
       notice.hidden = false;
       notice.querySelector('span:last-child').textContent = `Last AWS snapshot: ${new Date(snapshot.generatedAt).toLocaleString()}.`;
-    }
+    } else notice.hidden = true;
   } catch (error) {
-    const notice = $('project-notice');
+    const notice = $('feed-notice');
     notice.hidden = false;
     notice.querySelector('span:last-child').textContent = lastSnapshotAt
       ? `AWS snapshot temporarily unavailable. Showing the last update from ${new Date(lastSnapshotAt).toLocaleString()}.`
-      : 'AWS feed is being connected. Project metrics are unavailable.';
+      : 'AWS feed is being connected. Account and project metrics are unavailable.';
   }
 }
 
@@ -192,9 +262,9 @@ function setClock() { setText('clock', new Date().toLocaleString(undefined, { we
 setClock();
 $('refresh').addEventListener('click', loadPublicSnapshot);
 $('project-select').addEventListener('change', event => {
-  selectedPublicProject = event.target.value;
-  displayPublicProject();
+  location.hash = `project/${event.target.value}`;
 });
+window.addEventListener('hashchange', () => showDashboardRoute(publicProjects, true));
 loadPublicSnapshot();
 setInterval(loadPublicSnapshot, 60000);
 setInterval(setClock, 30000);
