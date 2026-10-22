@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
+from decimal import Decimal
 from math import isfinite
 
 
@@ -25,6 +26,64 @@ def aws_session(project: dict):
     )
 
 
+def cost_category(service: str, usage_type: str) -> str:
+    """Classify only identifiable bill lines; DNS queries remain operating usage."""
+    service_lower = service.casefold()
+    usage_lower = usage_type.casefold()
+    if service_lower == "tax" or usage_lower == "tax":
+        return "tax"
+    if (("route 53" in service_lower or "registrar" in service_lower)
+            and ("registr" in service_lower or "domain" in service_lower
+                 or "domainregistr" in usage_lower or "domainrenew" in usage_lower)):
+        return "domainRegistration"
+    if "route 53" in service_lower and "hostedzone" in usage_lower.replace("-", "").replace(" ", ""):
+        return "hostedZone"
+    return "operating"
+
+
+def account_month_cost(session) -> dict:
+    """Read actual account costs by service and usage type, including tax."""
+    today = datetime.now(timezone.utc).date()
+    request = {
+        "TimePeriod": {"Start": today.replace(day=1).isoformat(), "End": (today + timedelta(days=1)).isoformat()},
+        "Granularity": "MONTHLY", "Metrics": ["UnblendedCost"],
+        "GroupBy": [{"Type": "DIMENSION", "Key": "SERVICE"},
+                    {"Type": "DIMENSION", "Key": "USAGE_TYPE"}],
+    }
+    ce = session.client("ce", region_name="us-east-1")
+    totals = defaultdict(Decimal)
+    currency = None
+    found = False
+    while True:
+        response = ce.get_cost_and_usage(**request)
+        for period in response.get("ResultsByTime", []):
+            for group in period.get("Groups", []):
+                metric = group["Metrics"]["UnblendedCost"]
+                unit = metric.get("Unit", "USD")
+                if currency is not None and currency != unit:
+                    raise ValueError("Cost Explorer returned mixed currencies")
+                currency = unit
+                keys = group["Keys"]
+                totals[cost_category(keys[0], keys[1])] += Decimal(metric["Amount"])
+                found = True
+        token = response.get("NextPageToken")
+        if not token:
+            break
+        request["NextPageToken"] = token
+    if not found:
+        raise ValueError("Cost Explorer has not published account costs")
+    if currency != "USD":
+        raise ValueError("DNS allocation is configured in USD but AWS returned another currency")
+    rounded = lambda value: float(value.quantize(Decimal("0.01")))
+    return {
+        "total": rounded(sum(totals.values(), Decimal("0"))),
+        "hostedZoneCost": rounded(totals["hostedZone"]),
+        "domainRegistrationCost": rounded(totals["domainRegistration"]),
+        "tax": rounded(totals["tax"]),
+        "checkedAt": datetime.now(timezone.utc).isoformat(),
+    }
+
+
 def month_cost(session, tag_key: str, tag_value: str) -> dict:
     today = datetime.now(timezone.utc).date()
     ce = session.client("ce", region_name="us-east-1")
@@ -33,7 +92,8 @@ def month_cost(session, tag_key: str, tag_value: str) -> dict:
         "Granularity": "DAILY",
         "Metrics": ["UnblendedCost"],
         "Filter": {"Tags": {"Key": tag_key, "Values": [tag_value]}},
-        "GroupBy": [{"Type": "DIMENSION", "Key": "SERVICE"}],
+        "GroupBy": [{"Type": "DIMENSION", "Key": "SERVICE"},
+                    {"Type": "DIMENSION", "Key": "USAGE_TYPE"}],
     }
     by_day = defaultdict(float)
     by_service = defaultdict(float)
@@ -47,6 +107,8 @@ def month_cost(session, tag_key: str, tag_value: str) -> dict:
                 metric = group["Metrics"]["UnblendedCost"]
                 amount = float(metric["Amount"])
                 currency = metric.get("Unit", currency)
+                if cost_category(group["Keys"][0], group["Keys"][1]) != "operating":
+                    continue
                 by_day[date] += amount
                 by_service[group["Keys"][0]] += amount
         token = response.get("NextPageToken")

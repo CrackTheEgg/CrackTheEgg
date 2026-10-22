@@ -4,11 +4,32 @@
     "name": "Atlas website",
     "url": "https://christianhegarty.com",
     "public": true,
+    "deploymentStatus": "live",
     "tagValue": "Atlas",
     "costDataReady": false,
     "previewProtected": true,
     "regions": ["eu-west-2"],
     "cloudFrontDistributionId": "E6NQ1IKHRLQM1",
+    "showCosts": true,
+    "showResourceNames": false
+  },
+  {
+    "id": "tape-pack",
+    "name": "The Tape Pack",
+    "public": true,
+    "deploymentStatus": "not deployed",
+    "costDataReady": false,
+    "regions": ["eu-west-2"],
+    "showCosts": true,
+    "showResourceNames": false
+  },
+  {
+    "id": "daily-illustrated",
+    "name": "The Daily Illustrated",
+    "public": true,
+    "deploymentStatus": "not deployed",
+    "costDataReady": false,
+    "regions": ["eu-west-2"],
     "showCosts": true,
     "showResourceNames": false
   }

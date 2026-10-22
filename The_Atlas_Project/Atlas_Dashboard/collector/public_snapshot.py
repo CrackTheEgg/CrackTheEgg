@@ -15,7 +15,8 @@ from math import isfinite
 from pathlib import Path
 from urllib.parse import urlparse
 
-from aws_data import aws_session, cost_tag_has_usage, get_project_data
+from aws_data import account_month_cost, aws_session, cost_tag_has_usage, get_project_data
+from cost_allocation import config as allocation_config, project_cost, reconcile
 
 
 BASE = Path(__file__).resolve().parent
@@ -40,6 +41,8 @@ def configured_projects(path: Path = PROJECTS_FILE) -> list[dict]:
         seen.add(project_id)
         if not isinstance(item.get("name"), str) or not item["name"]:
             raise ValueError("Public projects need a name")
+        if item.get("deploymentStatus", "live") not in ("live", "not deployed"):
+            raise ValueError("deploymentStatus must be live or not deployed")
         if item.get("tagValue") is not None and (not isinstance(item["tagValue"], str) or not item["tagValue"]):
             raise ValueError("tagValue must be a nonempty string when configured")
         if not isinstance(item.get("costDataReady", True), bool):
@@ -93,6 +96,7 @@ def public_project(item: dict, data: dict) -> dict:
     return {
         "id": item["id"],
         "name": item["name"],
+        "deploymentStatus": item.get("deploymentStatus", "live"),
         "url": item.get("url"),
         "source": "aws",
         "monthCost": data.get("monthCost") if show_costs else None,
@@ -113,6 +117,11 @@ def public_project(item: dict, data: dict) -> dict:
 
 def collect(path: Path = PROJECTS_FILE, previous: dict | None = None) -> dict:
     projects = configured_projects(path)
+    allocations = allocation_config()
+    by_allocation_id = {row["id"]: row for row in allocations["projects"]}
+    unknown_ids = set(by_allocation_id) - {item["id"] for item in projects}
+    if path == PROJECTS_FILE and unknown_ids:
+        raise ValueError(f"DNS allocation has no public project: {sorted(unknown_ids)}")
     previous_by_id = {item["id"]: item for item in (previous or {}).get("projects", []) if isinstance(item, dict) and isinstance(item.get("id"), str)}
     results = []
     for item in projects:
@@ -157,6 +166,7 @@ def collect(path: Path = PROJECTS_FILE, previous: dict | None = None) -> dict:
             elif item.get("showCosts") is True and data.get("monthCost") is not None:
                 data["costCheckedAt"] = datetime.now(timezone.utc).isoformat()
             published = public_project(effective_item, data)
+            published["costAllocation"] = project_cost(published["monthCost"], by_allocation_id.get(item["id"]))
             published["costReady"] = cost_ready
             published["costReadyMonth"] = current_month if cost_ready else None
             published["costProbeCheckedAt"] = probe_time
@@ -164,6 +174,7 @@ def collect(path: Path = PROJECTS_FILE, previous: dict | None = None) -> dict:
         except Exception:
             results.append({
                 "id": item["id"], "name": item["name"], "source": "aws",
+                "deploymentStatus": item.get("deploymentStatus", "live"),
                 "url": item.get("url"),
                 "monthCost": None, "currency": "USD", "dailyCost": [],
                 "monthForecast": None, "forecastCurrency": "USD", "forecastCheckedAt": None,
@@ -175,8 +186,30 @@ def collect(path: Path = PROJECTS_FILE, previous: dict | None = None) -> dict:
                            "error4xxPercent": None, "checkedAt": None},
                 "warnings": ["AWS data is temporarily unavailable for this project."],
                 "checkedAt": datetime.now(timezone.utc).isoformat(),
+                "costAllocation": project_cost(None, by_allocation_id.get(item["id"])),
             })
-    return {"schemaVersion": 1, "generatedAt": datetime.now(timezone.utc).isoformat(), "projects": results}
+    account = None
+    account_warning = None
+    old_account = (previous or {}).get("accountCost") or {}
+    try:
+        checked = datetime.fromisoformat(old_account["checkedAt"])
+        now = datetime.now(timezone.utc)
+        recent = (checked.tzinfo is not None and timedelta(0) <= now - checked < timedelta(hours=24)
+                  and checked.strftime("%Y-%m") == now.strftime("%Y-%m"))
+    except (KeyError, TypeError, ValueError):
+        recent = False
+    if recent and old_account.get("total") is not None:
+        account = old_account
+    elif any(item["id"] in by_allocation_id for item in projects):
+        try:
+            account = account_month_cost(aws_session(projects[0]))
+        except Exception as exc:
+            account_warning = f"Account cost data unavailable: {type(exc).__name__}."
+    snapshot = {"schemaVersion": 1, "generatedAt": datetime.now(timezone.utc).isoformat(),
+                "projects": results, "accountCost": reconcile(account, results, allocations)}
+    if account_warning:
+        snapshot["accountCost"]["warning"] = account_warning
+    return snapshot
 
 
 def lambda_handler(event, context):

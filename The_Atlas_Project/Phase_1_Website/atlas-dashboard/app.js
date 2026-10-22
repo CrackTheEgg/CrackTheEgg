@@ -99,6 +99,13 @@ function renderResources(data) {
 }
 
 function renderProject(data) {
+  const allocation = data.costAllocation || {};
+  setText('project-deploy-status', data.deploymentStatus === 'not deployed' ? 'App not deployed' : 'Live project');
+  setText('direct-cost', fmtMoney(allocation.directAwsCost, data.currency));
+  setText('dns-cost', fmtMoney(allocation.allocatedDnsCost, data.currency));
+  setText('combined-cost', fmtMoney(allocation.combinedOperatingCost, data.currency));
+  const costDate = data.costCheckedAt ? new Date(data.costCheckedAt).toLocaleString() : 'unavailable';
+  setText('allocation-updated', `Direct AWS cost checked ${costDate}. ${allocation.allocationMethod || 'No DNS allocation configured'}.${allocation.combinedOperatingCost == null ? ' Combined cost remains unavailable until direct cost is confirmed.' : ' Combined cost includes the DNS allocation once.'}`);
   setText('cost-amount', fmtMoney(data.monthCost, data.currency));
   setText('cost-badge', data.monthCost == null ? 'COST UNAVAILABLE' : 'AWS COST DATA');
   renderTraffic(data);
@@ -114,6 +121,25 @@ function renderProject(data) {
   setText('sync-text', `AWS snapshot ${checked} · Cost checked ${costChecked}`);
 }
 
+function renderAccount(account = {}) {
+  const currency = account.currency || 'USD';
+  setText('account-status', account.checkedAt ? 'Cost Explorer reading' : 'Awaiting Cost Explorer');
+  setText('account-total', fmtMoney(account.total, currency));
+  setText('account-direct', fmtMoney(account.directProjectCost, currency));
+  setText('account-direct-note', account.directProjectPartial ? 'Partial: some projects have no tagged cost data yet' : 'All configured projects included');
+  setText('account-dns', fmtMoney(account.allocatedDnsCost, currency));
+  setText('account-shared', fmtMoney(account.sharedUnallocatedCost, currency));
+  setText('account-shared-note', account.sharedIncludesUnattributedProjects ? 'Includes charges awaiting project attribution' : 'Remaining shared or unallocated charges');
+  setText('account-domain', fmtMoney(account.domainRegistrationCost, currency));
+  setText('account-tax', fmtMoney(account.tax, currency));
+  const checked = account.checkedAt ? `AWS costs checked ${new Date(account.checkedAt).toLocaleString()}. ` : 'AWS account costs unavailable. ';
+  const difference = account.dnsDiscrepancy;
+  const dnsNote = difference == null ? 'Hosted-zone reconciliation awaits Cost Explorer.'
+    : Math.abs(difference) < 0.005 ? 'Hosted-zone charges reconcile with the manual allocations.'
+    : `Hosted-zone difference (actual minus allocated): ${fmtMoney(difference, currency)}. Review the charge; DNS queries are excluded from this comparison.`;
+  setText('account-reconciliation', `${checked}${dnsNote} Allocations redistribute the AWS total and are not added to it. ${account.warning || ''}`);
+}
+
 
 // The public site reads only an allowlisted AWS snapshot.
 let publicProjects = [];
@@ -126,7 +152,7 @@ function displayPublicProject() {
   if (!project) return;
   renderProject(project);
   projectLink.hidden = !project.url;
-  if (project.url) projectLink.href = project.url;
+  if (project.url) { projectLink.href = project.url; projectLink.textContent = `Visit ${project.name} ↗`; }
   else projectLink.removeAttribute('href');
 }
 
@@ -140,6 +166,7 @@ async function loadPublicSnapshot() {
     publicProjects = snapshot.projects.filter(item => item && item.source === 'aws' && typeof item.id === 'string');
     if (!publicProjects.length) throw new Error('No public projects configured');
     lastSnapshotAt = snapshot.generatedAt;
+    renderAccount(snapshot.accountCost || {});
     const select = $('project-select');
     select.replaceChildren(...publicProjects.map(project => new Option(project.name, project.id)));
     if (!publicProjects.some(project => project.id === selectedPublicProject)) selectedPublicProject = publicProjects[0].id;

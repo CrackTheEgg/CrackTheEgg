@@ -1,0 +1,9 @@
+{
+  "currency": "USD",
+  "method": "manual public hosted-zone allocation",
+  "projects": [
+    {"id": "atlas-website", "domain": "christianhegarty.com", "monthlyCost": 0.50},
+    {"id": "tape-pack", "domain": "thetapepack.com", "monthlyCost": 0.50},
+    {"id": "daily-illustrated", "domain": "thedailyillustrated.uk", "monthlyCost": 0.50}
+  ]
+}

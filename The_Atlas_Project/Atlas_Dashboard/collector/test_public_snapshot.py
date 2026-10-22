@@ -11,6 +11,14 @@ import public_snapshot
 
 
 class PublicSnapshotTests(unittest.TestCase):
+    def setUp(self):
+        self.account_reader = patch.object(public_snapshot, "account_month_cost", return_value={
+            "total": 21.14, "hostedZoneCost": 1.50, "domainRegistrationCost": 16.00,
+            "tax": 3.52, "checkedAt": datetime.now(timezone.utc).isoformat(),
+        })
+        self.account_reader.start()
+        self.addCleanup(self.account_reader.stop)
+
     def test_only_opted_in_projects_and_safe_fields_are_published(self):
         config = [
             {"id": "public-app", "name": "Public App", "public": True,
@@ -85,7 +93,7 @@ class PublicSnapshotTests(unittest.TestCase):
              patch.object(public_snapshot, "aws_session"), \
              patch.object(public_snapshot, "get_project_data", return_value=current) as reader:
             snapshot = public_snapshot.collect(config)
-        reader.assert_called_once()
+        self.assertEqual(reader.call_count, 3)
         self.assertFalse(reader.call_args.kwargs["include_costs"])
         website = snapshot["projects"][0]
         self.assertEqual(website["name"], "Atlas website")
@@ -106,7 +114,7 @@ class PublicSnapshotTests(unittest.TestCase):
              patch.object(public_snapshot, "get_project_data", return_value=current) as reader:
             snapshot = public_snapshot.collect(config)
         probe.assert_called_once()
-        self.assertTrue(reader.call_args.kwargs["include_costs"])
+        self.assertTrue(reader.call_args_list[0].kwargs["include_costs"])
         website = snapshot["projects"][0]
         self.assertTrue(website["costReady"])
         self.assertEqual(website["monthCost"], 4.25)
