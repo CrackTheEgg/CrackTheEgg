@@ -127,6 +127,7 @@ function renderAccount(account = {}) {
     ? Math.round((account.total - account.domainRegistrationCost - account.tax) * 100) / 100 : null;
   const projectOperating = account.directProjectCost != null && account.allocatedDnsCost != null
     ? Math.round((account.directProjectCost + account.allocatedDnsCost) * 100) / 100 : null;
+  setText('hero-operating', fmtMoney(operating, currency));
   setText('operating-total', fmtMoney(operating, currency));
   setText('project-operating', fmtMoney(projectOperating, currency));
   setText('project-operating-note', account.directProjectPartial
