@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#071122">
   <title>Atlas | AWS Metrics Dashboard</title>
   <link rel="stylesheet" href="./style.css?v=f4e947954d79">
-  <script src="./app.js?v=2ae9365c0418" defer></script>
+  <script src="./app.js?v=805de83e7783" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -47,10 +47,10 @@
         </section>
         <p id="account-reconciliation" class="allocation-note">Awaiting AWS account costs.</p>
 
-        <div class="section-heading overview-section"><div><div class="eyebrow subtle">02 / COST ATTRIBUTION</div><h2>Project, non-project and unattributed</h2><p>A high-level split of the AWS account total above.</p></div></div>
+        <div class="section-heading overview-section"><div><div class="eyebrow subtle">02 / COST ATTRIBUTION</div><h2>Running, setup and unattributed costs</h2><p>A high-level split of the AWS account total above.</p></div></div>
         <section class="account-overview" aria-label="AWS cost attribution overview">
-          <article class="overview-cost"><span class="overline">KNOWN PROJECT COSTS</span><strong id="project-operating">—</strong><p id="project-operating-note">Direct AWS charges plus allocated hosted-zone DNS</p></article>
-          <article class="overview-cost"><span class="overline">NON-PROJECT CHARGES</span><strong id="nonproject-cost">—</strong><p>One-off domain charges and tax; not allocated to projects</p></article>
+          <article class="overview-cost"><span class="overline">PROJECT RUNNING COSTS</span><strong id="project-operating">—</strong><p id="project-operating-note">Known direct AWS charges plus allocated hosted-zone DNS</p></article>
+          <article class="overview-cost"><span class="overline">PROJECT SETUP / ONE-OFF CHARGES</span><strong id="setup-cost">—</strong><p>Domain registration and account tax; not allocated to individual projects</p></article>
           <article class="overview-cost"><span class="overline">SHARED / UNATTRIBUTED</span><strong id="account-shared">—</strong><p id="account-shared-note">Includes costs awaiting project attribution</p></article>
         </section>
 
