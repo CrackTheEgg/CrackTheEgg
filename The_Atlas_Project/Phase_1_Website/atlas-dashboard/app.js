@@ -171,7 +171,7 @@ function renderOverviewProjects(projects) {
       : allocation.allocatedDnsCost != null ? 'Allocated DNS only · direct AWS cost unavailable' : 'Operating cost unavailable';
     const traffic = document.createElement('p'); traffic.className = 'project-meta';
     traffic.textContent = project.traffic?.requests == null ? 'Traffic unavailable' : `${fmtNumber(project.traffic.requests)} CloudFront requests this month`;
-    const open = document.createElement('span'); open.className = 'project-open'; open.textContent = 'Open project details ↗';
+    const open = document.createElement('span'); open.className = 'project-open'; open.textContent = 'View project details →';
     card.append(top, title, cost, meta, traffic, open);
     parent.append(card);
   }
@@ -204,9 +204,6 @@ function showDashboardRoute(projects, scroll = false) {
   if (selected) {
     setText('breadcrumb-current', selected.name);
     setText('detail-title', selected.name);
-    const select = $('project-select');
-    select.value = selected.id;
-    select.disabled = false;
     renderProject(selected);
     const projectLink = $('project-link');
     projectLink.hidden = !selected.url;
@@ -240,9 +237,6 @@ async function loadPublicSnapshot() {
     renderAccount(snapshot.accountCost || {});
     renderOverviewProjects(publicProjects);
     renderOverviewTraffic(publicProjects);
-    const select = $('project-select');
-    select.replaceChildren(...publicProjects.map(project => new Option(project.name, project.id)));
-    select.disabled = false;
     showDashboardRoute(publicProjects);
     const age = Date.now() - Date.parse(snapshot.generatedAt);
     const notice = $('feed-notice');
@@ -262,9 +256,6 @@ async function loadPublicSnapshot() {
 function setClock() { setText('clock', new Date().toLocaleString(undefined, { weekday: 'short', hour: '2-digit', minute: '2-digit' })); }
 setClock();
 $('refresh').addEventListener('click', loadPublicSnapshot);
-$('project-select').addEventListener('change', event => {
-  location.hash = `project/${event.target.value}`;
-});
 window.addEventListener('hashchange', () => showDashboardRoute(publicProjects, true));
 loadPublicSnapshot();
 setInterval(loadPublicSnapshot, 60000);

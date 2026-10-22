@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#071122">
   <title>Atlas | AWS Metrics Dashboard</title>
-  <link rel="stylesheet" href="./style.css?v=0be5515fd4a8">
-  <script src="./app.js?v=ddf706eb7822" defer></script>
+  <link rel="stylesheet" href="./style.css?v=4d3435534ae4">
+  <script src="./app.js?v=dafc7ab47948" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -67,8 +67,7 @@
         </section>
 
         <section id="detail-view" class="dashboard-view" aria-label="Project details" hidden>
-        <a href="#overview" class="back-link">← Back to overview</a>
-        <div class="section-heading project-heading" id="project-detail-heading"><div><div class="eyebrow subtle">PROJECT DETAIL</div><h2 id="detail-title">Project</h2><p>Costs, traffic, reliability and resources for this project.</p><a id="project-link" class="project-site-link" href="https://christianhegarty.com" target="_blank" rel="noopener noreferrer">Visit project ↗</a></div><label class="project-picker"><span>PROJECT</span><select id="project-select" aria-label="Select project" disabled><option value="atlas-website">Atlas website</option></select><span class="select-chevron">⌄</span></label></div>
+        <div class="section-heading project-heading" id="project-detail-heading"><div><div class="eyebrow subtle">PROJECT DETAIL</div><h2 id="detail-title">Project</h2><p>Costs, traffic, reliability and resources for this project.</p><a id="project-link" class="project-site-link" href="https://christianhegarty.com" target="_blank" rel="noopener noreferrer">Visit project ↗</a></div><a class="return-button" href="#overview">← Return to dashboard</a></div>
         <div id="project-notice" class="notice"><span class="notice-icon">✳</span><span>No AWS project snapshot is connected yet.</span></div>
         <section class="allocation-panel" aria-label="Selected project operating costs">
           <div class="allocation-heading"><div><span class="overline">PROJECT COST SUMMARY</span><h3>What this project costs</h3></div><span id="project-deploy-status" class="status-pill">Awaiting data</span></div>
@@ -104,6 +103,7 @@
           <article class="cloud-card forecast-card"><div class="cloud-card-header"><div><span class="overline">MONTH-END ESTIMATE</span><h3>AWS forecast</h3></div><span class="forecast-symbol" aria-hidden="true">↗</span></div><div class="cost-amount" id="forecast-amount">—</div><p class="card-desc">Projected full-month cost · estimate</p><p id="forecast-note" class="forecast-note">Forecast unavailable until AWS has enough cost history.</p><p id="forecast-updated" class="forecast-updated">No forecast yet</p></article>
         </section>
         <section class="resource-panel"><div class="resource-header"><div><span class="overline">RESOURCE INVENTORY</span><h3>What’s running</h3></div><div class="resource-count"><span id="resource-count">—</span> tagged resources</div></div><div class="table-scroll"><table><thead><tr><th>RESOURCE</th><th>TYPE</th><th>REGION</th><th>STATE</th><th>CPU ACTIVITY</th></tr></thead><tbody id="resource-body"></tbody></table></div><div class="resource-footer"><span id="sync-text">Waiting for sync</span><span>↗ ATLAS PROJECT MONITOR</span></div></section>
+        <div class="detail-actions"><a class="return-button" href="#overview">← Return to dashboard</a></div>
         </section>
         <footer class="page-footer"><span>ATLAS / CONTROL ROOM</span><span>AWS snapshot checked every 60 seconds · Cost and analytics data may lag</span></footer>
       </div>
