@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#071122">
   <title>Atlas | AWS Metrics Dashboard</title>
-  <link rel="stylesheet" href="./style.css?v=12da123e3d29">
-  <script src="./app.js?v=dafc7ab47948" defer></script>
+  <link rel="stylesheet" href="./style.css?v=f4e947954d79">
+  <script src="./app.js?v=2ae9365c0418" defer></script>
 </head>
 <body>
   <div class="app-shell">
@@ -32,20 +32,14 @@
       <div class="page-content">
         <section id="overview-view" class="dashboard-view" aria-label="AWS account overview">
         <section class="hero">
-          <div><div class="eyebrow"><span class="eyebrow-line"></span> AWS COST SNAPSHOT</div><h1><span id="hero-operating">—</span><br><em>running this month.</em></h1><p>Month-to-date operating cost, excluding one-off domain charges and tax. Explore the project and shared breakdown below.</p></div>
+          <div><div class="eyebrow"><span class="eyebrow-line"></span> AWS ACCOUNT COST SNAPSHOT</div><h1><span id="hero-total">—</span><br><em>spent this month.</em></h1><p>Actual month-to-date AWS account cost, including project charges, one-off domain charges and tax. See the breakdown below.</p></div>
           <div class="hero-visual" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit orbit-three"></div><div class="orbit-core">A</div><span class="orbit-dot dot-one"></span><span class="orbit-dot dot-two"></span><span class="orbit-dot dot-three"></span></div>
         </section>
 
         <div id="file-preview" class="notice" hidden><span class="notice-icon">↗</span><span>AWS project metrics appear when the live snapshot is connected.</span></div>
         <div id="feed-notice" class="notice" hidden><span class="notice-icon">✳</span><span>Waiting for AWS data.</span></div>
-        <div class="section-heading"><div><div class="eyebrow subtle">01 / ACCOUNT OVERVIEW</div><h2>AWS running costs</h2><p>Month to date · costs published by AWS Cost Explorer.</p></div><span id="account-status" class="status-pill">Awaiting Cost Explorer</span></div>
-        <section class="account-overview" aria-label="AWS operating cost overview">
-          <article class="overview-primary"><span class="overline">ACTUAL AWS OPERATING COST</span><strong id="operating-total">—</strong><p>Account spend excluding one-off domain charges and tax</p></article>
-          <article class="overview-cost"><span class="overline">KNOWN PROJECT COSTS</span><strong id="project-operating">—</strong><p id="project-operating-note">Direct AWS charges plus allocated hosted-zone DNS</p></article>
-          <article class="overview-cost"><span class="overline">SHARED / NOT YET ATTRIBUTED</span><strong id="account-shared">—</strong><p id="account-shared-note">Includes costs awaiting project attribution</p></article>
-        </section>
-        <section class="account-ledger" aria-label="AWS account total and non-operating charges">
-          <div><span>Actual AWS account total</span><strong id="account-total">—</strong></div>
+        <div class="section-heading"><div><div class="eyebrow subtle">01 / COST COMPONENTS</div><h2>Where the account total comes from</h2><p>Month to date · costs published by AWS Cost Explorer.</p></div><span id="account-status" class="status-pill">Awaiting Cost Explorer</span></div>
+        <section class="account-ledger" aria-label="AWS account cost components">
           <div><span>Confirmed direct project costs</span><strong id="account-direct">—</strong><small id="account-direct-note">Awaiting tagged costs</small></div>
           <div><span>Allocated Route 53 DNS</span><strong id="account-dns">—</strong></div>
           <div><span>One-off domain charges</span><strong id="account-domain">—</strong></div>
@@ -53,10 +47,17 @@
         </section>
         <p id="account-reconciliation" class="allocation-note">Awaiting AWS account costs.</p>
 
-        <div class="section-heading overview-section" id="projects"><div><div class="eyebrow subtle">02 / PROJECTS</div><h2>Explore each project</h2><p>Open a project for its costs, traffic, reliability and resources.</p></div></div>
+        <div class="section-heading overview-section"><div><div class="eyebrow subtle">02 / COST ATTRIBUTION</div><h2>Project, non-project and unattributed</h2><p>A high-level split of the AWS account total above.</p></div></div>
+        <section class="account-overview" aria-label="AWS cost attribution overview">
+          <article class="overview-cost"><span class="overline">KNOWN PROJECT COSTS</span><strong id="project-operating">—</strong><p id="project-operating-note">Direct AWS charges plus allocated hosted-zone DNS</p></article>
+          <article class="overview-cost"><span class="overline">NON-PROJECT CHARGES</span><strong id="nonproject-cost">—</strong><p>One-off domain charges and tax; not allocated to projects</p></article>
+          <article class="overview-cost"><span class="overline">SHARED / UNATTRIBUTED</span><strong id="account-shared">—</strong><p id="account-shared-note">Includes costs awaiting project attribution</p></article>
+        </section>
+
+        <div class="section-heading overview-section" id="projects"><div><div class="eyebrow subtle">03 / PROJECTS</div><h2>Explore each project</h2><p>Open a project for its costs, traffic, reliability and resources.</p></div></div>
         <div id="project-cards" class="project-card-grid" aria-label="AWS projects"></div>
 
-        <div class="section-heading overview-section" id="traffic-summary"><div><div class="eyebrow subtle">03 / TRAFFIC OVERVIEW</div><h2>Traffic across live projects</h2><p>Month to date · requests include pages, assets and prefetches.</p></div></div>
+        <div class="section-heading overview-section" id="traffic-summary"><div><div class="eyebrow subtle">04 / TRAFFIC OVERVIEW</div><h2>Traffic across live projects</h2><p>Month to date · requests include pages, assets and prefetches.</p></div></div>
         <section class="traffic-grid" aria-label="Traffic across live projects">
           <article class="traffic-card"><span class="overline">TRACKED VISITS</span><strong id="overview-visits">—</strong><p>Sessions; shown when analytics is connected</p></article>
           <article class="traffic-card"><span class="overline">PAGE VIEWS</span><strong id="overview-pageviews">—</strong><p>Tracked page view events</p></article>

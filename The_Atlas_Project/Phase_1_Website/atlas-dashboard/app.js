@@ -123,17 +123,16 @@ function renderProject(data) {
 function renderAccount(account = {}) {
   const currency = account.currency || 'USD';
   setText('account-status', account.checkedAt ? 'Cost Explorer reading' : 'Awaiting Cost Explorer');
-  const operating = [account.total, account.domainRegistrationCost, account.tax].every(value => value != null)
-    ? Math.round((account.total - account.domainRegistrationCost - account.tax) * 100) / 100 : null;
   const projectOperating = account.directProjectCost != null && account.allocatedDnsCost != null
     ? Math.round((account.directProjectCost + account.allocatedDnsCost) * 100) / 100 : null;
-  setText('hero-operating', fmtMoney(operating, currency));
-  setText('operating-total', fmtMoney(operating, currency));
+  const nonProject = account.domainRegistrationCost != null && account.tax != null
+    ? Math.round((account.domainRegistrationCost + account.tax) * 100) / 100 : null;
+  setText('hero-total', fmtMoney(account.total, currency));
   setText('project-operating', fmtMoney(projectOperating, currency));
+  setText('nonproject-cost', fmtMoney(nonProject, currency));
   setText('project-operating-note', account.directProjectPartial
     ? 'Confirmed direct charges plus DNS; other project costs may still be missing'
     : 'Direct AWS charges plus allocated hosted-zone DNS');
-  setText('account-total', fmtMoney(account.total, currency));
   setText('account-direct', fmtMoney(account.directProjectCost, currency));
   setText('account-direct-note', account.directProjectPartial ? 'Partial: some projects have no tagged cost data yet' : 'All configured projects included');
   setText('account-dns', fmtMoney(account.allocatedDnsCost, currency));
