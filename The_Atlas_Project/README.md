@@ -1,44 +1,30 @@
-# 🧭 Project Atlas: Chapter Directory
+# Project Atlas
 
-Welcome to **Project Atlas**, a series of real-world AWS architecture builds designed to deepen your cloud and DevOps skills — one chapter at a time.
+Project Atlas brings together practical work in cloud engineering, web applications, digital content and AI. Work is organised through project-specific engineering discussions and sprint priorities.
 
-Each folder below contains:
+## Engineering Areas
 
-- A project brief and architectural design
-- A real AWS build using console or IaC
-- Documentation, screenshots, and deployment outcomes
+| Area | Focus |
+|---|---|
+| Atlas Main Forum | Programme direction, priorities, governance and cross-project decisions |
+| Atlas Website Engineering | Website design, content, access control and deployment |
+| AWS Metrics Dashboard | AWS usage, operational metrics and cost visibility |
+| Tape Pack Application Engineering | The Tape Pack application and user experience |
+| Tape Pack Content Engineering | Content preparation, restoration and organisation |
+| Music Identification AI Engineering | Audio analysis and music identification research and development |
 
----
+These areas describe the organisation of the work; they do not indicate completion or deployment status.
 
-## 📚 Chapters
+## Repository Organisation
 
-| Chapter | Title                     | Focus Area                              | Status     | Project Link      |
-|---------|---------------------------|------------------------------------------|------------|-------------------|
-| 01      | Hello Lambda              | Lambda, API Gateway, CloudWatch, WAF     | ✅ Complete | [Project_1](Chapter_1_HelloWorld_Simple_Lambda_Function/project_summary.md)  |
-| 02      | Static Site S3            | S3, Route 53, CloudFront                 | 🟨 Planned  |                   |
-| 03      | Secure Contact Form       | API GW, SES, Lambda, CAPTCHA, WAF        | 🟨 Planned  |                   |
-| 04      | Visitor Analytics         | Kinesis, Firehose, Athena, QuickSight    | 🟨 Planned  |                   |
-| 05      | Scheduled Content Gen     | EventBridge, Step Functions, S3          | 🟨 Planned  |                   |
-| 06      | Authenticated Web App     | Cognito, AppSync, Amplify                | 🟨 Planned  |                   |
-| 07      | Serverless REST API       | Lambda, API Gateway REST, DynamoDB       | 🟨 Planned  |                   |
-| 08      | Scalable Container API    | ECS Fargate, ALB, Auto Scaling, RDS      | 🟨 Planned  |                   |
-| 09      | CI/CD & IaC Pipelines     | CodePipeline, CloudFormation             | 🟨 Planned  |                   |
-| 10      | Observability Platform    | CloudWatch, X-Ray, CloudTrail            | 🟨 Planned  |                   |
-| 11      | SignalCheck (Final App)   | Bedrock, Comprehend, Ethics, Public API  | 🟨 Planned  |                   |
+The repository structure is being reviewed to align with the current engineering areas. Existing folder names may reflect earlier stages of Atlas.
 
----
+The previous chapter-based learning roadmap has been retired. Legacy Chapters 1–3 have been removed from the working project. Previously committed versions remain available in Git history.
 
-## 📁 How to Navigate
+## Project Governance
 
-Each chapter folder contains:
+Sprint 04 task ATL-GOV-002 covers setting up the private `Atlas_Project_Control` repository and recording the approved Atlas Engineering Charter v1.0.
 
-- 📜 `project_brief.md` – The client-style requirement
-- 💬 `project_response.md` – My written interpretation and architectural decisions
-- 📊 `architecture_diagrams/` – AWS diagrams & draw.io source files
-- 📸 `P_Assets/` – Screenshots and config references
-- 🧠 `README.md` – Summary of the build with learning commentary
+Repository setup and charter publication are pending.
 
----
-
-📌 Return to [Main Repo](../README.md)
-
+[Return to the main repository README](../README.md)
