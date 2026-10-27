@@ -310,7 +310,7 @@ The target application must handle:
 The prototype scripts will eventually be refactored into reusable modules:
 
 ```text
-Chapter_4_Record_Hunter/
+Record_Hunter/
 ├── README.md
 ├── requirements.txt
 ├── docs/
