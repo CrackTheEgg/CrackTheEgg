@@ -17,7 +17,15 @@ These areas describe the organisation of the work; they do not indicate completi
 
 ## Repository Organisation
 
-The repository structure is being reviewed to align with the current engineering areas. Existing folder names may reflect earlier stages of Atlas.
+| Project or reference | Location | Purpose |
+|---|---|---|
+| Atlas Website | [Atlas_Website](Atlas_Website/) | Website source and portfolio pages |
+| AWS Metrics Dashboard | [Atlas_Dashboard](Atlas_Dashboard/) | AWS dashboard collector; the dashboard interface lives in [Atlas_Website/atlas-dashboard](Atlas_Website/atlas-dashboard/) |
+| The Tape Pack | [Atlas_Tape_Pack](Atlas_Tape_Pack/README.md) | Overview and link to the separate private application repository |
+| Record Hunter | [Record_Hunter](Record_Hunter/) | On hold for future integration into The Tape Pack as a record-finding tool |
+| Website documentation | [docs/website](docs/website/) | Website reference material, including certification badge links |
+
+The Tape Pack application is developed in its own repository. Its folder here provides a signpost to that project.
 
 The previous chapter-based learning roadmap has been retired. Legacy Chapters 1–3 have been removed from the working project. Previously committed versions remain available in Git history.
 
