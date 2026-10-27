@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "The_Atlas_Project/Phase_1_Website/**"
+      - "The_Atlas_Project/Atlas_Website/**"
       - ".github/workflows/deploy-atlas-website.yml"
 
   workflow_dispatch:
@@ -29,10 +29,10 @@ jobs:
           aws-region: eu-west-2
       - name: Deploy website to S3
         run: |
-          aws s3 sync The_Atlas_Project/Phase_1_Website/ s3://atlas-website-prod-739275438093/ --delete --exclude "atlas-dashboard/data/*"
+          aws s3 sync The_Atlas_Project/Atlas_Website/ s3://atlas-website-prod-739275438093/ --delete --exclude "atlas-dashboard/data/*"
       - name: Keep dashboard HTML fresh in browsers
         run: |
-          aws s3 cp The_Atlas_Project/Phase_1_Website/atlas-dashboard/index.html s3://atlas-website-prod-739275438093/atlas-dashboard/index.html \
+          aws s3 cp The_Atlas_Project/Atlas_Website/atlas-dashboard/index.html s3://atlas-website-prod-739275438093/atlas-dashboard/index.html \
             --content-type "text/html" \
             --cache-control "no-cache, max-age=0, must-revalidate"
       - name: Invalidate CloudFront cache
